@@ -6,7 +6,7 @@ public class Producto {
 
     private String nombreProducto;
     private Unidad unidad;
-    private List<PrecioPorProveedor> preciosPorProveedor;
+    private List<PrecioProductoPorProveedor> preciosPorProveedor;
 
     public Producto(String nombreProducto) {
         this.nombreProducto = nombreProducto;

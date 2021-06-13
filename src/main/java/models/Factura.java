@@ -1,4 +1,4 @@
 package main.java.models;
 
-public class Factura {
+public class Factura extends Documento {
 }
