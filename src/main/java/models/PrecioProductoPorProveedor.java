@@ -4,6 +4,7 @@ public class PrecioProductoPorProveedor {
 
     private double precio;
     private Proveedor proveedor;
+    private Producto producto;
 
     public PrecioProductoPorProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
