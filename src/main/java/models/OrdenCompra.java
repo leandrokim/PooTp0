@@ -3,10 +3,10 @@ package main.java.models;
 import java.util.List;
 
 public class OrdenDeCompra {
-    private Integer nOrdenCompra;
-    private Integer nFactura;
+    private int nOrdenCompra;
+    private int nFactura;
     private List <PrecioProductoPorProveedor> productos;
-    private Double totalPrecioAcordado;
+    private double totalPrecioAcordado;
 
     public Integer getnOrdenCompra() {
         return nOrdenCompra;
