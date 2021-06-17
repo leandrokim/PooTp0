@@ -1,8 +1,6 @@
 package main.java.models;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Rubro {
     private Integer idRubro;
@@ -36,7 +34,9 @@ public class Rubro {
     public void setProductos(List<Producto> productos) {
         this.productos = productos;
     }
-    public int getPrecioProductoPorProveedor(int idProducto){
 
+    public int getPrecioProductoPorProveedor(int idProducto) {
+        return 0;
     }
+
 }

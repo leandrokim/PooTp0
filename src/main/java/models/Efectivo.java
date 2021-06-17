@@ -11,4 +11,11 @@ public class Efectivo extends FormaPago {
         return importe;
     }
 
+    @Override
+    public DTOFormaPago toDTO() {
+        DTOFormaPago dto = new DTOFormaPago();
+        dto.importe = importe;
+        return dto;
+    }
+
 }

@@ -1,12 +1,16 @@
 package main.java.models;
 
-import java.time.LocalDate;
-
 public class Retencion {
 
-    private int idRetencion ;
+    private int idRetencion;
     private Impuesto impuesto;
-    private double  total;
+    private double total;
+
+    public Retencion(int idRetencion, Impuesto impuesto, double total) {
+        this.idRetencion = idRetencion;
+        this.impuesto = impuesto;
+        this.total = total;
+    }
 
     public int getIdRetencion() {
         return idRetencion;
@@ -31,4 +35,19 @@ public class Retencion {
     public void setTotal(double total) {
         this.total = total;
     }
+
+    public DTORetencion toDTO() {
+        DTORetencion dto = new DTORetencion();
+        dto.idRetencion = idRetencion;
+        dto.total = total;
+        dto.impuesto = impuesto.toDTO();
+        return dto;
+    }
+
+    public static class DTORetencion {
+        public int idRetencion;
+        public Impuesto.DTOImpuesto impuesto;
+        public double total;
+    }
+
 }

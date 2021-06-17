@@ -3,17 +3,21 @@ package main.java.models;
 import java.util.List;
 
 public class Producto {
+
     private int idProducto;
     private String nombreProducto;
     private Unidad unidad;
     private List<PrecioProductoPorProveedor> preciosPorProveedor;
     private TipoIVA tipoDeIva;
 
-    public Producto(int idProducto) {
+    public Producto(int idProducto, String nombreProducto, Unidad unidad, List<PrecioProductoPorProveedor> preciosPorProveedor, TipoIVA tipoDeIva) {
         this.idProducto = idProducto;
+        this.nombreProducto = nombreProducto;
+        this.unidad = unidad;
+        this.preciosPorProveedor = preciosPorProveedor;
+        this.tipoDeIva = tipoDeIva;
     }
 
-    //region get
     public int getIdProducto() {
         return idProducto;
     }
@@ -34,10 +38,6 @@ public class Producto {
         return tipoDeIva;
     }
 
-    //endregion
-
-    //region set
-
     public void setIdProducto(int idProducto) {
         this.idProducto = idProducto;
     }
@@ -57,8 +57,5 @@ public class Producto {
     public void setTipoDeIva(TipoIVA tipoDeIva) {
         this.tipoDeIva = tipoDeIva;
     }
-
-
-
 
 }

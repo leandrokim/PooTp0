@@ -1,6 +1,7 @@
 package main.java.models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,6 +10,12 @@ public class CuentaCorriente {
     private Proveedor proveedor;
     private List<Documento> documentos;
     private List<OrdenPago> ordenesDePago;
+
+    public CuentaCorriente(Proveedor proveedor) {
+        this.proveedor = proveedor;
+        this.documentos = new ArrayList<>();
+        this.ordenesDePago = new ArrayList<>();
+    }
 
     public Proveedor getProveedor() {
         return proveedor;

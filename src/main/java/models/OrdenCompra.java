@@ -2,25 +2,36 @@ package main.java.models;
 
 import java.util.List;
 
-public class OrdenDeCompra {
+public class OrdenCompra {
+
     private int nOrdenCompra;
     private int nFactura;
-    private List <PrecioProductoPorProveedor> productos;
+    private List<PrecioProductoPorProveedor> productos;
     private double totalPrecioAcordado;
 
-    public Integer getnOrdenCompra() {
+    public OrdenCompra(int nOrdenCompra, int nFactura, List<PrecioProductoPorProveedor> productos) {
+        this.nOrdenCompra = nOrdenCompra;
+        this.nFactura = nFactura;
+        this.productos = productos;
+        totalPrecioAcordado = 0;
+        for (PrecioProductoPorProveedor precioProductoPorProveedor : productos) {
+            totalPrecioAcordado += precioProductoPorProveedor.getPrecio();
+        }
+    }
+
+    public Integer getNOrdenCompra() {
         return nOrdenCompra;
     }
 
-    public void setnOrdenCompra(Integer nOrdenCompra) {
+    public void setNOrdenCompra(Integer nOrdenCompra) {
         this.nOrdenCompra = nOrdenCompra;
     }
 
-    public Integer getnFactura() {
+    public Integer getNFactura() {
         return nFactura;
     }
 
-    public void setnFactura(Integer nFactura) {
+    public void setNFactura(Integer nFactura) {
         this.nFactura = nFactura;
     }
 
@@ -39,4 +50,5 @@ public class OrdenDeCompra {
     public void setTotalPrecioAcordado(Double totalPrecioAcordado) {
         this.totalPrecioAcordado = totalPrecioAcordado;
     }
+
 }

@@ -1,7 +1,6 @@
 package main.java.models;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Certificado {
 
@@ -9,42 +8,58 @@ public class Certificado {
     private LocalDate fechaInicio;
     private LocalDate fechaFinal;
     private boolean retencion;
-    private Retencion idRetencion;
+    private Impuesto impuesto;
 
-
-    //region get
-    public Certificado getCertificado() {
-        return this.Certificado;
+    public Certificado(int cuit, LocalDate fechaInicio, LocalDate fechaFinal, boolean retencion, Impuesto impuesto) {
+        this.cuit = cuit;
+        this.fechaInicio = fechaInicio;
+        this.fechaFinal = fechaFinal;
+        this.retencion = retencion;
+        this.impuesto = impuesto;
     }
-    public LocalDate getFechaInicio(){
+
+    public Certificado getCertificado() {
+        return this;
+    }
+
+    public LocalDate getFechaInicio() {
         return (fechaInicio);
     }
-    public Retencion getIdRetencion() {
-        return Retencion;
-    }
-    public LocalDate getFechaFinal(){
+
+    public LocalDate getFechaFinal() {
         return (fechaFinal);
     }
-    public Retencion getIdRetencion() {
-        return idRetencion;
-    }
-    //endregion
 
-    //region set
     public void setFechaInicio(LocalDate fechaSalida) {
         this.fechaInicio = fechaSalida;
     }
+
     public void setFechaFinal(LocalDate fechaSalida) {
         this.fechaFinal = fechaSalida;
     }
-    public void setCuit(int cuit) {
+
+    public void setCuitProveedor(int cuit) {
         this.cuit = cuit;
     }
-    public void setRetencion(boolean state) {
+
+    public Impuesto getImpuesto() {
+        return impuesto;
+    }
+
+    public void setImpuesto(Impuesto impuesto) {
+        this.impuesto = impuesto;
+    }
+
+    public boolean isRetencion() {
+        return retencion;
+    }
+
+    public void setRetencion(boolean retencion) {
         this.retencion = retencion;
     }
-    public void setAerolinea(Aerolinea aerolinea) {
-        this.aerolinea = aerolinea;
+
+    public int getCuitProveedor() {
+        return cuit;
     }
-//endregion
+
 }

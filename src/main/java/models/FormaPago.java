@@ -6,4 +6,10 @@ public abstract class FormaPago {
 
     public abstract double getImporte();
 
+    public abstract DTOFormaPago toDTO();
+
+    public static class DTOFormaPago {
+        public double importe;
+    }
+
 }

@@ -3,6 +3,7 @@ package main.java.controllers;
 import main.java.models.CuentaCorriente;
 import main.java.models.Factura;
 import main.java.models.PrecioProductoPorProveedor;
+import main.java.models.Proveedor;
 
 import java.time.LocalDate;
 import java.util.List;

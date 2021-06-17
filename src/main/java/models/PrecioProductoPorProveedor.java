@@ -6,8 +6,10 @@ public class PrecioProductoPorProveedor {
     private Proveedor proveedor;
     private Producto producto;
 
-    public PrecioProductoPorProveedor (Proveedor proveedor){
-        this.proveedor= proveedor;
+    public PrecioProductoPorProveedor(double precio, Proveedor proveedor, Producto producto) {
+        this.precio = precio;
+        this.proveedor = proveedor;
+        this.producto = producto;
     }
 
     public double getPrecio() {
@@ -34,5 +36,8 @@ public class PrecioProductoPorProveedor {
         this.producto = producto;
     }
 
+    public double getProductoIva() {
+        return producto.getTipoDeIva().getValue() * precio / 100;
+    }
 
 }

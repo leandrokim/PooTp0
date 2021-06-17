@@ -5,6 +5,11 @@ public class Compra {
     private int numCompra;
     private Factura factura;
 
+    public Compra(int numCompra, Factura factura) {
+        this.numCompra = numCompra;
+        this.factura = factura;
+    }
+
     public Compra(Factura factura) {
         this.factura = factura;
     }

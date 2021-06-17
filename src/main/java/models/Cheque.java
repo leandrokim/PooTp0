@@ -9,6 +9,18 @@ public class Cheque extends FormaPago {
     private LocalDate fechaVencimiento;
     private String firmante;
 
+    public Cheque(double importe,
+                  TipoCheque tipo,
+                  LocalDate fechaEmision,
+                  LocalDate fechaVencimiento,
+                  String firmante) {
+        this.importe = importe;
+        this.tipo = tipo;
+        this.fechaEmision = fechaEmision;
+        this.fechaVencimiento = fechaVencimiento;
+        this.firmante = firmante;
+    }
+
     public TipoCheque getTipo() {
         return tipo;
     }
@@ -44,6 +56,13 @@ public class Cheque extends FormaPago {
     @Override
     public double getImporte() {
         return importe;
+    }
+
+    @Override
+    public DTOFormaPago toDTO() {
+        DTOFormaPago dto = new DTOFormaPago();
+        dto.importe = importe;
+        return dto;
     }
 
 }

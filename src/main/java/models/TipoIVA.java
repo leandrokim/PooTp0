@@ -1,6 +1,7 @@
 package main.java.models;
 
 public enum TipoIVA {
+
     DOS_COMA_CINCO(2.5),
     CINCO(5),
     DIEZ_COMA_CINCO(10.5),
@@ -9,7 +10,6 @@ public enum TipoIVA {
 
     private final double value;
 
-//    private
     TipoIVA(double value) {
         this.value = value;
     }
@@ -17,4 +17,5 @@ public enum TipoIVA {
     public double getValue() {
         return value;
     }
+
 }
