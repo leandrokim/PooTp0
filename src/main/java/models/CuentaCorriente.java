@@ -1,5 +1,8 @@
 package main.java.models;
 
+import main.java.collections.OrdenPagoCollection;
+import main.java.collections.RetencionCollection;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +19,10 @@ public class CuentaCorriente {
         this.documentos = new ArrayList<>();
         this.ordenesDePago = new ArrayList<>();
     }
-
+    private List<OrdenPago> getOrdenesPago() {
+        OrdenPagoCollection collection = new OrdenPagoCollection();
+        return collection.getDatos();
+    }
     public Proveedor getProveedor() {
         return proveedor;
     }
@@ -136,6 +142,35 @@ public class CuentaCorriente {
                     documento.getTotal()));
         }
         return dto;
+    }
+    public List<DTOListadoDeImpuestosConNombreYTotalRetenido> getImpuestosRetenidos() {
+        List<DTOListadoDeImpuestosConNombreYTotalRetenido> dto = new ArrayList<>();
+        List<OrdenPago> ordenesDePago= getOrdenesDePago();
+        for (OrdenPago ordenPago : ordenesDePago) {
+            List<DTOListadoDeImpuestosConNombreYTotalRetenido> retencionesEImpuestos = ordenPago.getTotalRetenciones();
+            for (DTOListadoDeImpuestosConNombreYTotalRetenido lista : retencionesEImpuestos) {
+
+                DTOListadoDeImpuestosConNombreYTotalRetenido busq=verificarImpuesto(dto, lista.nombreDelImpuesto);
+
+                if (busq!=null)
+                {
+                    busq.totalRetenido=busq.totalRetenido + lista.totalRetenido;
+                    dto.replaceAll(p ->p.nombreDelImpuesto==busq.nombreDelImpuesto?busq:p);
+                }
+                else{
+                    dto.add(new DTOListadoDeImpuestosConNombreYTotalRetenido(lista.totalRetenido,lista.nombreDelImpuesto));
+                }
+
+            }
+
+        }
+        return dto;
+    }
+    private DTOListadoDeImpuestosConNombreYTotalRetenido verificarImpuesto(List<DTOListadoDeImpuestosConNombreYTotalRetenido> dto,String nombreImpuesto)
+    {
+        return (dto.stream()
+                .filter(v -> v.nombreDelImpuesto.equals(nombreImpuesto))
+                .findFirst().orElse(null));
     }
 
 }

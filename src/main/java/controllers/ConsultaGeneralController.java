@@ -57,7 +57,7 @@ public class ConsultaGeneralController {
         List<DTOConsultasDeLibroIVA> dto = new ArrayList<>();
         List<CuentaCorriente> cuentaCorrientes = getCuentaCorrientes();
         for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
-            //TODO diagrama de secuencia cambiar cuentaCorriente.getIvaPorDocumento() y la respuesta
+
             List<DTOConsultasDeLibroIVA> listadoIVAPorDocumento = cuentaCorriente.getIvaPorDocumento();
             dto.addAll(listadoIVAPorDocumento);
         }
@@ -68,8 +68,43 @@ public class ConsultaGeneralController {
         return 0;
     }
 
-    public List<Object> totalDeImpuestosRetenidos() {
+    public List<Object> totalDeImpuestosRetsenidos() {
         return null;
+    }
+
+    public List<DTOListadoDeImpuestosConNombreYTotalRetenido> totalDeImpuestosRetenidos() {
+        List<DTOListadoDeImpuestosConNombreYTotalRetenido> dto = new ArrayList<>();
+        List<CuentaCorriente> cuentaCorrientes = getCuentaCorrientes();
+
+        for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+
+            List<DTOListadoDeImpuestosConNombreYTotalRetenido> retencionesEImpuestos = cuentaCorriente.getImpuestosRetenidos();
+
+            //recorro esa lista para generar la lista unica de retenciones e impuestos
+            for (DTOListadoDeImpuestosConNombreYTotalRetenido lista : retencionesEImpuestos) {
+
+                DTOListadoDeImpuestosConNombreYTotalRetenido busq=verificarImpuesto(dto, lista.nombreDelImpuesto);
+
+                if (busq!=null)
+                {
+                    busq.totalRetenido=busq.totalRetenido + lista.totalRetenido;
+                    dto.replaceAll(p ->p.nombreDelImpuesto==busq.nombreDelImpuesto?busq:p);
+                }
+                else{
+                    dto.add(new DTOListadoDeImpuestosConNombreYTotalRetenido(lista.totalRetenido,lista.nombreDelImpuesto));
+                }
+
+            }
+
+        }
+        return dto;
+    }
+
+    private DTOListadoDeImpuestosConNombreYTotalRetenido verificarImpuesto(List<DTOListadoDeImpuestosConNombreYTotalRetenido> dto,String nombreImpuesto)
+    {
+        return (dto.stream()
+                .filter(v -> v.nombreDelImpuesto.equals(nombreImpuesto))
+                .findFirst().orElse(null));
     }
 
     public List<Factura> facturasPorDiaOProveedor(LocalDate dia, int cuitProveedor) {
