@@ -1,5 +1,8 @@
 package main.java.controllers;
 
+import main.java.collections.ImpuestoCollection;
+import main.java.collections.OrdenPagoCollection;
+import main.java.models.Impuesto;
 import main.java.models.OrdenPago;
 
 import java.util.ArrayList;
@@ -17,10 +20,14 @@ public class OrdenesYDocumentosController {
         return instancia;
     }
 
+    public List<Impuesto> getImpuestos() {
+        ImpuestoCollection collection = new ImpuestoCollection();
+        return collection.getDatos();
+    }
+
     public List<OrdenPago> getOrdenesDePago() {
-        ordenesDePago = new ArrayList<>();
-        //TODO persistencia
-        return ordenesDePago;
+        OrdenPagoCollection collection = new OrdenPagoCollection();
+        return collection.getDatos();
     }
 
     public List<OrdenPago.DTOOrdenPago> ordenesDePagoEmitidas() {

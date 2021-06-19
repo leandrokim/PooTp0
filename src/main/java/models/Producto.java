@@ -58,4 +58,20 @@ public class Producto {
         this.tipoDeIva = tipoDeIva;
     }
 
+    public DTOProducto toDTO() {
+        DTOProducto dto = new DTOProducto();
+        dto.idProducto = getIdProducto();
+        dto.nombreProducto = getNombreProducto();
+        dto.tipoDeIva = getTipoDeIva();
+        dto.unidad = getUnidad();
+        return dto;
+    }
+
+    public static class DTOProducto {
+        public int idProducto;
+        public String nombreProducto;
+        public Unidad unidad;
+        public TipoIVA tipoDeIva;
+    }
+
 }

@@ -142,4 +142,41 @@ public class Proveedor {
         this.ordenesDeCompra = ordenesDeCompra;
     }
 
+    public DTOProveedor toDTO() {
+        DTOProveedor dto = new DTOProveedor();
+        dto.cuitProveedor = getCuitProveedor();
+        dto.nombreProveedor = getNombreProveedor();
+        dto.topeDeudaEmpresa = getTopeDeudaEmpresa();
+        dto.responsableIva = isResponsableIva();
+        dto.emailProvedor = getEmailProvedor();
+        dto.telProvedor = getTelProvedor();
+        dto.dirProvedor = getDirProvedor();
+        dto.certificados = new ArrayList<>();
+        for (Certificado certificado : certificados) {
+            dto.certificados.add(certificado.toDTO());
+        }
+        dto.rubros = new ArrayList<>();
+        for (Rubro rubro : rubros) {
+            dto.rubros.add(rubro.toDTO());
+        }
+        dto.retenciones = new ArrayList<>();
+        for (Retencion retencion : retenciones) {
+            dto.retenciones.add(retencion.toDTO());
+        }
+        return dto;
+    }
+
+    public static class DTOProveedor {
+        public int cuitProveedor;
+        public String nombreProveedor;
+        public double topeDeudaEmpresa;
+        public boolean responsableIva;
+        public String emailProvedor;
+        public String telProvedor;
+        public String dirProvedor;
+        public List<Certificado.DTOCertificado> certificados;
+        public List<Rubro.DTORubro> rubros;
+        public List<Retencion.DTORetencion> retenciones;
+    }
+
 }

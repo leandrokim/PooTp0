@@ -1,6 +1,7 @@
 package main.java.models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NotaDebito extends Documento {
@@ -46,10 +47,22 @@ public class NotaDebito extends Documento {
 
     @Override
     public DTODocumento toDTO() {
-        DTODocumento documento = new DTODocumento();
-        documento.nombreEmpresa = getNombreEmpresa();
-        //TODO
-        return documento;
+        DTODocumento dto = new DTODocumento();
+        dto.nombreEmpresa = getNombreEmpresa();
+        dto.cuitEmpresa = getCuitEmpresa();
+        dto.fecha = getFecha();
+        dto.cuitProveedor = getCuitProveedor();
+        dto.total = getTotal();
+        dto.productos = new ArrayList<>();
+        for (PrecioProductoPorProveedor producto : getProductos()) {
+            dto.productos.add(producto.toDTO());
+        }
+        return dto;
+    }
+
+    @Override
+    public String getTipoDocumento() {
+        return NotaDebito.class.getSimpleName();
     }
 
 }

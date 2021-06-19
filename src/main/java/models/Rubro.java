@@ -1,5 +1,7 @@
 package main.java.models;
 
+import main.java.exceptions.ProductoNoEncontradoException;
+
 import java.util.List;
 
 public class Rubro {
@@ -35,8 +37,26 @@ public class Rubro {
         this.productos = productos;
     }
 
-    public int getPrecioProductoPorProveedor(int idProducto) {
-        return 0;
+    public List<PrecioProductoPorProveedor> getPrecioProductoPorProveedor(int idProducto) {
+        List<Producto> productos = getProductos();
+        for (Producto producto : productos) {
+            if (idProducto == producto.getIdProducto()) {
+                return producto.getPreciosPorProveedor();
+            }
+        }
+        throw new ProductoNoEncontradoException("El producto con ID " + idProducto + " no existe");
+    }
+
+    public DTORubro toDTO() {
+        DTORubro dto = new DTORubro();
+        dto.idRubro = getIdRubro();
+        dto.nombreRubro = getNombreRubro();
+        return dto;
+    }
+
+    public static class DTORubro {
+        public Integer idRubro;
+        public String nombreRubro;
     }
 
 }

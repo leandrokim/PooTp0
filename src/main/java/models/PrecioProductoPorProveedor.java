@@ -40,4 +40,18 @@ public class PrecioProductoPorProveedor {
         return producto.getTipoDeIva().getValue() * precio / 100;
     }
 
+    public DTOPrecioProductoPorProveedor toDTO() {
+        DTOPrecioProductoPorProveedor dto = new DTOPrecioProductoPorProveedor();
+        dto.precio = getPrecio();
+        dto.producto = getProducto().toDTO();
+        dto.proveedor = getProveedor().toDTO();
+        return dto;
+    }
+
+    public static class DTOPrecioProductoPorProveedor {
+        public double precio;
+        public Producto.DTOProducto producto;
+        public Proveedor.DTOProveedor proveedor;
+    }
+
 }

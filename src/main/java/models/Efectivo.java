@@ -15,6 +15,7 @@ public class Efectivo extends FormaPago {
     public DTOFormaPago toDTO() {
         DTOFormaPago dto = new DTOFormaPago();
         dto.importe = importe;
+        dto.tipo = Efectivo.class.getSimpleName();
         return dto;
     }
 

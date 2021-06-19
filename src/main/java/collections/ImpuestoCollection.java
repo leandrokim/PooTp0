@@ -1,0 +1,12 @@
+package main.java.collections;
+
+import main.java.models.Impuesto;
+
+public class ImpuestoCollection extends Collection<Impuesto> {
+
+    @Override
+    public String nombreArchivo() {
+        return ImpuestoCollection.class.getSimpleName();
+    }
+
+}

@@ -41,11 +41,11 @@ public class CuentaCorriente {
         this.ordenesDePago = ordenesDePago;
     }
 
-    public CuentaCorrienteDTO toDTO() {
+    public DTOCuentaCorriente toDTO() {
         return null;
     }
 
-    public static class CuentaCorrienteDTO {
+    public static class DTOCuentaCorriente {
 
     }
 
@@ -82,12 +82,60 @@ public class CuentaCorriente {
                 .collect(Collectors.toList());
     }
 
-    public List<Documento> consultaDocumentosProveedor() {
-        return null;
+    public DTODocumentosPagosYDeudas consultaDocumentosProveedor() {
+        int cuitProveedor = proveedor.getCuitProveedor();
+        double totalDeuda = 0d;
+
+        List<Documento.DTODocumento> documentosRecibidos = new ArrayList<>();
+        List<Documento.DTODocumento> facturasImpagas = new ArrayList<>();
+        for (Documento documento : documentos) {
+            documentosRecibidos.add(documento.toDTO());
+            if (documento instanceof Factura) {
+                Factura factura = (Factura) documento;
+                if (!factura.isFacturaPaga()) {
+                    facturasImpagas.add(factura.toDTO());
+
+                    totalDeuda += factura.getTotal();
+                }
+            }
+            if (documento instanceof NotaDebito) {
+                totalDeuda -= documento.getTotal();
+            }
+
+            if (documento instanceof NotaCredito) {
+                totalDeuda += documento.getTotal();
+            }
+        }
+
+        List<OrdenPago.DTOOrdenPago> pagosRealizados = new ArrayList<>();
+        for (OrdenPago ordenPago : ordenesDePago) {
+            pagosRealizados.add(ordenPago.toDTO());
+        }
+
+        return new DTODocumentosPagosYDeudas(cuitProveedor,
+                facturasImpagas,
+                documentosRecibidos,
+                pagosRealizados,
+                totalDeuda);
     }
 
     public String getNombreProveedor() {
         return proveedor.getNombreProveedor();
+    }
+
+    public List<DTOConsultasDeLibroIVA> getIvaPorDocumento() {
+        List<DTOConsultasDeLibroIVA> dto = new ArrayList<>();
+
+        for (Documento documento : documentos) {
+            List<Iva> ivaDocumentos = documento.getDocumentIva();
+            dto.add(new DTOConsultasDeLibroIVA(getCuitProveedor(),
+                    getNombreProveedor(),
+                    documento.getFecha(),
+                    documento.getTipoDocumento(),
+                    ivaDocumentos,
+                    documento.getTotal()));
+        }
+        return dto;
     }
 
 }

@@ -86,8 +86,15 @@ public abstract class Documento {
 
     public abstract DTODocumento toDTO();
 
+    public abstract String getTipoDocumento();
+
     public static class DTODocumento {
         public String nombreEmpresa;
+        public int cuitEmpresa;
+        public LocalDate fecha;
+        public int cuitProveedor;
+        public List<PrecioProductoPorProveedor.DTOPrecioProductoPorProveedor> productos;
+        public double total;
     }
 
 }

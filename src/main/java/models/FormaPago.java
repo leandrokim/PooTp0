@@ -10,6 +10,7 @@ public abstract class FormaPago {
 
     public static class DTOFormaPago {
         public double importe;
+        public String tipo;
     }
 
 }

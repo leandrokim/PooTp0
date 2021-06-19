@@ -62,6 +62,7 @@ public class Cheque extends FormaPago {
     public DTOFormaPago toDTO() {
         DTOFormaPago dto = new DTOFormaPago();
         dto.importe = importe;
+        dto.tipo = Cheque.class.getSimpleName();
         return dto;
     }
 

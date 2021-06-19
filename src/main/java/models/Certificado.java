@@ -62,4 +62,22 @@ public class Certificado {
         return cuit;
     }
 
+    public DTOCertificado toDTO() {
+        DTOCertificado dto = new DTOCertificado();
+        dto.cuit = getCuitProveedor();
+        dto.fechaInicio = getFechaInicio();
+        dto.fechaFinal = getFechaFinal();
+        dto.retencion = getCertificado().isRetencion();
+        dto.impuesto = getImpuesto().toDTO();
+        return dto;
+    }
+
+    public static class DTOCertificado {
+        public int cuit;
+        public LocalDate fechaInicio;
+        public LocalDate fechaFinal;
+        public boolean retencion;
+        public Impuesto.DTOImpuesto impuesto;
+    }
+
 }
