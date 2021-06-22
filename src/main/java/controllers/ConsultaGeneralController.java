@@ -28,6 +28,15 @@ public class ConsultaGeneralController {
         RubroCollection collection = new RubroCollection();
         return collection.getDatos();
     }
+    public List<Proveedor> getProveedores() {
+        ProveedorCollection collection = new ProveedorCollection();
+        return collection.getDatos();
+
+    }
+    public List<OrdenPago> getOrdenPago() {
+        OrdenPagoCollection collection = new OrdenPagoCollection();
+        return collection.getDatos();
+    }
 
     public List<DTODocumentosPagosYDeudas> consultaCuentaCorrienteProveedores() {
         List<DTODocumentosPagosYDeudas> dto = new ArrayList<>();
@@ -65,7 +74,18 @@ public class ConsultaGeneralController {
     }
 
     public double totalDeudaPorProveedor(int cuitProveedor) {
-        return 0;
+        double totalDeudaPorProveedor = 0;
+        List<CuentaCorriente> cuentaCorrientes = getCuentaCorrientes();
+        List<Proveedor> proveedores = getProveedores();
+        for (CuentaCorriente cuentaCorriente: cuentaCorrientes){
+            if (cuitProveedor== proveedor.getCuitProveedor()){
+                List<OrdenPago> ordenesDePago = getOrdenPago();
+                for (OrdenPago ordenPago: ordenesDePago){
+                    totalDeudaPorProveedor += OrdenPago.getTotalACancelar();
+                }
+            }
+        }
+        return totalDeudaPorProveedor;
     }
 
     public List<Object> totalDeImpuestosRetsenidos() {
