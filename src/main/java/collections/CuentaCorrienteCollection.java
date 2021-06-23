@@ -9,4 +9,9 @@ public class CuentaCorrienteCollection extends Collection<CuentaCorriente> {
         return CuentaCorrienteCollection.class.getSimpleName();
     }
 
+    @Override
+    protected Class<CuentaCorriente> clase() {
+        return CuentaCorriente.class;
+    }
+
 }

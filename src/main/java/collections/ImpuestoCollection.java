@@ -9,4 +9,9 @@ public class ImpuestoCollection extends Collection<Impuesto> {
         return ImpuestoCollection.class.getSimpleName();
     }
 
+    @Override
+    protected Class<Impuesto> clase() {
+        return Impuesto.class;
+    }
+
 }

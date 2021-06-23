@@ -9,4 +9,9 @@ public class OrdenPagoCollection extends Collection<OrdenPago> {
         return OrdenPagoCollection.class.getSimpleName();
     }
 
+    @Override
+    protected Class<OrdenPago> clase() {
+        return OrdenPago.class;
+    }
+
 }

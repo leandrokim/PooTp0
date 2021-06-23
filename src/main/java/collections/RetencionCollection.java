@@ -10,4 +10,9 @@ public class RetencionCollection extends Collection<Retencion>{
         return RetencionCollection.class.getSimpleName();
     }
 
+    @Override
+    protected Class<Retencion> clase() {
+        return Retencion.class;
+    }
+
 }

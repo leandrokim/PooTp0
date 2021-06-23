@@ -4,11 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 
 import javax.swing.*;
 import java.io.*;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public abstract class Collection<T> {
@@ -63,9 +61,7 @@ public abstract class Collection<T> {
                 JsonArray gsonArr = parser.parse(cadena).getAsJsonArray();
                 Gson g = new Gson();
                 for (JsonElement js : gsonArr) {
-                    Type type = new TypeToken<T>() {
-                    }.getType();
-                    lista.add(g.fromJson(js, type));
+                    lista.add(g.fromJson(js, clase()));
                 }
 
                 b.close();
@@ -77,5 +73,7 @@ public abstract class Collection<T> {
         }
         return lista;
     }
+
+    protected abstract Class<T> clase();
 
 }

@@ -1,6 +1,8 @@
 package main.java.controllers;
 
 import main.java.collections.CuentaCorrienteCollection;
+import main.java.collections.OrdenPagoCollection;
+import main.java.collections.ProveedorCollection;
 import main.java.collections.RubroCollection;
 import main.java.models.*;
 
@@ -28,11 +30,13 @@ public class ConsultaGeneralController {
         RubroCollection collection = new RubroCollection();
         return collection.getDatos();
     }
+
     public List<Proveedor> getProveedores() {
         ProveedorCollection collection = new ProveedorCollection();
         return collection.getDatos();
 
     }
+
     public List<OrdenPago> getOrdenPago() {
         OrdenPagoCollection collection = new OrdenPagoCollection();
         return collection.getDatos();
@@ -77,10 +81,10 @@ public class ConsultaGeneralController {
         double totalDeudaPorProveedor = 0;
         List<CuentaCorriente> cuentaCorrientes = getCuentaCorrientes();
         List<Proveedor> proveedores = getProveedores();
-        for (CuentaCorriente cuentaCorriente: cuentaCorrientes){
-            if (cuitProveedor== proveedor.getCuitProveedor()){
+        for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+            if (cuitProveedor == proveedor.getCuitProveedor()) {
                 List<OrdenPago> ordenesDePago = getOrdenPago();
-                for (OrdenPago ordenPago: ordenesDePago){
+                for (OrdenPago ordenPago : ordenesDePago) {
                     totalDeudaPorProveedor += OrdenPago.getTotalACancelar();
                 }
             }
@@ -103,15 +107,13 @@ public class ConsultaGeneralController {
             //recorro esa lista para generar la lista unica de retenciones e impuestos
             for (DTOListadoDeImpuestosConNombreYTotalRetenido lista : retencionesEImpuestos) {
 
-                DTOListadoDeImpuestosConNombreYTotalRetenido busq=verificarImpuesto(dto, lista.nombreDelImpuesto);
+                DTOListadoDeImpuestosConNombreYTotalRetenido busq = verificarImpuesto(dto, lista.nombreDelImpuesto);
 
-                if (busq!=null)
-                {
-                    busq.totalRetenido=busq.totalRetenido + lista.totalRetenido;
-                    dto.replaceAll(p ->p.nombreDelImpuesto==busq.nombreDelImpuesto?busq:p);
-                }
-                else{
-                    dto.add(new DTOListadoDeImpuestosConNombreYTotalRetenido(lista.totalRetenido,lista.nombreDelImpuesto));
+                if (busq != null) {
+                    busq.totalRetenido = busq.totalRetenido + lista.totalRetenido;
+                    dto.replaceAll(p -> p.nombreDelImpuesto == busq.nombreDelImpuesto ? busq : p);
+                } else {
+                    dto.add(new DTOListadoDeImpuestosConNombreYTotalRetenido(lista.totalRetenido, lista.nombreDelImpuesto));
                 }
 
             }
@@ -120,8 +122,7 @@ public class ConsultaGeneralController {
         return dto;
     }
 
-    private DTOListadoDeImpuestosConNombreYTotalRetenido verificarImpuesto(List<DTOListadoDeImpuestosConNombreYTotalRetenido> dto,String nombreImpuesto)
-    {
+    private DTOListadoDeImpuestosConNombreYTotalRetenido verificarImpuesto(List<DTOListadoDeImpuestosConNombreYTotalRetenido> dto, String nombreImpuesto) {
         return (dto.stream()
                 .filter(v -> v.nombreDelImpuesto.equals(nombreImpuesto))
                 .findFirst().orElse(null));

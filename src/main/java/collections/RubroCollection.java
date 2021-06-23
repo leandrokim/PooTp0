@@ -9,4 +9,9 @@ public class RubroCollection extends Collection<Rubro> {
         return RubroCollection.class.getSimpleName();
     }
 
+    @Override
+    protected Class<Rubro> clase() {
+        return Rubro.class;
+    }
+
 }
