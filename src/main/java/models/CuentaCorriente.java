@@ -19,10 +19,12 @@ public class CuentaCorriente {
         this.documentos = new ArrayList<>();
         this.ordenesDePago = new ArrayList<>();
     }
+
     private List<OrdenPago> getOrdenesPago() {
         OrdenPagoCollection collection = new OrdenPagoCollection();
         return collection.getDatos();
     }
+
     public Proveedor getProveedor() {
         return proveedor;
     }
@@ -83,7 +85,7 @@ public class CuentaCorriente {
 
     public List<Factura> getFacturasPorDia(LocalDate dia) {
         return documentos.stream().filter(documento -> documento instanceof Factura)
-                //TODO filter by date
+                .filter(documento -> documento.getFecha().isEqual(dia))
                 .map(documento -> (Factura) documento)
                 .collect(Collectors.toList());
     }
@@ -143,22 +145,21 @@ public class CuentaCorriente {
         }
         return dto;
     }
+
     public List<DTOListadoDeImpuestosConNombreYTotalRetenido> getImpuestosRetenidos() {
         List<DTOListadoDeImpuestosConNombreYTotalRetenido> dto = new ArrayList<>();
-        List<OrdenPago> ordenesDePago= getOrdenesDePago();
+        List<OrdenPago> ordenesDePago = getOrdenesDePago();
         for (OrdenPago ordenPago : ordenesDePago) {
             List<DTOListadoDeImpuestosConNombreYTotalRetenido> retencionesEImpuestos = ordenPago.getTotalRetenciones();
             for (DTOListadoDeImpuestosConNombreYTotalRetenido lista : retencionesEImpuestos) {
 
-                DTOListadoDeImpuestosConNombreYTotalRetenido busq=verificarImpuesto(dto, lista.nombreDelImpuesto);
+                DTOListadoDeImpuestosConNombreYTotalRetenido busq = verificarImpuesto(dto, lista.nombreDelImpuesto);
 
-                if (busq!=null)
-                {
-                    busq.totalRetenido=busq.totalRetenido + lista.totalRetenido;
-                    dto.replaceAll(p ->p.nombreDelImpuesto==busq.nombreDelImpuesto?busq:p);
-                }
-                else{
-                    dto.add(new DTOListadoDeImpuestosConNombreYTotalRetenido(lista.totalRetenido,lista.nombreDelImpuesto));
+                if (busq != null) {
+                    busq.totalRetenido = busq.totalRetenido + lista.totalRetenido;
+                    dto.replaceAll(p -> p.nombreDelImpuesto == busq.nombreDelImpuesto ? busq : p);
+                } else {
+                    dto.add(new DTOListadoDeImpuestosConNombreYTotalRetenido(lista.totalRetenido, lista.nombreDelImpuesto));
                 }
 
             }
@@ -166,8 +167,8 @@ public class CuentaCorriente {
         }
         return dto;
     }
-    private DTOListadoDeImpuestosConNombreYTotalRetenido verificarImpuesto(List<DTOListadoDeImpuestosConNombreYTotalRetenido> dto,String nombreImpuesto)
-    {
+
+    private DTOListadoDeImpuestosConNombreYTotalRetenido verificarImpuesto(List<DTOListadoDeImpuestosConNombreYTotalRetenido> dto, String nombreImpuesto) {
         return (dto.stream()
                 .filter(v -> v.nombreDelImpuesto.equals(nombreImpuesto))
                 .findFirst().orElse(null));

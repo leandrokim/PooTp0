@@ -80,12 +80,11 @@ public class ConsultaGeneralController {
     public double totalDeudaPorProveedor(int cuitProveedor) {
         double totalDeudaPorProveedor = 0;
         List<CuentaCorriente> cuentaCorrientes = getCuentaCorrientes();
-        List<Proveedor> proveedores = getProveedores();
         for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
-            if (cuitProveedor == proveedor.getCuitProveedor()) {
+            if (cuitProveedor == cuentaCorriente.getCuitProveedor()) {
                 List<OrdenPago> ordenesDePago = getOrdenPago();
                 for (OrdenPago ordenPago : ordenesDePago) {
-                    totalDeudaPorProveedor += OrdenPago.getTotalACancelar();
+                    totalDeudaPorProveedor += ordenPago.getTotalACancelar();
                 }
             }
         }
@@ -128,8 +127,45 @@ public class ConsultaGeneralController {
                 .findFirst().orElse(null));
     }
 
-    public List<Factura> facturasPorDiaOProveedor(LocalDate dia, int cuitProveedor) {
-        return null;
+    public List<DTOFacturas> facturasPorDiaOProveedor(LocalDate dia, int cuitProveedor) {
+        List<DTOFacturas> dto = new ArrayList<>();
+        List<CuentaCorriente> cuentaCorrientes = getCuentaCorrientes();
+        if (cuitProveedor != 0 && dia != null) {
+            //tiene proveedor y fecha
+            for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+                int cuitDelProveedor = cuentaCorriente.getCuitProveedor();
+                if (cuitDelProveedor == cuitProveedor) {
+                    List<Factura> facturas = cuentaCorriente.getFacturasPorDia(dia);
+                    dto.add(toDTOFacturas(cuitDelProveedor, dia, facturas));
+                }
+            }
+        } else if (cuitProveedor == 0 && dia != null) {
+            //solo fecha
+            for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+                dto.add(toDTOFacturas(cuentaCorriente.getCuitProveedor(),
+                        dia,
+                        cuentaCorriente.getFacturasPorDia(dia)));
+            }
+        } else {
+            //solo proveedor
+            for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+                int cuitDelProveedor = cuentaCorriente.getCuitProveedor();
+                if (cuitDelProveedor == cuitProveedor) {
+                    dto.add(toDTOFacturas(cuitDelProveedor,
+                            null,
+                            cuentaCorriente.getFacturas()));
+                }
+            }
+        }
+        return dto;
+    }
+
+    private DTOFacturas toDTOFacturas(int cuitProveedor, LocalDate fecha, List<Factura> facturas) {
+        double monto = 0d;
+        for (Factura factura : facturas) {
+            monto += factura.getTotal();
+        }
+        return new DTOFacturas(cuitProveedor, fecha, facturas.size(), monto);
     }
 
 }
