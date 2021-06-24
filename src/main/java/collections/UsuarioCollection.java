@@ -1,6 +1,6 @@
 package main.java.collections;
 
-import main.java.models.Usuario;
+import main.java.models.Usuario.Usuario;
 
 public class UsuarioCollection extends Collection<Usuario> {
 

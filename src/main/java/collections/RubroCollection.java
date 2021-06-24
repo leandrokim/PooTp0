@@ -1,6 +1,6 @@
 package main.java.collections;
 
-import main.java.models.Rubro;
+import main.java.models.Productos.Rubro;
 
 public class RubroCollection extends Collection<Rubro> {
 

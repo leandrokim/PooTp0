@@ -1,7 +1,7 @@
 package main.java.collections;
 
 
-import main.java.models.Retencion;
+import main.java.models.Proveedor.Retencion;
 
 public class RetencionCollection extends Collection<Retencion>{
 

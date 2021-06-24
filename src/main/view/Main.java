@@ -5,6 +5,10 @@ import javax.swing.*;
 public class Main extends JFrame {
 
     private JPanel mainPanel;
+    private JButton proveedoresButton;
+    private JButton documentosButton;
+    private JButton ordenPagoButton;
+    private JButton consultasGeneralesButton;
 
     public Main(String title) {
         super(title);
@@ -20,6 +24,11 @@ public class Main extends JFrame {
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        consultasGeneralesButton.addActionListener(e -> {
+            ConsultasGenerales consultasGenerales = new ConsultasGenerales("Consultas Generales");
+            consultasGenerales.setVisible(true);
+        });
     }
 
     public static void main(String[] args) {
@@ -29,6 +38,7 @@ public class Main extends JFrame {
         loginFrame.addListener(() -> {
             Main mainFrame = new Main("Pantalla Principal");
             mainFrame.setVisible(true);
+            loginFrame.dispose();
         });
     }
 

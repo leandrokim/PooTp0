@@ -1,7 +1,6 @@
 package main.java.collections;
 
-import main.java.models.Proveedor;
-import main.java.models.Rubro;
+import main.java.models.Proveedor.Proveedor;
 
 public class ProveedorCollection extends Collection<Proveedor> {
 

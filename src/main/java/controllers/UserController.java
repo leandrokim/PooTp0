@@ -2,8 +2,8 @@ package main.java.controllers;
 
 import main.java.collections.UsuarioCollection;
 import main.java.exceptions.UsuarioExistenteException;
-import main.java.models.TipoUsuario;
-import main.java.models.Usuario;
+import main.java.models.Usuario.TipoUsuario;
+import main.java.models.Usuario.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;

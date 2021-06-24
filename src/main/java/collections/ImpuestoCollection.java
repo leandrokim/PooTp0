@@ -1,6 +1,6 @@
 package main.java.collections;
 
-import main.java.models.Impuesto;
+import main.java.models.Proveedor.Impuesto;
 
 public class ImpuestoCollection extends Collection<Impuesto> {
 

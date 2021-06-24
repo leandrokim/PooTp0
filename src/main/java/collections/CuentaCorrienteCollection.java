@@ -1,6 +1,6 @@
 package main.java.collections;
 
-import main.java.models.CuentaCorriente;
+import main.java.models.Proveedor.CuentaCorriente;
 
 public class CuentaCorrienteCollection extends Collection<CuentaCorriente> {
 

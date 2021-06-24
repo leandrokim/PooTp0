@@ -4,7 +4,16 @@ import main.java.collections.CuentaCorrienteCollection;
 import main.java.collections.OrdenPagoCollection;
 import main.java.collections.ProveedorCollection;
 import main.java.collections.RubroCollection;
-import main.java.models.*;
+import main.java.models.Documentos.Factura;
+import main.java.models.Documentos.OrdenPago;
+import main.java.models.Productos.PrecioProductoPorProveedor;
+import main.java.models.Productos.Rubro;
+import main.java.models.Proveedor.CuentaCorriente;
+import main.java.models.Proveedor.Proveedor;
+import main.java.models.dto.DTOConsultasDeLibroIVA;
+import main.java.models.dto.DTODocumentosPagosYDeudas;
+import main.java.models.dto.DTOFacturas;
+import main.java.models.dto.DTOListadoDeImpuestosConNombreYTotalRetenido;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

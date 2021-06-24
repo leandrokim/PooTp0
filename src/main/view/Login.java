@@ -2,7 +2,7 @@ package main.view;
 
 import main.java.controllers.UserController;
 import main.java.exceptions.UsuarioExistenteException;
-import main.java.models.TipoUsuario;
+import main.java.models.Usuario.TipoUsuario;
 
 import javax.swing.*;
 
