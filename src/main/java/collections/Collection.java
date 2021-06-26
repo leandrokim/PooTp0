@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 
-public abstract class Collection<T> {
+public abstract class Collection<T, H> {
 
     protected ArrayList<T> datos;
 
@@ -35,6 +35,25 @@ public abstract class Collection<T> {
         String texto;
         Gson g = new Gson();
         texto = g.toJson(datos);
+        //grabo el String
+        try {
+            //Este bloque de codigo obligatoriamente debe ir dentro de un try.
+            fileWriter = new FileWriter(archivo);
+            fileWriter.write(texto);
+            bwEscritor = new BufferedWriter(fileWriter);
+            bwEscritor.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+
+    public void grabar(ArrayList<H> datosDTO) {
+        File archivo = new File("./" + nombreArchivo() + ".txt");
+        FileWriter fileWriter;
+        BufferedWriter bwEscritor;
+        String texto;
+        Gson g = new Gson();
+        texto = g.toJson(datosDTO);
         //grabo el String
         try {
             //Este bloque de codigo obligatoriamente debe ir dentro de un try.

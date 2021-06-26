@@ -2,7 +2,7 @@ package main.java.collections;
 
 import main.java.models.Documentos.OrdenPago;
 
-public class OrdenPagoCollection extends Collection<OrdenPago> {
+public class OrdenPagoCollection extends Collection<OrdenPago, OrdenPago.DTOOrdenPago> {
 
     @Override
     public String nombreArchivo() {

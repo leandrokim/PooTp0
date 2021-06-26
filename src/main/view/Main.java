@@ -1,6 +1,10 @@
 package main.view;
 
+import main.view.ABMProveedor.ProveedorABM;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main extends JFrame {
 
@@ -28,6 +32,11 @@ public class Main extends JFrame {
         consultasGeneralesButton.addActionListener(e -> {
             ConsultasGenerales consultasGenerales = new ConsultasGenerales("Consultas Generales");
             consultasGenerales.setVisible(true);
+        });
+
+        proveedoresButton.addActionListener(e -> {
+            ProveedorABM proveedorABM = new ProveedorABM();
+            proveedorABM.frame.setVisible(true);
         });
     }
 

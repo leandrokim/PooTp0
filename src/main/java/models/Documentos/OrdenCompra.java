@@ -1,7 +1,10 @@
 package main.java.models.Documentos;
 
 import main.java.models.Productos.PrecioProductoPorProveedor;
+import main.java.models.Productos.Producto;
+import main.java.models.Proveedor.Proveedor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrdenCompra {
@@ -41,6 +44,23 @@ public class OrdenCompra {
 
     public void setTotalPrecioAcordado(Double totalPrecioAcordado) {
         this.totalPrecioAcordado = totalPrecioAcordado;
+    }
+
+    public DTOOrdenCompra toDTO() {
+        DTOOrdenCompra dto = new DTOOrdenCompra();
+        dto.nOrdenCompra = getNOrdenCompra();
+        dto.productos = new ArrayList<>();
+        for (PrecioProductoPorProveedor precioProductoPorProveedor : getProductos()) {
+            dto.productos.add(precioProductoPorProveedor.toDTO());
+        }
+        dto.totalPrecioAcordado = getTotalPrecioAcordado();
+        return dto;
+    }
+
+    public static class DTOOrdenCompra {
+        public int nOrdenCompra;
+        public List<PrecioProductoPorProveedor.DTOPrecioProductoPorProveedor> productos;
+        public double totalPrecioAcordado;
     }
 
 }

@@ -41,14 +41,14 @@ public class TotalDeuda extends JFrame {
         abmController = ABMController.getInstancia();
 
         buscarButton.addActionListener(e -> {
-            Proveedor proveedor = abmController.getProveedor(Integer.parseInt(cuitProveedor.getText()));
+            Proveedor.DTOProveedor proveedor = abmController.getProveedor(Integer.parseInt(cuitProveedor.getText()));
 
             if (proveedor == null) {
                 JOptionPane.showMessageDialog(null, "Proveedor no existe");
                 return;
             }
 
-            nombreProveedor.setText(proveedor.getNombreProveedor());
+            nombreProveedor.setText(proveedor.nombreProveedor);
 
             double deuda = controller.totalDeudaPorProveedor(Integer.parseInt(cuitProveedor.getText()));
             deudaProveedor.setText(Double.toString(deuda));

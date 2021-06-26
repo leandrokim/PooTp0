@@ -144,17 +144,24 @@ public class Proveedor {
         dto.telProvedor = getTelProvedor();
         dto.dirProvedor = getDirProvedor();
         dto.certificados = new ArrayList<>();
-        for (Certificado certificado : certificados) {
-            dto.certificados.add(certificado.toDTO());
+        if (certificados != null) {
+            for (Certificado certificado : certificados) {
+                dto.certificados.add(certificado.toDTO());
+            }
+        }
+        if (rubros != null) {
+            for (Rubro rubro : rubros) {
+                dto.rubros.add(rubro.toDTO());
+            }
         }
         dto.rubros = new ArrayList<>();
-        for (Rubro rubro : rubros) {
-            dto.rubros.add(rubro.toDTO());
-        }
         dto.retenciones = new ArrayList<>();
-        for (Retencion retencion : retenciones) {
-            dto.retenciones.add(retencion.toDTO());
+        if (retenciones != null) {
+            for (Retencion retencion : retenciones) {
+                dto.retenciones.add(retencion.toDTO());
+            }
         }
+
         return dto;
     }
 
@@ -169,6 +176,7 @@ public class Proveedor {
         public List<Certificado.DTOCertificado> certificados;
         public List<Rubro.DTORubro> rubros;
         public List<Retencion.DTORetencion> retenciones;
+        public List<OrdenCompra> ordenesDeCompra;
     }
 
 }
