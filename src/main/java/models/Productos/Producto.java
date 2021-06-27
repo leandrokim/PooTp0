@@ -2,6 +2,7 @@ package main.java.models.Productos;
 
 import main.java.models.IVA.TipoIVA;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Producto {
@@ -54,6 +55,13 @@ public class Producto {
 
     public void setPreciosPorProveedor(List<PrecioProductoPorProveedor> preciosPorProveedor) {
         this.preciosPorProveedor = preciosPorProveedor;
+    }
+
+    public void addPreciosPorProveedor(PrecioProductoPorProveedor precioProductoPorProveedor) {
+        if (preciosPorProveedor == null) {
+            preciosPorProveedor = new ArrayList<>();
+        }
+        preciosPorProveedor.add(precioProductoPorProveedor);
     }
 
     public void setTipoDeIva(TipoIVA tipoDeIva) {

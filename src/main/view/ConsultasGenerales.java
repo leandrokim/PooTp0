@@ -1,5 +1,8 @@
 package main.view;
 
+import main.view.CompulsaDePrecios.CompulsaDePrecios;
+import main.view.CompulsaDePrecios.CompulsaDialog;
+
 import javax.swing.*;
 
 public class ConsultasGenerales extends JFrame {
@@ -37,7 +40,8 @@ public class ConsultasGenerales extends JFrame {
         });
 
         compulsaDePreciosButton.addActionListener(e -> {
-
+            CompulsaDialog compulsaDePrecios = new CompulsaDialog("Compulsa de Precios");
+            compulsaDePrecios.setVisible(true);
         });
 
         ordenesDePagoButton.addActionListener(e -> {

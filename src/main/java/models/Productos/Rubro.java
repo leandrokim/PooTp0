@@ -2,22 +2,25 @@ package main.java.models.Productos;
 
 import main.java.exceptions.ProductoNoEncontradoException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Rubro {
-    private Integer idRubro;
+
+    private int idRubro;
     private String nombreRubro;
     private List<Producto> productos;
 
-    public Rubro(String nombreRubro) {
+    public Rubro(int idRubro, String nombreRubro) {
+        this.idRubro = idRubro;
         this.nombreRubro = nombreRubro;
     }
 
-    public Integer getIdRubro() {
+    public int getIdRubro() {
         return idRubro;
     }
 
-    public void setIdRubro(Integer idRubro) {
+    public void setIdRubro(int idRubro) {
         this.idRubro = idRubro;
     }
 
@@ -35,6 +38,13 @@ public class Rubro {
 
     public void setProductos(List<Producto> productos) {
         this.productos = productos;
+    }
+
+    public void addProducto(Producto producto) {
+        if (productos == null) {
+            productos = new ArrayList<>();
+        }
+        productos.add(producto);
     }
 
     public List<PrecioProductoPorProveedor> getPrecioProductoPorProveedor(int idProducto) {

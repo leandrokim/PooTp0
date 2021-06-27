@@ -1,14 +1,18 @@
 package main.java.models.Productos;
 
+import main.java.collections.RubroCollection;
+import main.java.controllers.ABMController;
 import main.java.models.Proveedor.Proveedor;
+
+import java.util.ArrayList;
 
 public class PrecioProductoPorProveedor {
 
     private double precio;
     private Proveedor proveedor;
-    private Producto producto;
+    private int producto;
 
-    public PrecioProductoPorProveedor(double precio, Proveedor proveedor, Producto producto) {
+    public PrecioProductoPorProveedor(double precio, Proveedor proveedor, int producto) {
         this.precio = precio;
         this.proveedor = proveedor;
         this.producto = producto;
@@ -31,15 +35,24 @@ public class PrecioProductoPorProveedor {
     }
 
     public Producto getProducto() {
-        return producto;
+        RubroCollection collection = new RubroCollection();
+        ArrayList<Rubro> rubros = collection.getDatos();
+        for (Rubro rubro : rubros) {
+            for (Producto producto : rubro.getProductos()) {
+                if (producto.getIdProducto() == this.producto) {
+                    return producto;
+                }
+            }
+        }
+        return null;
     }
 
-    public void setProducto(Producto producto) {
+    public void setProductoId(int producto) {
         this.producto = producto;
     }
 
     public double getProductoIva() {
-        return producto.getTipoDeIva().getValue() * precio / 100;
+        return getProducto().getTipoDeIva().getValue() * precio / 100;
     }
 
     public DTOPrecioProductoPorProveedor toDTO() {

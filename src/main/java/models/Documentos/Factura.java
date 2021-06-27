@@ -70,18 +70,34 @@ public class Factura extends Documento {
     }
 
     @Override
-    public DTODocumento toDTO() {
-        DTODocumento dto = new DTODocumento();
+    public DTOFactura toDTO() {
+        DTOFactura dto = new DTOFactura();
         dto.nombreEmpresa = getNombreEmpresa();
         dto.cuitEmpresa = getCuitEmpresa();
         dto.fecha = getFecha();
         dto.cuitProveedor = getCuitProveedor();
         dto.total = getTotal();
         dto.productos = new ArrayList<>();
-        for (PrecioProductoPorProveedor producto : getProductos()){
-            dto.productos.add(producto.toDTO());
-        }
+        if (getProductos() != null)
+            for (PrecioProductoPorProveedor producto : getProductos()) {
+                dto.productos.add(producto.toDTO());
+            }
+        dto.nFactura = getnFactura();
+        dto.facturaPaga = isFacturaPaga();
+        dto.responsabilidadIVA = getResponsabilidadIVA();
+        dto.ordenesDeCompras = new ArrayList<>();
+        if (getOrdenesDeCompras() != null)
+            for (OrdenCompra ordenCompra : getOrdenesDeCompras()) {
+                dto.ordenesDeCompras.add(ordenCompra.toDTO());
+            }
         return dto;
+    }
+
+    public static class DTOFactura extends DTODocumento {
+        public int nFactura;
+        public boolean facturaPaga;
+        public ResponsableIVA responsabilidadIVA;
+        public List<OrdenCompra.DTOOrdenCompra> ordenesDeCompras;
     }
 
     @Override

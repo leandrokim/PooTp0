@@ -3,8 +3,6 @@ package main.view;
 import main.view.ABMProveedor.ProveedorABM;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Main extends JFrame {
 
@@ -37,6 +35,15 @@ public class Main extends JFrame {
         proveedoresButton.addActionListener(e -> {
             ProveedorABM proveedorABM = new ProveedorABM();
             proveedorABM.frame.setVisible(true);
+        });
+
+        documentosButton.addActionListener(e -> {
+            ABMDocumentos abmDocumentos = new ABMDocumentos("ABM Documentos");
+            abmDocumentos.setVisible(true);
+        });
+
+        ordenPagoButton.addActionListener(e -> {
+            //TODO
         });
     }
 

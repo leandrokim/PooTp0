@@ -46,4 +46,20 @@ public class Usuario {
         return this.nombre.equals(nombre) && this.password.equals(password);
     }
 
+    public DTOUsuario toDTO() {
+        DTOUsuario dto = new DTOUsuario();
+        dto.id = getId();
+        dto.nombre = getNombre();
+        dto.password = getPassword();
+        dto.tipo = getTipo();
+        return dto;
+    }
+
+    public static class DTOUsuario {
+        public int id;
+        public String nombre;
+        public String password;
+        public TipoUsuario tipo;
+    }
+
 }

@@ -17,7 +17,9 @@ public class ProveedorABMDialog extends AbstractABMDialog<Proveedor.DTOProveedor
     private JTextField addressField;
     private JLabel phoneLabel;
     private JTextField phoneField;
-
+    private JLabel deudaLabel;
+    private JTextField deudaField;
+    private JCheckBox ivaField;
 
     public ProveedorABMDialog(JFrame frame) {
         super(frame, "Proveedor", true);
@@ -49,6 +51,13 @@ public class ProveedorABMDialog extends AbstractABMDialog<Proveedor.DTOProveedor
 
         phoneField = new JTextField();
         phoneField.setColumns(10);
+
+        deudaLabel = new JLabel("Deuda");
+
+        deudaField = new JTextField();
+        deudaField.setColumns(10);
+
+        ivaField = new JCheckBox("Responsable IVA");
     }
 
     @Override
@@ -58,16 +67,19 @@ public class ProveedorABMDialog extends AbstractABMDialog<Proveedor.DTOProveedor
                 .addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(cuitLabel)
                         .addComponent(nameLabel)
-                        .addComponent(emailLabel, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(emailLabel)
                         .addComponent(addressLabel)
-                        .addComponent(phoneLabel))
+                        .addComponent(phoneLabel)
+                        .addComponent(deudaLabel)
+                        .addComponent(ivaField))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(cuitField)
                         .addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addComponent(emailField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
                         .addComponent(addressField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(phoneField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(phoneField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(deudaField))
                 .addContainerGap(108, Short.MAX_VALUE);
     }
 
@@ -95,6 +107,12 @@ public class ProveedorABMDialog extends AbstractABMDialog<Proveedor.DTOProveedor
                         .addComponent(phoneLabel)
                         .addComponent(phoneField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(deudaLabel)
+                        .addComponent(deudaField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(ivaField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(60, Short.MAX_VALUE);
     }
 
@@ -109,7 +127,8 @@ public class ProveedorABMDialog extends AbstractABMDialog<Proveedor.DTOProveedor
         proveedor.emailProvedor = emailField.getText();
         proveedor.dirProvedor = addressField.getText();
         proveedor.telProvedor = phoneField.getText();
-        
+        proveedor.topeDeudaEmpresa = Double.parseDouble(deudaField.getText());
+        proveedor.responsableIva = ivaField.isSelected();
         dto = proveedor;
     }
 
@@ -121,6 +140,8 @@ public class ProveedorABMDialog extends AbstractABMDialog<Proveedor.DTOProveedor
         emailField.setText(proveedor.emailProvedor);
         addressField.setText(proveedor.dirProvedor);
         phoneField.setText(proveedor.telProvedor);
+        deudaField.setText(String.valueOf(dto.topeDeudaEmpresa));
+        ivaField.setSelected(dto.responsableIva);
     }
 
     @Override

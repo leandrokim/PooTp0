@@ -18,6 +18,9 @@ public class AbstractModelTable<T> extends AbstractTableModel {
     }
 
     public AbstractModelTable(ArrayList<T> lista, ArrayList<TableColumn> columnas) {
+        if (lista == null) {
+            lista = new ArrayList<>();
+        }
         this.lista = lista;
         tableColumns = columnas;
     }

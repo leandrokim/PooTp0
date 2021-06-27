@@ -60,8 +60,8 @@ public class ConsultaGeneralController {
         return dto;
     }
 
-    public List<PrecioProductoPorProveedor.DTOPrecioProductoPorProveedor> compulsaDePrecios(int idRubro, int idProducto) {
-        List<PrecioProductoPorProveedor.DTOPrecioProductoPorProveedor> dto = new ArrayList<>();
+    public ArrayList<PrecioProductoPorProveedor.DTOPrecioProductoPorProveedor> compulsaDePrecios(int idRubro, int idProducto) {
+        ArrayList<PrecioProductoPorProveedor.DTOPrecioProductoPorProveedor> dto = new ArrayList<>();
         List<Rubro> rubros = getRubros();
         for (Rubro rubro : rubros) {
             if (idRubro == rubro.getIdRubro()) {

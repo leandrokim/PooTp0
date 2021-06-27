@@ -27,7 +27,7 @@ public abstract class AbstractABMWindow {
      * Initialize the contents of the frame.
      */
 
-    private void initialize() {
+    protected void initialize() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
@@ -36,49 +36,52 @@ public abstract class AbstractABMWindow {
 
         frame = new JFrame();
         frame.setSize(800, 800);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        JPanel panel = new JPanel();
-        panel.setBorder(new EmptyBorder(10, 0, 0, 0));
-        panel.setMinimumSize(new Dimension(10, 50));
-        frame.getContentPane().add(panel, BorderLayout.SOUTH);
 
-        JButton btnEliminar = new JButton("Eliminar");
-        btnEliminar.addActionListener(e -> borrar());
+        if (isABM()) {
+            JPanel panel = new JPanel();
+            panel.setBorder(new EmptyBorder(10, 0, 0, 0));
+            panel.setMinimumSize(new Dimension(10, 50));
+            frame.getContentPane().add(panel, BorderLayout.SOUTH);
 
-        JButton btnModificar = new JButton("Modificar");
-        btnModificar.addActionListener(e -> modificar());
+            JButton btnEliminar = new JButton("Eliminar");
+            btnEliminar.addActionListener(e -> borrar());
 
-        JButton btnAgregar = new JButton("Agregar");
-        btnAgregar.addActionListener(e -> agregar());
+            JButton btnModificar = new JButton("Modificar");
+            btnModificar.addActionListener(e -> modificar());
 
-        JSeparator separator = new JSeparator();
-        GroupLayout gl_panel = new GroupLayout(panel);
-        gl_panel.setHorizontalGroup(
-                gl_panel.createParallelGroup(Alignment.LEADING)
-                        .addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-                                .addContainerGap(423, Short.MAX_VALUE)
-                                .addComponent(btnAgregar)
-                                .addGap(18)
-                                .addComponent(btnModificar)
-                                .addGap(18)
-                                .addComponent(btnEliminar)
-                                .addContainerGap())
-                        .addComponent(separator, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
-        );
-        gl_panel.setVerticalGroup(
-                gl_panel.createParallelGroup(Alignment.LEADING)
-                        .addGroup(gl_panel.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(separator, GroupLayout.PREFERRED_SIZE, 2, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(btnEliminar)
-                                        .addComponent(btnModificar)
-                                        .addComponent(btnAgregar))
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panel.setLayout(gl_panel);
+            JButton btnAgregar = new JButton("Agregar");
+            btnAgregar.addActionListener(e -> agregar());
+
+            JSeparator separator = new JSeparator();
+            GroupLayout gl_panel = new GroupLayout(panel);
+            gl_panel.setHorizontalGroup(
+                    gl_panel.createParallelGroup(Alignment.LEADING)
+                            .addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+                                    .addContainerGap(423, Short.MAX_VALUE)
+                                    .addComponent(btnAgregar)
+                                    .addGap(18)
+                                    .addComponent(btnModificar)
+                                    .addGap(18)
+                                    .addComponent(btnEliminar)
+                                    .addContainerGap())
+                            .addComponent(separator, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
+            );
+            gl_panel.setVerticalGroup(
+                    gl_panel.createParallelGroup(Alignment.LEADING)
+                            .addGroup(gl_panel.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addComponent(separator, GroupLayout.PREFERRED_SIZE, 2, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(ComponentPlacement.RELATED)
+                                    .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+                                            .addComponent(btnEliminar)
+                                            .addComponent(btnModificar)
+                                            .addComponent(btnAgregar))
+                                    .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+            panel.setLayout(gl_panel);
+        }
 
         JPanel panel_1 = new JPanel();
         panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -105,6 +108,10 @@ public abstract class AbstractABMWindow {
         table.setAutoCreateRowSorter(true);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         scrollPane.setViewportView(table);
+    }
+
+    protected boolean isABM() {
+        return true;
     }
 
     protected abstract String getTitle();

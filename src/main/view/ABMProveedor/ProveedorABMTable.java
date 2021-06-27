@@ -26,6 +26,10 @@ public class ProveedorABMTable extends AbstractModelTable<Proveedor.DTOProveedor
                 return dto.dirProvedor;
             case 4:
                 return dto.telProvedor;
+            case 5:
+                return dto.responsableIva;
+            case 6:
+                return dto.topeDeudaEmpresa;
             default:
                 return "";
         }

@@ -1,38 +1,41 @@
-package main.view.ABMProveedor;
+package main.view.ABMFactura;
 
 import main.java.controllers.ABMController;
-import main.java.models.Proveedor.Proveedor;
+import main.java.models.Documentos.Factura;
+import main.java.models.IVA.ResponsableIVA;
 import main.view.abm.AbstractABMWindow;
 import main.view.abm.ModalResult;
 import main.view.abm.TableColumn;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class ProveedorABM extends AbstractABMWindow {
+public class FacturaABM extends AbstractABMWindow {
 
-    private ProveedorABMTable tableModel;
-    private ArrayList<Proveedor.DTOProveedor> proveedores;
+    private FacturaABMTable tableModel;
+    private ArrayList<Factura.DTOFactura> facturas;
 
     @Override
     protected String getTitle() {
-        return "Proveedor";
+        return "Factura";
     }
 
     @Override
     protected AbstractTableModel getTableModel() {
         ABMController controller = ABMController.getInstancia();
-        proveedores = controller.getProveedores();
+        facturas = controller.getFacturas();
         ArrayList<TableColumn> tableColumns = new ArrayList<>();
-        tableColumns.add(new TableColumn("Cuit", String.class));
-        tableColumns.add(new TableColumn("Nombre", String.class));
-        tableColumns.add(new TableColumn("Email", String.class));
-        tableColumns.add(new TableColumn("Direccion", String.class));
-        tableColumns.add(new TableColumn("Telefono", String.class));
-        tableColumns.add(new TableColumn("ResponsableIva", boolean.class));
-        tableColumns.add(new TableColumn("Deuda", double.class));
-        tableModel = new ProveedorABMTable(proveedores, tableColumns);
+        tableColumns.add(new TableColumn("Nro Factura", int.class));
+        tableColumns.add(new TableColumn("Cuit Empresa", int.class));
+        tableColumns.add(new TableColumn("Nombre Empresa", String.class));
+        tableColumns.add(new TableColumn("Cuit Proveedor", int.class));
+        tableColumns.add(new TableColumn("Fecha", LocalDate.class));
+        tableColumns.add(new TableColumn("Total", double.class));
+        tableColumns.add(new TableColumn("Paga", boolean.class));
+        tableColumns.add(new TableColumn("Responsable IVA", ResponsableIVA.class));
+        tableModel = new FacturaABMTable(facturas, tableColumns);
 
         return tableModel;
     }
@@ -40,7 +43,7 @@ public class ProveedorABM extends AbstractABMWindow {
     @Override
     protected void agregar() {
         try {
-            ProveedorABMDialog dialog = new ProveedorABMDialog(frame);
+            FacturaABMDialog dialog = new FacturaABMDialog(frame);
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
             //Esto se ejecuta cuando se apaga el modal
@@ -48,7 +51,7 @@ public class ProveedorABM extends AbstractABMWindow {
                 tableModel.agregar(dialog.getDTO());
 
                 ABMController controller = ABMController.getInstancia();
-                controller.guardarProveedores(tableModel.lista);
+                controller.guardarFacturas(tableModel.lista);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,7 +63,7 @@ public class ProveedorABM extends AbstractABMWindow {
         try {
             tableModel.eliminar(table.getSelectedRow());
             ABMController controller = ABMController.getInstancia();
-            controller.guardarProveedores(tableModel.lista);
+            controller.guardarFacturas(tableModel.lista);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,14 +72,14 @@ public class ProveedorABM extends AbstractABMWindow {
     @Override
     protected void modificar() {
         try {
-            ProveedorABMDialog dialog = new ProveedorABMDialog(frame);
-            dialog.setDTO(proveedores.get(table.getSelectedRow()));
+            FacturaABMDialog dialog = new FacturaABMDialog(frame);
+            dialog.setDTO(facturas.get(table.getSelectedRow()));
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
             if (dialog.getModalResult() == ModalResult.OK) {
                 tableModel.refresh();
                 ABMController controller = ABMController.getInstancia();
-                controller.guardarProveedores(tableModel.lista);
+                controller.guardarFacturas(tableModel.lista);
             }
         } catch (Exception e) {
             e.printStackTrace();

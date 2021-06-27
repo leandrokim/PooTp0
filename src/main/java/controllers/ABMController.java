@@ -1,6 +1,11 @@
 package main.java.controllers;
 
+import main.java.collections.FacturaCollection;
 import main.java.collections.ProveedorCollection;
+import main.java.collections.RubroCollection;
+import main.java.models.Documentos.Factura;
+import main.java.models.Productos.Producto;
+import main.java.models.Productos.Rubro;
 import main.java.models.Proveedor.Proveedor;
 
 import java.util.ArrayList;
@@ -41,6 +46,53 @@ public class ABMController {
     public void guardarProveedores(ArrayList<Proveedor.DTOProveedor> datos) {
         ProveedorCollection collection = new ProveedorCollection();
         collection.grabar(datos);
+    }
+
+    public ArrayList<Factura.DTOFactura> getFacturas() {
+        ArrayList<Factura.DTOFactura> dtoFacturas = new ArrayList<>();
+        FacturaCollection collection = new FacturaCollection();
+        ArrayList<Factura> facturas = collection.getDatos();
+        for (Factura factura : facturas) {
+            dtoFacturas.add(factura.toDTO());
+        }
+        return dtoFacturas;
+    }
+
+    public void guardarFacturas(ArrayList<Factura.DTOFactura> datos) {
+        FacturaCollection collection = new FacturaCollection();
+        collection.grabar(datos);
+    }
+
+    public int nuevoNumeroFactura() {
+        FacturaCollection collection = new FacturaCollection();
+        ArrayList<Factura> facturas = collection.getDatos();
+        return facturas.get(facturas.size() - 1).getnFactura() + 1;
+    }
+
+    public boolean existeRubro(int rubroId) {
+        RubroCollection collection = new RubroCollection();
+        ArrayList<Rubro> rubros = collection.getDatos();
+        for (Rubro rubro : rubros) {
+            if (rubro.getIdRubro() == rubroId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean existeProducto(int rubroId, int productoId) {
+        RubroCollection collection = new RubroCollection();
+        ArrayList<Rubro> rubros = collection.getDatos();
+        for (Rubro rubro : rubros) {
+            if (rubro.getIdRubro() == rubroId) {
+                for (Producto producto : rubro.getProductos()){
+                    if (producto.getIdProducto() == productoId){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 }
