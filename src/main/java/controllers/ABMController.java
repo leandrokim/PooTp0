@@ -67,6 +67,9 @@ public class ABMController {
     public int nuevoNumeroFactura() {
         FacturaCollection collection = new FacturaCollection();
         ArrayList<Factura> facturas = collection.getDatos();
+        if (facturas == null || facturas.isEmpty()) {
+            return 1;
+        }
         return facturas.get(facturas.size() - 1).getnFactura() + 1;
     }
 
@@ -86,8 +89,8 @@ public class ABMController {
         ArrayList<Rubro> rubros = collection.getDatos();
         for (Rubro rubro : rubros) {
             if (rubro.getIdRubro() == rubroId) {
-                for (Producto producto : rubro.getProductos()){
-                    if (producto.getIdProducto() == productoId){
+                for (Producto producto : rubro.getProductos()) {
+                    if (producto.getIdProducto() == productoId) {
                         return true;
                     }
                 }

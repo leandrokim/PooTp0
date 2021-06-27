@@ -14,6 +14,7 @@ public class Cheque extends FormaPago {
                   LocalDate fechaEmision,
                   LocalDate fechaVencimiento,
                   String firmante) {
+        super();
         this.importe = importe;
         this.tipo = tipo;
         this.fechaEmision = fechaEmision;
@@ -63,6 +64,7 @@ public class Cheque extends FormaPago {
         DTOFormaPago dto = new DTOFormaPago();
         dto.importe = importe;
         dto.tipo = Cheque.class.getSimpleName();
+        dto.type = type;
         return dto;
     }
 

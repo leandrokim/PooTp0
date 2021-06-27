@@ -3,20 +3,20 @@ package main.java.models.dto;
 import main.java.models.Documentos.Documento;
 import main.java.models.Documentos.OrdenPago;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class DTODocumentosPagosYDeudas {
 
     public int cuitProveedor;
-    public List<Documento.DTODocumento> documentosImpagos;
-    public List<Documento.DTODocumento> documentosRecibidos;
-    public List<OrdenPago.DTOOrdenPago> pagosRealizados;
+    public ArrayList<Documento.DTODocumento> documentosImpagos;
+    public ArrayList<Documento.DTODocumento> documentosRecibidos;
+    public ArrayList<OrdenPago.DTOOrdenPago> pagosRealizados;
     public double totalDeuda;
 
     public DTODocumentosPagosYDeudas(int cuitProveedor,
-                                     List<Documento.DTODocumento> documentosImpagos,
-                                     List<Documento.DTODocumento> documentosRecibidos,
-                                     List<OrdenPago.DTOOrdenPago> pagosRealizados,
+                                     ArrayList<Documento.DTODocumento> documentosImpagos,
+                                     ArrayList<Documento.DTODocumento> documentosRecibidos,
+                                     ArrayList<OrdenPago.DTOOrdenPago> pagosRealizados,
                                      double totalDeuda) {
         this.cuitProveedor = cuitProveedor;
         this.documentosImpagos = documentosImpagos;
@@ -24,4 +24,5 @@ public class DTODocumentosPagosYDeudas {
         this.pagosRealizados = pagosRealizados;
         this.totalDeuda = totalDeuda;
     }
+
 }

@@ -98,8 +98,8 @@ public class CuentaCorriente {
         int cuitProveedor = proveedor.getCuitProveedor();
         double totalDeuda = 0d;
 
-        List<Documento.DTODocumento> documentosRecibidos = new ArrayList<>();
-        List<Documento.DTODocumento> facturasImpagas = new ArrayList<>();
+        ArrayList<Documento.DTODocumento> documentosRecibidos = new ArrayList<>();
+        ArrayList<Documento.DTODocumento> facturasImpagas = new ArrayList<>();
         for (Documento documento : documentos) {
             documentosRecibidos.add(documento.toDTO());
             if (documento instanceof Factura) {
@@ -110,6 +110,7 @@ public class CuentaCorriente {
                     totalDeuda += factura.getTotal();
                 }
             }
+
             if (documento instanceof NotaDebito) {
                 totalDeuda -= documento.getTotal();
             }
@@ -119,7 +120,7 @@ public class CuentaCorriente {
             }
         }
 
-        List<OrdenPago.DTOOrdenPago> pagosRealizados = new ArrayList<>();
+        ArrayList<OrdenPago.DTOOrdenPago> pagosRealizados = new ArrayList<>();
         for (OrdenPago ordenPago : ordenesDePago) {
             pagosRealizados.add(ordenPago.toDTO());
         }

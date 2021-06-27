@@ -3,6 +3,11 @@ package main.java.models.FormaDePago;
 public abstract class FormaPago {
 
     protected double importe;
+    protected String type;
+
+    public FormaPago() {
+        type = getClass().getName();
+    }
 
     public abstract double getImporte();
 
@@ -11,6 +16,8 @@ public abstract class FormaPago {
     public static class DTOFormaPago {
         public double importe;
         public String tipo;
+
+        public String type;
     }
 
 }

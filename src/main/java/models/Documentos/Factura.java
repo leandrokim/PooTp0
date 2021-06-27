@@ -15,7 +15,17 @@ public class Factura extends Documento {
     private List<OrdenCompra> ordenesDeCompras;
     private boolean facturaPaga;
 
-    public Factura(int nFactura, ResponsableIVA responsabilidadIVA, List<OrdenCompra> ordenesDeCompras) {
+    public Factura(int nFactura,
+                   ResponsableIVA responsabilidadIVA,
+                   List<OrdenCompra> ordenesDeCompras,
+                   String nombreEmpresa,
+                   int cuitEmpresa,
+                   LocalDate fecha,
+                   int cuitProveedor) {
+        super(nombreEmpresa,
+        cuitEmpresa,
+        fecha,
+        cuitProveedor);
         this.nFactura = nFactura;
         this.responsabilidadIVA = responsabilidadIVA;
         this.ordenesDeCompras = ordenesDeCompras;
@@ -90,6 +100,8 @@ public class Factura extends Documento {
             for (OrdenCompra ordenCompra : getOrdenesDeCompras()) {
                 dto.ordenesDeCompras.add(ordenCompra.toDTO());
             }
+
+        dto.type = type;
         return dto;
     }
 

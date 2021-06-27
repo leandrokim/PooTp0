@@ -1,5 +1,9 @@
 package main.java.models.Documentos;
 
+import main.java.models.IVA.Iva;
+import main.java.models.IVA.ResponsableIVA;
+import main.java.models.Productos.PrecioProductoPorProveedor;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,7 +16,15 @@ public class NotaCredito extends Documento {
     private int nNotaDeCredito;
     private boolean vigente;
 
-    public NotaCredito(int nNotaDeCredito) {
+    public NotaCredito(int nNotaDeCredito,
+                       String nombreEmpresa,
+                       int cuitEmpresa,
+                       LocalDate fecha,
+                       int cuitProveedor) {
+        super(nombreEmpresa,
+                cuitEmpresa,
+                fecha,
+                cuitProveedor);
         this.nNotaDeCredito = nNotaDeCredito;
         this.vigente = true;
     }
@@ -45,35 +57,34 @@ public class NotaCredito extends Documento {
         return super.getTotal();
     }
 
-    public NotaCredito.DTONotaCredito toDTO() {
-        NotaCredito.DTONotaCredito dto = new NotaCredito.DTONotaCredito();
-        dto.nNotaDeCredito = this.getnNotaDeCredito();
-        dto.vigente = this.isVigente();
-        dto.nombreEmpresa = this.getNombreEmpresa();
-        dto.cuitEmpresa = this.getCuitEmpresa();
-        dto.fecha = this.getFecha();
-        dto.cuitProveedor = this.getCuitProveedor();
-        dto.total = this.getTotal();
-        dto.productos = new ArrayList();
-        Iterator var2 = this.getProductos().iterator();
+    @Override
+    public DTONotaCredito toDTO() {
+        DTONotaCredito dto = new DTONotaCredito();
+        dto.nombreEmpresa = getNombreEmpresa();
+        dto.cuitEmpresa = getCuitEmpresa();
+        dto.fecha = getFecha();
+        dto.cuitProveedor = getCuitProveedor();
+        dto.total = getTotal();
+        dto.productos = new ArrayList<>();
+        if (getProductos() != null)
+            for (PrecioProductoPorProveedor producto : getProductos()) {
+                dto.productos.add(producto.toDTO());
+            }
+        dto.nNotaDeCredito = getnNotaDeCredito();
+        dto.vigente = isVigente();
 
-        while(var2.hasNext()) {
-            PrecioProductoPorProveedor producto = (PrecioProductoPorProveedor)var2.next();
-            dto.productos.add(producto.toDTO());
-        }
-
+        dto.type = type;
         return dto;
-    }
-
-    public String getTipoDocumento() {
-        return NotaCredito.class.getSimpleName();
     }
 
     public static class DTONotaCredito extends DTODocumento {
         public int nNotaDeCredito;
         public boolean vigente;
-
-        public DTONotaCredito() {
-        }
     }
+
+    @Override
+    public String getTipoDocumento() {
+        return NotaCredito.class.getSimpleName();
+    }
+
 }

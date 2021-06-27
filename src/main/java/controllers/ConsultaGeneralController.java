@@ -30,7 +30,7 @@ public class ConsultaGeneralController {
         return instancia;
     }
 
-    public List<CuentaCorriente> getCuentaCorrientes() {
+    public ArrayList<CuentaCorriente> getCuentaCorrientes() {
         CuentaCorrienteCollection collection = new CuentaCorrienteCollection();
         return collection.getDatos();
     }
@@ -51,9 +51,9 @@ public class ConsultaGeneralController {
         return collection.getDatos();
     }
 
-    public List<DTODocumentosPagosYDeudas> consultaCuentaCorrienteProveedores() {
-        List<DTODocumentosPagosYDeudas> dto = new ArrayList<>();
-        List<CuentaCorriente> cuentaCorrientes = getCuentaCorrientes();
+    public ArrayList<DTODocumentosPagosYDeudas> consultaCuentaCorrienteProveedores() {
+        ArrayList<DTODocumentosPagosYDeudas> dto = new ArrayList<>();
+        ArrayList<CuentaCorriente> cuentaCorrientes = getCuentaCorrientes();
         for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
             dto.add(cuentaCorriente.consultaDocumentosProveedor());
         }

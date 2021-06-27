@@ -18,16 +18,21 @@ public class OrdenPago {
     private List<FormaPago> formasDePagos;
     private LocalDate fecha;
 
-    public OrdenPago(List<Documento> documentosAsociados, List<Retencion> retenciones, List<FormaPago> formasDePagos, LocalDate fecha) {
+    public OrdenPago(List<Documento> documentosAsociados,
+                     List<Retencion> retenciones,
+                     List<FormaPago> formasDePagos,
+                     LocalDate fecha) {
         this.documentosAsociados = documentosAsociados;
         this.formasDePagos = formasDePagos;
         this.fecha = fecha;
         this.retenciones = retenciones; //TODO
     }
+
     private List<Retencion> getRetencionesArchivos() {
         RetencionCollection collection = new RetencionCollection();
         return collection.getDatos();
     }
+
     public List<Documento> getDocumentosAsociados() {
         return documentosAsociados;
     }
@@ -40,33 +45,33 @@ public class OrdenPago {
 
         return retenciones;
     }
+
     public List<DTOListadoDeImpuestosConNombreYTotalRetenido> getTotalRetenciones() {
         List<DTOListadoDeImpuestosConNombreYTotalRetenido> dto = new ArrayList<>();
         List<Retencion> retenciones = getRetencionesArchivos();
         for (Retencion retencion : retenciones) {
 
             double total = retencion.getTotal();
-            String nombreImpuesto=retencion.getImpuesto().getNombreImpuesto();
-            DTOListadoDeImpuestosConNombreYTotalRetenido busq=verificarImpuesto(dto,nombreImpuesto);
-            if (busq!=null)
-            {
-                busq.totalRetenido=busq.totalRetenido + total;
-                dto.replaceAll(p ->p.nombreDelImpuesto==busq.nombreDelImpuesto?busq:p);//dto.replaceAll(DTOListadoDeImpuestosConNombreYTotalRetenido ->DTOListadoDeImpuestosConNombreYTotalRetenido.nombreDelImpuesto==busq.nombreDelImpuesto?busq:DTOListadoDeImpuestosConNombreYTotalRetenido);
-            }
-            else{
-                dto.add(new DTOListadoDeImpuestosConNombreYTotalRetenido(total,nombreImpuesto));
+            String nombreImpuesto = retencion.getImpuesto().getNombreImpuesto();
+            DTOListadoDeImpuestosConNombreYTotalRetenido busq = verificarImpuesto(dto, nombreImpuesto);
+            if (busq != null) {
+                busq.totalRetenido = busq.totalRetenido + total;
+                dto.replaceAll(p -> p.nombreDelImpuesto == busq.nombreDelImpuesto ? busq : p);//dto.replaceAll(DTOListadoDeImpuestosConNombreYTotalRetenido ->DTOListadoDeImpuestosConNombreYTotalRetenido.nombreDelImpuesto==busq.nombreDelImpuesto?busq:DTOListadoDeImpuestosConNombreYTotalRetenido);
+            } else {
+                dto.add(new DTOListadoDeImpuestosConNombreYTotalRetenido(total, nombreImpuesto));
             }
 
         }
 
         return dto;
     }
-    private DTOListadoDeImpuestosConNombreYTotalRetenido verificarImpuesto(List<DTOListadoDeImpuestosConNombreYTotalRetenido> dto,String nombreImpuesto)
-    {
+
+    private DTOListadoDeImpuestosConNombreYTotalRetenido verificarImpuesto(List<DTOListadoDeImpuestosConNombreYTotalRetenido> dto, String nombreImpuesto) {
         return (dto.stream()
                 .filter(v -> v.nombreDelImpuesto.equals(nombreImpuesto))
                 .findFirst().orElse(null));
     }
+
     public void setRetenciones(List<Retencion> retenciones) {
         this.retenciones = retenciones;
     }
@@ -106,17 +111,20 @@ public class OrdenPago {
         dto.fecha = getFecha();
         dto.totalACancelar = getTotalACancelar();
         dto.documentosAsociados = new ArrayList<>();
-        for (Documento documento : documentosAsociados) {
-            dto.documentosAsociados.add(documento.toDTO());
-        }
+        if (documentosAsociados != null)
+            for (Documento documento : documentosAsociados) {
+                dto.documentosAsociados.add(documento.toDTO());
+            }
         dto.formasDePago = new ArrayList<>();
-        for (FormaPago formaPago : formasDePagos) {
-            dto.formasDePago.add(formaPago.toDTO());
-        }
+        if (formasDePagos != null)
+            for (FormaPago formaPago : formasDePagos) {
+                dto.formasDePago.add(formaPago.toDTO());
+            }
         dto.retenciones = new ArrayList<>();
-        for (Retencion retencion : retenciones) {
-            dto.retenciones.add(retencion.toDTO());
-        }
+        if (retenciones != null)
+            for (Retencion retencion : retenciones) {
+                dto.retenciones.add(retencion.toDTO());
+            }
         return dto;
     }
 
@@ -127,7 +135,5 @@ public class OrdenPago {
         public List<FormaPago.DTOFormaPago> formasDePago;
         public List<Retencion.DTORetencion> retenciones;
     }
-
-
 
 }

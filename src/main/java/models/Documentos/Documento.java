@@ -17,6 +17,18 @@ public abstract class Documento {
     private List<PrecioProductoPorProveedor> productos;
     private double total;
 
+    //Es para parsearlo en persistencia
+    protected String type;
+
+    public Documento(String nombreEmpresa, int cuitEmpresa, LocalDate fecha, int cuitProveedor) {
+        this.nombreEmpresa = nombreEmpresa;
+        this.cuitEmpresa = cuitEmpresa;
+        this.fecha = fecha;
+        this.cuitProveedor = cuitProveedor;
+
+        type = getClass().getName();
+    }
+
     public String getNombreEmpresa() {
         return nombreEmpresa;
     }
@@ -55,6 +67,10 @@ public abstract class Documento {
 
     public void setProductos(List<PrecioProductoPorProveedor> productos) {
         this.productos = productos;
+        total = 0d;
+        for (PrecioProductoPorProveedor producto : productos) {
+            total += producto.getPrecio();
+        }
     }
 
     public void setTotal(double total) {
@@ -99,6 +115,8 @@ public abstract class Documento {
         public int cuitProveedor;
         public List<PrecioProductoPorProveedor.DTOPrecioProductoPorProveedor> productos;
         public double total;
+
+        public String type;
     }
 
 }

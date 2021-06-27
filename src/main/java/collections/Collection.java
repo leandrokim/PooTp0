@@ -1,9 +1,8 @@
 package main.java.collections;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
+import main.java.models.Documentos.Documento;
+import main.java.models.FormaDePago.FormaPago;
 
 import javax.swing.*;
 import java.io.*;
@@ -33,7 +32,7 @@ public abstract class Collection<T, H> {
         FileWriter fileWriter;
         BufferedWriter bwEscritor;
         String texto;
-        Gson g = new Gson();
+        Gson g = getGson();
         texto = g.toJson(datos);
         //grabo el String
         try {
@@ -52,7 +51,7 @@ public abstract class Collection<T, H> {
         FileWriter fileWriter;
         BufferedWriter bwEscritor;
         String texto;
-        Gson g = new Gson();
+        Gson g = getGson();
         texto = g.toJson(datosDTO);
         //grabo el String
         try {
@@ -78,7 +77,7 @@ public abstract class Collection<T, H> {
                 cadena = b.readLine();
                 JsonParser parser = new JsonParser();
                 JsonArray gsonArr = parser.parse(cadena).getAsJsonArray();
-                Gson g = new Gson();
+                Gson g = getGson();
                 for (JsonElement js : gsonArr) {
                     lista.add(g.fromJson(js, clase()));
                 }
@@ -91,6 +90,13 @@ public abstract class Collection<T, H> {
             }
         }
         return lista;
+    }
+
+    private Gson getGson() {
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Documento.class, new JsonDeserializerWithInheritance<Documento>());
+        builder.registerTypeAdapter(FormaPago.class, new JsonDeserializerWithInheritance<FormaPago>());
+        return builder.create();
     }
 
     protected abstract Class<T> clase();

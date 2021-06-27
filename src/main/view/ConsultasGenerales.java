@@ -2,6 +2,7 @@ package main.view;
 
 import main.view.CompulsaDePrecios.CompulsaDePrecios;
 import main.view.CompulsaDePrecios.CompulsaDialog;
+import main.view.CuentaCorrientesProveedores.CuentaCorrientesProveedores;
 
 import javax.swing.*;
 
@@ -36,7 +37,8 @@ public class ConsultasGenerales extends JFrame {
         });
 
         cuentacorrienteButton.addActionListener(e -> {
-
+            CuentaCorrientesProveedores cuentaCorrientesProveedores = new CuentaCorrientesProveedores();
+            cuentaCorrientesProveedores.frame.setVisible(true);
         });
 
         compulsaDePreciosButton.addActionListener(e -> {

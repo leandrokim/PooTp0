@@ -5,7 +5,6 @@ import main.view.abm.AbstractModelTable;
 import main.view.abm.TableColumn;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CompulsaDePreciosTable extends AbstractModelTable<PrecioProductoPorProveedor.DTOPrecioProductoPorProveedor> {
 
@@ -37,14 +36,5 @@ public class CompulsaDePreciosTable extends AbstractModelTable<PrecioProductoPor
                 return "";
         }
     }
-
-//    tableColumns.add(new TableColumn("Cuit Proveedor", int.class));
-//        tableColumns.add(new TableColumn("Nombre Proveedor", String.class));
-//        tableColumns.add(new TableColumn("Email", String.class));
-//        tableColumns.add(new TableColumn("Direccion", String.class));
-//        tableColumns.add(new TableColumn("Telefono", String.class));
-//        tableColumns.add(new TableColumn("ResponsableIva", boolean.class));
-//        tableColumns.add(new TableColumn("Precio Acordado", double.class));
-//        tableColumns.add(new TableColumn("Nombre Producto", String.class));
 
 }
