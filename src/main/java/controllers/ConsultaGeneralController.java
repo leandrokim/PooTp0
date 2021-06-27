@@ -100,12 +100,8 @@ public class ConsultaGeneralController {
         return totalDeudaPorProveedor;
     }
 
-    public List<Object> totalDeImpuestosRetsenidos() {
-        return null;
-    }
-
-    public List<DTOListadoDeImpuestosConNombreYTotalRetenido> totalDeImpuestosRetenidos() {
-        List<DTOListadoDeImpuestosConNombreYTotalRetenido> dto = new ArrayList<>();
+    public ArrayList<DTOListadoDeImpuestosConNombreYTotalRetenido> totalDeImpuestosRetenidos() {
+        ArrayList<DTOListadoDeImpuestosConNombreYTotalRetenido> dto = new ArrayList<>();
         List<CuentaCorriente> cuentaCorrientes = getCuentaCorrientes();
 
         for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {

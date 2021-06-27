@@ -1,14 +1,15 @@
 package main.java.controllers;
 
-import main.java.collections.FacturaCollection;
-import main.java.collections.ProveedorCollection;
-import main.java.collections.RubroCollection;
+import main.java.collections.*;
 import main.java.models.Documentos.Factura;
+import main.java.models.Documentos.NotaCredito;
+import main.java.models.Documentos.NotaDebito;
 import main.java.models.Productos.Producto;
 import main.java.models.Productos.Rubro;
 import main.java.models.Proveedor.Proveedor;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ABMController {
@@ -93,6 +94,44 @@ public class ABMController {
             }
         }
         return false;
+    }
+
+    public ArrayList<NotaCredito.DTONotaCredito> getNotasCredito() {
+        ArrayList<NotaCredito.DTONotaCredito> dtoNotasCredito = new ArrayList();
+        NotaCreditoCollection collection = new NotaCreditoCollection();
+        ArrayList<NotaCredito> notasCredito = collection.getDatos();
+        Iterator var4 = notasCredito.iterator();
+
+        while(var4.hasNext()) {
+            NotaCredito notaCredito = (NotaCredito)var4.next();
+            dtoNotasCredito.add(notaCredito.toDTO());
+        }
+
+        return dtoNotasCredito;
+    }
+
+    public void guardarNotasCredito(ArrayList<NotaCredito.DTONotaCredito> datos) {
+        NotaCreditoCollection collection = new NotaCreditoCollection();
+        collection.grabar(datos);
+    }
+
+    public ArrayList<NotaDebito.DTONotaDebito> getNotasDebito() {
+        ArrayList<NotaDebito.DTONotaDebito> dtoNotasDebito = new ArrayList();
+        NotaDebitoCollection collection = new NotaDebitoCollection();
+        ArrayList<NotaDebito> notasDebito = collection.getDatos();
+        Iterator var4 = notasDebito.iterator();
+
+        while(var4.hasNext()) {
+            NotaDebito notaDebito = (NotaDebito)var4.next();
+            dtoNotasDebito.add(notaDebito.toDTO());
+        }
+
+        return dtoNotasDebito;
+    }
+
+    public void guardarNotasDebito(ArrayList<NotaDebito.DTONotaDebito> datos) {
+        NotaDebitoCollection collection = new NotaDebitoCollection();
+        collection.grabar(datos);
     }
 
 }
