@@ -1,4 +1,4 @@
-package src.main.view.ABMOrdenPago;
+package main.view.ABMOrdenPago;
 
 import main.java.models.Documentos.OrdenPago;
 import main.java.util.DateUtil;
