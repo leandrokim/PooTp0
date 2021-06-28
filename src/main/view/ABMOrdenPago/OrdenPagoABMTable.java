@@ -1,7 +1,7 @@
-package src.main.view.ABMOrdenPago;
+package main.view.ABMOrdenPago;
 
-import src.main.java.models.Documentos.OrdenPago;
-import src.main.view.abm.TableColumn;
+import main.java.models.Documentos.OrdenPago;
+import main.view.abm.TableColumn;
 
 import java.util.ArrayList;
 
