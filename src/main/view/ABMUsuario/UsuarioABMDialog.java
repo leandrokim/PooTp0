@@ -1,9 +1,9 @@
 package src.main.view.ABMUsuario;
 
-import src.main.java.models.IVA.ResponsableIVA;
-import src.main.java.models.Usuario.Usuario;
-import src.main.java.models.Usuario.TipoUsuario;
-import src.main.view.abm.AbstractABMDialog;
+import main.java.models.IVA.ResponsableIVA;
+import main.java.models.Usuario.Usuario;
+import main.java.models.Usuario.TipoUsuario;
+import main.view.abm.AbstractABMDialog;
 
 import javax.swing.*;
 
