@@ -43,7 +43,13 @@ public class Main extends JFrame {
         });
 
         ordenPagoButton.addActionListener(e -> {
-            //TODO
+            OrdenPagoABM ordenPagoABM = new OrdenPagoABM();
+            ordenPagoABM.setVisible(true);
+        });
+
+        usuariosButton.addActionListener(e -> {
+            UsuarioABM usuarioABM = new UsuarioABM();
+            UsuarioABM.setVisible(true);
         });
     }
 
