@@ -1,8 +1,8 @@
-package src.main.view.ABMUsuario;
+package main.view.ABMUsuario;
 
 
-import src.main.java.models.Usuario.Usuario;
-import src.main.view.abm.TableColumn;
+import main.java.models.Usuario.Usuario;
+import main.view.abm.TableColumn;
 
 import java.util.ArrayList;
 
