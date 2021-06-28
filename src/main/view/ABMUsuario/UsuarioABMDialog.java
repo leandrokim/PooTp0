@@ -1,4 +1,4 @@
-package src.main.view.ABMUsuario;
+package main.view.ABMUsuario;
 
 import main.java.models.IVA.ResponsableIVA;
 import main.java.models.Usuario.Usuario;
