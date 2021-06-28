@@ -1,12 +1,12 @@
-package src.main.view.ABMOrdenPago;
+package main.view.ABMOrdenPago;
 
-import src.main.java.controllers.ABMController;
-import src.main.view.ABMOrdenPago.OrdenPagoABM;
-import src.main.view.ABMOrdenPago.OrdenPagoABMTable;
-import src.main.java.models.Documentos.OrdenPago;
-import src.main.view.abm.AbstractABMWindow;
-import src.main.view.abm.ModalResult;
-import src.main.view.abm.TableColumn;
+import main.java.controllers.ABMController;
+import main.view.ABMOrdenPago.OrdenPagoABM;
+import main.view.ABMOrdenPago.OrdenPagoABMTable;
+import main.java.models.Documentos.OrdenPago;
+import main.view.abm.AbstractABMWindow;
+import main.view.abm.ModalResult;
+import main.view.abm.TableColumn;
 
 import javax.swing.*;
 import java.time.LocalDate;
