@@ -1,4 +1,4 @@
-package src.main.view.ABMOrdenPago;
+package main.view.ABMOrdenPago;
 
 import javax.swing.*;
 
