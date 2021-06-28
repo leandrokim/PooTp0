@@ -1,8 +1,8 @@
 package src.main.view.ABMOrdenPago;
 
-import src.main.java.models.Documentos.OrdenPago;
-import src.main.java.util.DateUtil;
-import src.main.view.abm.AbstractABMDialog;
+import main.java.models.Documentos.OrdenPago;
+import main.java.util.DateUtil;
+import main.view.abm.AbstractABMDialog;
 
 import javax.swing.*;
 import javax.swing.text.DefaultFormatterFactory;
