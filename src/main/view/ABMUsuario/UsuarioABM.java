@@ -1,11 +1,11 @@
-package src.main.view.ABMUsuario;
+package main.view.ABMUsuario;
 
-import src.main.java.controllers.ABMController;
-import src.main.java.models.Usuario.Usuario;
-import src.main.view.ABMOrdenPago.OrdenPagoABMTable;
-import src.main.view.abm.AbstractABMWindow;
-import src.main.view.abm.ModalResult;
-import src.main.view.abm.TableColumn;
+import main.java.controllers.ABMController;
+import main.java.models.Usuario.Usuario;
+import main.view.ABMOrdenPago.OrdenPagoABMTable;
+import main.view.abm.AbstractABMWindow;
+import main.view.abm.ModalResult;
+import main.view.abm.TableColumn;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class UsuarioABM extends AbstractABMWindow {
     }
 
     @Override
-    protected void agregar() { // es necesario agregar si ya tenemos el registarse en el login
+    protected void agregar() { // es necesario agregar si ya tenemos el registarse en el login?
         try {
             UsuarioABMDialog dialog = new UsuarioABMDialog(frame);
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
