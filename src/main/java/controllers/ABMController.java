@@ -136,5 +136,34 @@ public class ABMController {
         NotaDebitoCollection collection = new NotaDebitoCollection();
         collection.grabar(datos);
     }
+    public ArrayList<OrdenPago.DTOOrdenPago> getOrdenPago() {
+        ArrayList<OrdenPago.DTOOrdenPago> dtoOrdenPago = new ArrayList<>();
+        OrdenPagoCollection collection = new OrdenPagoCollection();
+        ArrayList<OrdenPago> ordenesDePago = collection.getDatos();
+        for (OrdenPago ordenDePago : ordenesDePago) {
+            dtoOrdenPago.add(ordenDePago.toDTO());
+        }
+        return dtoOrdenPago;
+    }
+    public void guardarOrdenesPago(ArrayList<OrdenPago.DTOOrdenPago> datos) {
+        OrdenPagoCollection collection = new OrdenPagoCollection();
+        collection.grabar(datos);
+    }
+
+    public ArrayList<Usuario.DTOUsuario> getUsuarios() {
+        ArrayList<Usuario.DTOUsuario> dtoUsuarios = new ArrayList<>();
+        UsuarioCollection collection = new UsuarioCollection();
+        ArrayList<Usuario> usuarios = collection.getDatos();
+        for (Usuario usuario : usuarios) {
+            dtoUsuarios.add(usuario.toDTO());
+        }
+        return dtoUsuarios;
+    }
+    public void guardarUsuarios(ArrayList<Usuario.DTOUsuario> datos) {
+        UsuarioCollection collection = new UsuarioCollection();
+        collection.grabar(datos);
+    }
+
+
 
 }
