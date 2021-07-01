@@ -129,8 +129,8 @@ public class ConsultaGeneralController {
                 .findFirst().orElse(null));
     }
 
-    public List<DTOFacturas> facturasPorDiaOProveedor(LocalDate dia, int cuitProveedor) {
-        List<DTOFacturas> dto = new ArrayList<>();
+    public ArrayList<DTOFacturas> facturasPorDiaOProveedor(LocalDate dia, int cuitProveedor) {
+        ArrayList<DTOFacturas> dto = new ArrayList<>();
         List<CuentaCorriente> cuentaCorrientes = getCuentaCorrientes();
         if (cuitProveedor != 0 && dia != null) {
             //tiene proveedor y fecha

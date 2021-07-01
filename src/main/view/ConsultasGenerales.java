@@ -2,7 +2,9 @@ package main.view;
 
 import main.view.CompulsaDePrecios.CompulsaDialog;
 import main.view.CuentaCorrientesProveedores.CuentaCorrientesProveedores;
+import main.view.OrdenesDePagosEmitidas.OrdenesDePagos;
 import main.view.TotalDeImpuestosRetenidos.TotalImpuestosRetenidos;
+import main.view.TotalFactura.TotalFacturaDialog;
 
 import javax.swing.*;
 
@@ -33,7 +35,8 @@ public class ConsultasGenerales extends JFrame {
         setLocationRelativeTo(null);
 
         totalFacturasButton.addActionListener(e -> {
-
+            TotalFacturaDialog totalFacturas = new TotalFacturaDialog("Total Factura Recibidas");
+            totalFacturas.setVisible(true);
         });
 
         cuentacorrienteButton.addActionListener(e -> {
@@ -47,7 +50,8 @@ public class ConsultasGenerales extends JFrame {
         });
 
         ordenesDePagoButton.addActionListener(e -> {
-
+            OrdenesDePagos ordenesDePagos = new OrdenesDePagos();
+            ordenesDePagos.frame.setVisible(true);
         });
 
         totalDeudaButton.addActionListener(e -> {
