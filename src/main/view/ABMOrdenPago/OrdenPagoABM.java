@@ -1,8 +1,6 @@
 package main.view.ABMOrdenPago;
 
 import main.java.controllers.ABMController;
-import main.view.ABMOrdenPago.OrdenPagoABM;
-import main.view.ABMOrdenPago.OrdenPagoABMTable;
 import main.java.models.Documentos.OrdenPago;
 import main.view.abm.AbstractABMWindow;
 import main.view.abm.ModalResult;

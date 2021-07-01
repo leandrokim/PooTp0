@@ -1,12 +1,12 @@
 package main.view.ABMUsuario;
 
-
 import main.java.models.Usuario.Usuario;
+import main.view.abm.AbstractModelTable;
 import main.view.abm.TableColumn;
 
 import java.util.ArrayList;
 
-public class UsuarioABMTable {
+public class UsuarioABMTable extends AbstractModelTable<Usuario.DTOUsuario> {
 
     public UsuarioABMTable(ArrayList<Usuario.DTOUsuario> lista, ArrayList<TableColumn> columnas) {
         super(lista, columnas);

@@ -1,12 +1,17 @@
 package main.java.controllers;
 
-import main.java.collections.*;
+import main.java.collections.CuentaCorrienteCollection;
+import main.java.collections.UsuarioCollection;
 import main.java.models.Documentos.Factura;
 import main.java.models.Documentos.NotaCredito;
 import main.java.models.Documentos.NotaDebito;
+import main.java.models.Documentos.OrdenPago;
 import main.java.models.Productos.Producto;
 import main.java.models.Productos.Rubro;
+import main.java.models.Proveedor.CuentaCorriente;
 import main.java.models.Proveedor.Proveedor;
+import main.java.models.Usuario.Usuario;
+import main.java.util.DTOUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,9 +28,18 @@ public class ABMController {
         return instancia;
     }
 
+    private List<Proveedor> getProveedoresCollection() {
+        CuentaCorrienteCollection collection = new CuentaCorrienteCollection();
+        List<CuentaCorriente> cuentaCorrientes = collection.getDatos();
+        List<Proveedor> proveedores = new ArrayList<>();
+        for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+            proveedores.add(cuentaCorriente.getProveedor());
+        }
+        return proveedores;
+    }
+
     public Proveedor.DTOProveedor getProveedor(int cuitProveedor) {
-        ProveedorCollection collection = new ProveedorCollection();
-        List<Proveedor> proveedores = collection.getDatos();
+        List<Proveedor> proveedores = getProveedoresCollection();
         for (Proveedor proveedor : proveedores) {
             if (cuitProveedor == proveedor.getCuitProveedor()) {
                 return proveedor.toDTO();
@@ -36,8 +50,7 @@ public class ABMController {
 
     public ArrayList<Proveedor.DTOProveedor> getProveedores() {
         ArrayList<Proveedor.DTOProveedor> dtoProveedores = new ArrayList<>();
-        ProveedorCollection collection = new ProveedorCollection();
-        ArrayList<Proveedor> proveedores = collection.getDatos();
+        List<Proveedor> proveedores = getProveedoresCollection();
         for (Proveedor proveedor : proveedores) {
             dtoProveedores.add(proveedor.toDTO());
         }
@@ -45,8 +58,23 @@ public class ABMController {
     }
 
     public void guardarProveedores(ArrayList<Proveedor.DTOProveedor> datos) {
-        ProveedorCollection collection = new ProveedorCollection();
-        collection.grabar(datos);
+        CuentaCorrienteCollection collection = new CuentaCorrienteCollection();
+        ArrayList<CuentaCorriente> cuentaCorrientes = collection.getDatos();
+
+        ArrayList<CuentaCorriente> toSave = new ArrayList<>();
+        for (Proveedor.DTOProveedor dtoProveedor : datos) {
+            Proveedor proveedor = (Proveedor) DTOUtil.toClass(dtoProveedor, Proveedor.class);
+
+            for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+                if (cuentaCorriente.getCuitProveedor() == proveedor.getCuitProveedor()) {
+                    cuentaCorriente.setProveedor(proveedor);
+                    toSave.add(cuentaCorriente);
+                }
+            }
+        }
+
+        collection.setDatos(toSave);
+        collection.grabar();
     }
 
     public ArrayList<Factura.DTOFactura> getFacturas() {
@@ -105,8 +133,8 @@ public class ABMController {
         ArrayList<NotaCredito> notasCredito = collection.getDatos();
         Iterator var4 = notasCredito.iterator();
 
-        while(var4.hasNext()) {
-            NotaCredito notaCredito = (NotaCredito)var4.next();
+        while (var4.hasNext()) {
+            NotaCredito notaCredito = (NotaCredito) var4.next();
             dtoNotasCredito.add(notaCredito.toDTO());
         }
 
@@ -124,8 +152,8 @@ public class ABMController {
         ArrayList<NotaDebito> notasDebito = collection.getDatos();
         Iterator var4 = notasDebito.iterator();
 
-        while(var4.hasNext()) {
-            NotaDebito notaDebito = (NotaDebito)var4.next();
+        while (var4.hasNext()) {
+            NotaDebito notaDebito = (NotaDebito) var4.next();
             dtoNotasDebito.add(notaDebito.toDTO());
         }
 
@@ -136,6 +164,7 @@ public class ABMController {
         NotaDebitoCollection collection = new NotaDebitoCollection();
         collection.grabar(datos);
     }
+
     public ArrayList<OrdenPago.DTOOrdenPago> getOrdenPago() {
         ArrayList<OrdenPago.DTOOrdenPago> dtoOrdenPago = new ArrayList<>();
         OrdenPagoCollection collection = new OrdenPagoCollection();
@@ -145,6 +174,7 @@ public class ABMController {
         }
         return dtoOrdenPago;
     }
+
     public void guardarOrdenesPago(ArrayList<OrdenPago.DTOOrdenPago> datos) {
         OrdenPagoCollection collection = new OrdenPagoCollection();
         collection.grabar(datos);
@@ -159,11 +189,11 @@ public class ABMController {
         }
         return dtoUsuarios;
     }
+
     public void guardarUsuarios(ArrayList<Usuario.DTOUsuario> datos) {
         UsuarioCollection collection = new UsuarioCollection();
         collection.grabar(datos);
     }
-
 
 
 }

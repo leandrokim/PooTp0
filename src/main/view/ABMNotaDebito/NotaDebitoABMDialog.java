@@ -70,7 +70,7 @@ public class NotaDebitoABMDialog extends AbstractABMDialog<DTONotaDebito> {
             notaDebito = new DTONotaDebito();
         }
 
-        notaDebito.nNotaDebito = Integer.parseInt(this.nNotaDebitoField.getText());
+        notaDebito.nNotaDeDebito = Integer.parseInt(this.nNotaDebitoField.getText());
         notaDebito.vigente = this.vigenteField.isSelected();
         notaDebito.nombreEmpresa = this.nameField.getText();
         notaDebito.cuitEmpresa = Integer.parseInt(this.cuitField.getText());

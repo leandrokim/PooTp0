@@ -1,8 +1,6 @@
 package main.java.main;
 
 import main.java.collections.CuentaCorrienteCollection;
-import main.java.collections.ProveedorCollection;
-import main.java.collections.RubroCollection;
 import main.java.controllers.ABMController;
 import main.java.models.Documentos.Documento;
 import main.java.models.Documentos.Factura;

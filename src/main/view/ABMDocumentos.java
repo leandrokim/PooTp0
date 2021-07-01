@@ -1,6 +1,8 @@
 package main.view;
 
 import main.view.ABMFactura.FacturaABM;
+import main.view.ABMNotaCredito.NotaCreditoABM;
+import main.view.ABMNotaDebito.NotaDebitoABM;
 
 import javax.swing.*;
 
@@ -32,11 +34,13 @@ public class ABMDocumentos extends JFrame {
         });
 
         creditoButton.addActionListener(e -> {
-            //TODO
+            NotaDebitoABM notaDebitoABM = new NotaDebitoABM();
+            notaDebitoABM.frame.setVisible(true);
         });
 
         debitoButton.addActionListener(e -> {
-            //TODO
+            NotaCreditoABM notaCreditoABM = new NotaCreditoABM();
+            notaCreditoABM.frame.setVisible(true);
         });
     }
 

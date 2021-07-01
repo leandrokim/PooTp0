@@ -1,8 +1,8 @@
 package main.view;
 
-import main.view.CompulsaDePrecios.CompulsaDePrecios;
 import main.view.CompulsaDePrecios.CompulsaDialog;
 import main.view.CuentaCorrientesProveedores.CuentaCorrientesProveedores;
+import main.view.TotalDeImpuestosRetenidos.TotalImpuestosRetenidos;
 
 import javax.swing.*;
 
@@ -56,7 +56,8 @@ public class ConsultasGenerales extends JFrame {
         });
 
         retenidosButton.addActionListener(e -> {
-
+            TotalImpuestosRetenidos totalImpuestosRetenidos = new TotalImpuestosRetenidos();
+            totalImpuestosRetenidos.frame.setVisible(true);
         });
 
         ivaButton.addActionListener(e -> {

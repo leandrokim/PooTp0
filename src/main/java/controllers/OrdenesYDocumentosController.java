@@ -1,7 +1,5 @@
 package main.java.controllers;
 
-import main.java.collections.ImpuestoCollection;
-import main.java.collections.OrdenPagoCollection;
 import main.java.models.Proveedor.Impuesto;
 import main.java.models.Documentos.OrdenPago;
 

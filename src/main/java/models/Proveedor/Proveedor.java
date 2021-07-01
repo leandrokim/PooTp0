@@ -149,19 +149,24 @@ public class Proveedor {
                 dto.certificados.add(certificado.toDTO());
             }
         }
+        dto.rubros = new ArrayList<>();
         if (rubros != null) {
             for (Rubro rubro : rubros) {
                 dto.rubros.add(rubro.toDTO());
             }
         }
-        dto.rubros = new ArrayList<>();
         dto.retenciones = new ArrayList<>();
         if (retenciones != null) {
             for (Retencion retencion : retenciones) {
                 dto.retenciones.add(retencion.toDTO());
             }
         }
-
+        dto.ordenesDeCompra = new ArrayList<>();
+        if (ordenesDeCompra != null){
+            for (OrdenCompra ordenCompra : ordenesDeCompra){
+                dto.ordenesDeCompra.add(ordenCompra.toDTO());
+            }
+        }
         return dto;
     }
 
@@ -176,7 +181,7 @@ public class Proveedor {
         public List<Certificado.DTOCertificado> certificados;
         public List<Rubro.DTORubro> rubros;
         public List<Retencion.DTORetencion> retenciones;
-        public List<OrdenCompra> ordenesDeCompra;
+        public List<OrdenCompra.DTOOrdenCompra> ordenesDeCompra;
     }
 
 }

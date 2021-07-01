@@ -1,9 +1,6 @@
 package main.java.controllers;
 
 import main.java.collections.CuentaCorrienteCollection;
-import main.java.collections.OrdenPagoCollection;
-import main.java.collections.ProveedorCollection;
-import main.java.collections.RubroCollection;
 import main.java.models.Documentos.Factura;
 import main.java.models.Documentos.OrdenPago;
 import main.java.models.Productos.PrecioProductoPorProveedor;

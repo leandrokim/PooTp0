@@ -12,10 +12,10 @@ public class NotaDebitoABMTable extends AbstractModelTable<DTONotaDebito> {
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
-        DTONotaDebito dto = (DTONotaDebito)this.lista.get(rowIndex);
+        DTONotaDebito dto = this.lista.get(rowIndex);
         switch(columnIndex) {
             case 0:
-                return dto.nNotaDebito;
+                return dto.nNotaDeDebito;
             case 1:
                 return dto.vigente;
             case 2:

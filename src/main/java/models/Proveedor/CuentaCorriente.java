@@ -1,6 +1,5 @@
 package main.java.models.Proveedor;
 
-import main.java.collections.OrdenPagoCollection;
 import main.java.models.Documentos.*;
 import main.java.models.IVA.Iva;
 import main.java.models.dto.DTOConsultasDeLibroIVA;
@@ -25,8 +24,7 @@ public class CuentaCorriente {
     }
 
     private List<OrdenPago> getOrdenesPago() {
-        OrdenPagoCollection collection = new OrdenPagoCollection();
-        return collection.getDatos();
+        return ordenesDePago;
     }
 
     public Proveedor getProveedor() {

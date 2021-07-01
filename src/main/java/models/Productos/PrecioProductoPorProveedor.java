@@ -1,7 +1,5 @@
 package main.java.models.Productos;
 
-import main.java.collections.RubroCollection;
-import main.java.controllers.ABMController;
 import main.java.models.Proveedor.Proveedor;
 
 import java.util.ArrayList;

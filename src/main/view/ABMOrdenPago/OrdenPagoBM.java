@@ -8,7 +8,7 @@ public class OrdenPagoBM {
     private JTextField totalField;
     private JTextField chequeField;
     private JTextField efectivoField;
-    }
+}
 
 
 

@@ -1,8 +1,5 @@
 package main.java.models.Documentos;
 
-import main.java.collections.RetencionCollection;
-import main.java.models.Documentos.Documento;
-import main.java.models.Documentos.NotaDebito;
 import main.java.models.FormaDePago.FormaPago;
 import main.java.models.Proveedor.Retencion;
 import main.java.models.dto.DTOListadoDeImpuestosConNombreYTotalRetenido;
@@ -13,6 +10,7 @@ import java.util.List;
 
 public class OrdenPago {
 
+    private int nroOrdenPago;//TODO
     private List<Documento> documentosAsociados;
     private List<Retencion> retenciones;
     private List<FormaPago> formasDePagos;
@@ -25,12 +23,11 @@ public class OrdenPago {
         this.documentosAsociados = documentosAsociados;
         this.formasDePagos = formasDePagos;
         this.fecha = fecha;
-        this.retenciones = retenciones; //TODO
+        this.retenciones = retenciones;
     }
 
     private List<Retencion> getRetencionesArchivos() {
-        RetencionCollection collection = new RetencionCollection();
-        return collection.getDatos();
+        return retenciones;
     }
 
     public List<Documento> getDocumentosAsociados() {

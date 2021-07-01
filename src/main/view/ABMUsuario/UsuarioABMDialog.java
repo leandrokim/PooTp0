@@ -1,8 +1,8 @@
 package main.view.ABMUsuario;
 
 import main.java.models.IVA.ResponsableIVA;
-import main.java.models.Usuario.Usuario;
 import main.java.models.Usuario.TipoUsuario;
+import main.java.models.Usuario.Usuario;
 import main.view.abm.AbstractABMDialog;
 
 import javax.swing.*;
@@ -12,7 +12,7 @@ public class UsuarioABMDialog extends AbstractABMDialog<Usuario.DTOUsuario> {
     private JLabel nombreLabel;
     private JTextField nombreField;
     private JLabel tipoLabel;
-    private JTextField tipoField;
+    private JComboBox tipoField;
 
     public UsuarioABMDialog(JFrame frame) {
         super(frame, "Usuario", true);
@@ -27,9 +27,9 @@ public class UsuarioABMDialog extends AbstractABMDialog<Usuario.DTOUsuario> {
 
         tipoLabel = new JLabel("Contraseña");
 
-        tipoField = new JTextField();
-        tipoField.setColumns(10);
-
+        String[] tipoStrings = {TipoUsuario.USUARIO.name(), TipoUsuario.SUPERVISOR.name()};
+        tipoField = new JComboBox(tipoStrings);
+        tipoField.setSelectedIndex(0);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class UsuarioABMDialog extends AbstractABMDialog<Usuario.DTOUsuario> {
         }
         usuario.nombre = (nombreField).getText();
         int index = tipoField.getSelectedIndex();
-        usuario.tipo = index == 0 ? TipoUsuario.USUARIO: TipoUsuario.SUPERVISOR;
+        usuario.tipo = index == 0 ? TipoUsuario.USUARIO : TipoUsuario.SUPERVISOR;
         dto = usuario;
     }
 

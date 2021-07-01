@@ -136,10 +136,10 @@ public class OrdenPagoABMDialog extends AbstractABMDialog<OrdenPago.DTOOrdenPago
             ordenPago = new OrdenPago.DTOOrdenPago();
         }
         ordenPago.fecha = DateUtil.toDate(fechaField.getText());
-        ordenPago.documentosAsociados = documentosAsociadosField.getText(); // son listas, me pide que lo cambie a string pero rompe el DTO
-        ordenPago.retenciones = Double.parseDouble(retencionesField.getText());
+//        ordenPago.documentosAsociados = documentosAsociadosField.getText(); // son listas, me pide que lo cambie a string pero rompe el DTO
+//        ordenPago.retenciones = Double.parseDouble(retencionesField.getText());
         ordenPago.totalACancelar = Double.parseDouble(totalField.getText());
-        ordenPago.formasDePago = formaPagoField.getText();
+//        ordenPago.formasDePago = formaPagoField.getText();
         dto = ordenPago;
     }
 

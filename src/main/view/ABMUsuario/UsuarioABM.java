@@ -2,12 +2,13 @@ package main.view.ABMUsuario;
 
 import main.java.controllers.ABMController;
 import main.java.models.Usuario.Usuario;
-import main.view.ABMOrdenPago.OrdenPagoABMTable;
 import main.view.abm.AbstractABMWindow;
+import main.view.abm.AbstractModelTable;
 import main.view.abm.ModalResult;
 import main.view.abm.TableColumn;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
 public class UsuarioABM extends AbstractABMWindow {
@@ -15,18 +16,13 @@ public class UsuarioABM extends AbstractABMWindow {
     private UsuarioABMTable tableModel;
     private ArrayList<Usuario.DTOUsuario> usuarios;
 
-    public static void setVisible(boolean b) { // me lo crea el intellij para que no de error. Chequear
-    }
-
-
-
     @Override
     protected String getTitle() {
         return "Usuario";
     }
 
     @Override
-    protected OrdenPagoABMTable getTableModel() {
+    protected AbstractTableModel getTableModel() {
         ABMController controller = ABMController.getInstancia();
         usuarios = controller.getUsuarios();
         ArrayList<TableColumn> tableColumns = new ArrayList<>();

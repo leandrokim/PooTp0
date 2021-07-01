@@ -1,6 +1,8 @@
 package main.view;
 
+import main.view.ABMOrdenPago.OrdenPagoABM;
 import main.view.ABMProveedor.ProveedorABM;
+import main.view.ABMUsuario.UsuarioABM;
 
 import javax.swing.*;
 
@@ -11,6 +13,7 @@ public class Main extends JFrame {
     private JButton documentosButton;
     private JButton ordenPagoButton;
     private JButton consultasGeneralesButton;
+    private JButton userButton;
 
     public Main(String title) {
         super(title);
@@ -44,12 +47,12 @@ public class Main extends JFrame {
 
         ordenPagoButton.addActionListener(e -> {
             OrdenPagoABM ordenPagoABM = new OrdenPagoABM();
-            ordenPagoABM.setVisible(true);
+            ordenPagoABM.frame.setVisible(true);
         });
 
-        usuariosButton.addActionListener(e -> {
+        userButton.addActionListener(e -> {
             UsuarioABM usuarioABM = new UsuarioABM();
-            UsuarioABM.setVisible(true);
+            usuarioABM.frame.setVisible(true);
         });
     }
 
