@@ -23,11 +23,9 @@ public class NotaCreditoABM extends AbstractABMWindow {
     protected AbstractTableModel getTableModel() {
         ABMController controller = ABMController.getInstancia();
         this.notasCredito = controller.getNotasCredito();
-        ArrayList<TableColumn> tableColumns = new ArrayList();
+        ArrayList<TableColumn> tableColumns = new ArrayList<>();
         tableColumns.add(new TableColumn("nNotaCredito", String.class));
         tableColumns.add(new TableColumn("vigente", String.class));
-        tableColumns.add(new TableColumn("nombreEmpresa", String.class));
-        tableColumns.add(new TableColumn("cuitEmpresa", String.class));
         tableColumns.add(new TableColumn("fecha", String.class));
         tableColumns.add(new TableColumn("cuitProveedor", String.class));
         tableColumns.add(new TableColumn("total", String.class));

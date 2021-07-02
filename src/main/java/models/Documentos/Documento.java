@@ -10,8 +10,6 @@ import java.util.List;
 
 public abstract class Documento {
 
-    private String nombreEmpresa;
-    private int cuitEmpresa;
     private LocalDate fecha;
     private int cuitProveedor;
     private List<PrecioProductoPorProveedor> productos;
@@ -20,29 +18,11 @@ public abstract class Documento {
     //Es para parsearlo en persistencia
     protected String type;
 
-    public Documento(String nombreEmpresa, int cuitEmpresa, LocalDate fecha, int cuitProveedor) {
-        this.nombreEmpresa = nombreEmpresa;
-        this.cuitEmpresa = cuitEmpresa;
+    public Documento(LocalDate fecha, int cuitProveedor) {
         this.fecha = fecha;
         this.cuitProveedor = cuitProveedor;
 
         type = getClass().getName();
-    }
-
-    public String getNombreEmpresa() {
-        return nombreEmpresa;
-    }
-
-    public void setNombreEmpresa(String nombreEmpresa) {
-        this.nombreEmpresa = nombreEmpresa;
-    }
-
-    public int getCuitEmpresa() {
-        return cuitEmpresa;
-    }
-
-    public void setCuitEmpresa(int cuitEmpresa) {
-        this.cuitEmpresa = cuitEmpresa;
     }
 
     public LocalDate getFecha() {
@@ -109,8 +89,6 @@ public abstract class Documento {
     public abstract String getTipoDocumento();
 
     public static class DTODocumento {
-        public String nombreEmpresa;
-        public int cuitEmpresa;
         public LocalDate fecha;
         public int cuitProveedor;
         public List<PrecioProductoPorProveedor.DTOPrecioProductoPorProveedor> productos;

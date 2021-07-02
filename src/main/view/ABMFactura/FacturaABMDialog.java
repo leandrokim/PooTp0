@@ -12,10 +12,6 @@ import javax.swing.text.MaskFormatter;
 
 public class FacturaABMDialog extends AbstractABMDialog<Factura.DTOFactura> {
 
-    private JLabel cuitEmpresaLabel;
-    private JTextField cuitEmpresaField;
-    private JLabel nameLabel;
-    private JTextField nameField;
     private JLabel cuitProveedorLabel;
     private JTextField cuitProveedorField;
     private JLabel dateLabel;
@@ -32,16 +28,6 @@ public class FacturaABMDialog extends AbstractABMDialog<Factura.DTOFactura> {
 
     @Override
     protected void inicializarCampos() {
-        cuitEmpresaLabel = new JLabel("Cuit Empresa");
-
-        cuitEmpresaField = new JTextField();
-        cuitEmpresaField.setColumns(10);
-
-        nameLabel = new JLabel("Nombre");
-
-        nameField = new JTextField();
-        nameField.setColumns(10);
-
         cuitProveedorLabel = new JLabel("Cuit Proveedor");
 
         cuitProveedorField = new JTextField();
@@ -76,8 +62,6 @@ public class FacturaABMDialog extends AbstractABMDialog<Factura.DTOFactura> {
         return group.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(cuitEmpresaLabel)
-                        .addComponent(nameLabel)
                         .addComponent(cuitProveedorLabel)
                         .addComponent(dateLabel)
                         .addComponent(totalLabel)
@@ -85,8 +69,6 @@ public class FacturaABMDialog extends AbstractABMDialog<Factura.DTOFactura> {
                         .addComponent(ivaLabel))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(cuitEmpresaField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(nameField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
                         .addComponent(cuitProveedorField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
                         .addComponent(dateField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
                         .addComponent(totalField)
@@ -98,13 +80,6 @@ public class FacturaABMDialog extends AbstractABMDialog<Factura.DTOFactura> {
     protected GroupLayout.SequentialGroup getVerticalGroup(GroupLayout group) {
         return group.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(cuitEmpresaLabel)
-                        .addComponent(cuitEmpresaField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(nameLabel)
-                        .addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(cuitProveedorLabel)
@@ -135,8 +110,6 @@ public class FacturaABMDialog extends AbstractABMDialog<Factura.DTOFactura> {
             ABMController controller = ABMController.getInstancia();
             factura.nFactura = controller.nuevoNumeroFactura();
         }
-        factura.cuitEmpresa = Integer.parseInt(cuitEmpresaField.getText());
-        factura.nombreEmpresa = nameField.getText();
         factura.cuitProveedor = Integer.parseInt(cuitProveedorField.getText());
         factura.fecha = DateUtil.toDate(dateField.getText());
         factura.total = Double.parseDouble(totalField.getText());
@@ -149,8 +122,6 @@ public class FacturaABMDialog extends AbstractABMDialog<Factura.DTOFactura> {
     @Override
     protected void asignarDatosForm() {
         Factura.DTOFactura factura = dto;
-        cuitEmpresaField.setText(String.valueOf(factura.cuitEmpresa));
-        nameField.setText(factura.nombreEmpresa);
         cuitProveedorField.setText(String.valueOf(factura.cuitProveedor));
         dateField.setText(DateUtil.toString(factura.fecha));
         totalField.setText(String.valueOf(factura.total));

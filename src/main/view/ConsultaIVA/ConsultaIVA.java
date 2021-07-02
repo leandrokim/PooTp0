@@ -1,35 +1,38 @@
-package main.view.CuentaCorrientesProveedores;
+package main.view.ConsultaIVA;
 
-import main.java.models.Documentos.Documento;
+import main.java.controllers.ConsultaGeneralController;
+import main.java.models.dto.DTOConsultasDeLibroIVA;
 import main.view.abm.AbstractABMWindow;
 import main.view.abm.TableColumn;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
+import java.util.List;
 
-public class CCDocumentosRecibidos extends AbstractABMWindow {
+public class ConsultaIVA extends AbstractABMWindow {
 
-    private final ArrayList<Documento.DTODocumento> documentosRecibidos;
-
-    public CCDocumentosRecibidos(ArrayList<Documento.DTODocumento> documentosRecibidos) {
-        this.documentosRecibidos = documentosRecibidos;
-        initialize();
+    public ConsultaIVA() {
+        super();
     }
 
     @Override
     protected String getTitle() {
-        return "Documentos Recibidos";
+        return "Consulta IVA";
     }
 
     @Override
     protected AbstractTableModel getTableModel() {
+        ConsultaGeneralController controller = ConsultaGeneralController.getInstancia();
+        ArrayList<DTOConsultasDeLibroIVA> datos = controller.consultaLibroIVACompras();
         ArrayList<TableColumn> tableColumns = new ArrayList<>();
-        tableColumns.add(new TableColumn("Tipo Documentos", String.class));
-        tableColumns.add(new TableColumn("Numero", int.class));
         tableColumns.add(new TableColumn("Cuit Proveedor", int.class));
+        tableColumns.add(new TableColumn("Nombre Proveedor", String.class));
         tableColumns.add(new TableColumn("Fecha", String.class));
+        tableColumns.add(new TableColumn("Tipo Documento", String.class));
+        tableColumns.add(new TableColumn("IVAs", String.class));
         tableColumns.add(new TableColumn("Total", double.class));
-        return new CCDocumentosTable(documentosRecibidos, tableColumns);
+        return new ConsultaIVATable(datos, tableColumns);
     }
 
     //Is Not ABM

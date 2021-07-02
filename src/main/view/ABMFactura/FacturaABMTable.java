@@ -1,6 +1,7 @@
 package main.view.ABMFactura;
 
 import main.java.models.Documentos.Factura;
+import main.java.util.DateUtil;
 import main.view.abm.AbstractModelTable;
 import main.view.abm.TableColumn;
 
@@ -19,18 +20,14 @@ public class FacturaABMTable extends AbstractModelTable<Factura.DTOFactura> {
             case 0:
                 return dto.nFactura;
             case 1:
-                return dto.cuitEmpresa;
-            case 2:
-                return dto.nombreEmpresa;
-            case 3:
                 return dto.cuitProveedor;
-            case 4:
-                return dto.fecha;
-            case 5:
+            case 2:
+                return DateUtil.toString(dto.fecha);
+            case 3:
                 return dto.total;
-            case 6:
+            case 4:
                 return dto.facturaPaga;
-            case 7:
+            case 5:
                 return dto.responsabilidadIVA;
             default:
                 return "";

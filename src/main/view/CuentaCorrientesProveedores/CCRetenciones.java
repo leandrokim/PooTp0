@@ -1,35 +1,35 @@
 package main.view.CuentaCorrientesProveedores;
 
-import main.java.models.Documentos.Documento;
+import main.java.models.Proveedor.Retencion;
 import main.view.abm.AbstractABMWindow;
 import main.view.abm.TableColumn;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
-public class CCDocumentosRecibidos extends AbstractABMWindow {
+public class CCRetenciones extends AbstractABMWindow {
 
-    private final ArrayList<Documento.DTODocumento> documentosRecibidos;
+    private final ArrayList<Retencion.DTORetencion> retencions;
 
-    public CCDocumentosRecibidos(ArrayList<Documento.DTODocumento> documentosRecibidos) {
-        this.documentosRecibidos = documentosRecibidos;
+    public CCRetenciones(ArrayList<Retencion.DTORetencion> retencions) {
+        this.retencions = retencions;
         initialize();
     }
 
     @Override
     protected String getTitle() {
-        return "Documentos Recibidos";
+        return "Formas de Pago";
     }
 
     @Override
     protected AbstractTableModel getTableModel() {
         ArrayList<TableColumn> tableColumns = new ArrayList<>();
-        tableColumns.add(new TableColumn("Tipo Documentos", String.class));
-        tableColumns.add(new TableColumn("Numero", int.class));
-        tableColumns.add(new TableColumn("Cuit Proveedor", int.class));
-        tableColumns.add(new TableColumn("Fecha", String.class));
+        tableColumns.add(new TableColumn("Id", int.class));
+        tableColumns.add(new TableColumn("Id Impuesto", int.class));
+        tableColumns.add(new TableColumn("Nombre Impuesto", String.class));
+        tableColumns.add(new TableColumn("Porcentaje", double.class));
         tableColumns.add(new TableColumn("Total", double.class));
-        return new CCDocumentosTable(documentosRecibidos, tableColumns);
+        return new CCRetencionesTable(retencions, tableColumns);
     }
 
     //Is Not ABM

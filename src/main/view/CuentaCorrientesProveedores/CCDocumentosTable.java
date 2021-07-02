@@ -10,9 +10,9 @@ import main.view.abm.TableColumn;
 
 import java.util.ArrayList;
 
-public class CCDocumentosRecibidosTable extends AbstractModelTable<Documento.DTODocumento> {
+public class CCDocumentosTable extends AbstractModelTable<Documento.DTODocumento> {
 
-    public CCDocumentosRecibidosTable(ArrayList<Documento.DTODocumento> lista, ArrayList<TableColumn> columnas) {
+    public CCDocumentosTable(ArrayList<Documento.DTODocumento> lista, ArrayList<TableColumn> columnas) {
         super(lista, columnas);
     }
 

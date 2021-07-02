@@ -1,6 +1,7 @@
 package main.view;
 
 import main.view.CompulsaDePrecios.CompulsaDialog;
+import main.view.ConsultaIVA.ConsultaIVA;
 import main.view.CuentaCorrientesProveedores.CuentaCorrientesProveedores;
 import main.view.OrdenesDePagosEmitidas.OrdenesDePagos;
 import main.view.TotalDeImpuestosRetenidos.TotalImpuestosRetenidos;
@@ -65,7 +66,8 @@ public class ConsultasGenerales extends JFrame {
         });
 
         ivaButton.addActionListener(e -> {
-
+            ConsultaIVA consultaIVA = new ConsultaIVA();
+            consultaIVA.frame.setVisible(true);
         });
     }
 

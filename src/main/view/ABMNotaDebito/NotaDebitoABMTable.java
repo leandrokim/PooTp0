@@ -2,7 +2,9 @@
 package main.view.ABMNotaDebito;
 
 import java.util.ArrayList;
+
 import main.java.models.Documentos.NotaDebito.DTONotaDebito;
+import main.java.util.DateUtil;
 import main.view.abm.AbstractModelTable;
 import main.view.abm.TableColumn;
 
@@ -13,20 +15,16 @@ public class NotaDebitoABMTable extends AbstractModelTable<DTONotaDebito> {
 
     public Object getValueAt(int rowIndex, int columnIndex) {
         DTONotaDebito dto = this.lista.get(rowIndex);
-        switch(columnIndex) {
+        switch (columnIndex) {
             case 0:
                 return dto.nNotaDeDebito;
             case 1:
                 return dto.vigente;
             case 2:
-                return dto.nombreEmpresa;
+                return DateUtil.toString(dto.fecha);
             case 3:
-                return dto.cuitEmpresa;
-            case 4:
-                return dto.fecha;
-            case 5:
                 return dto.cuitProveedor;
-            case 6:
+            case 4:
                 return dto.total;
             default:
                 return "";

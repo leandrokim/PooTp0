@@ -138,9 +138,9 @@ public class OrdenPago {
         public int cuitProveedor;
         public LocalDate fecha;
         public double totalACancelar;
-        public List<Documento.DTODocumento> documentosAsociados;
-        public List<FormaPago.DTOFormaPago> formasDePago;
-        public List<Retencion.DTORetencion> retenciones;
+        public ArrayList<Documento.DTODocumento> documentosAsociados;
+        public ArrayList<FormaPago.DTOFormaPago> formasDePago;
+        public ArrayList<Retencion.DTORetencion> retenciones;
     }
 
 }

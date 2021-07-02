@@ -1,30 +1,20 @@
 package main.java.models.Documentos;
 
 import main.java.models.IVA.Iva;
-import main.java.models.IVA.ResponsableIVA;
 import main.java.models.Productos.PrecioProductoPorProveedor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import main.java.models.Documentos.Documento.DTODocumento;
-import main.java.models.IVA.Iva;
-import main.java.models.Productos.PrecioProductoPorProveedor;
 
 public class NotaCredito extends Documento {
     private int nNotaDeCredito;
     private boolean vigente;
 
     public NotaCredito(int nNotaDeCredito,
-                       String nombreEmpresa,
-                       int cuitEmpresa,
                        LocalDate fecha,
                        int cuitProveedor) {
-        super(nombreEmpresa,
-                cuitEmpresa,
-                fecha,
-                cuitProveedor);
+        super(fecha, cuitProveedor);
         this.nNotaDeCredito = nNotaDeCredito;
         this.vigente = true;
     }
@@ -60,8 +50,6 @@ public class NotaCredito extends Documento {
     @Override
     public DTONotaCredito toDTO() {
         DTONotaCredito dto = new DTONotaCredito();
-        dto.nombreEmpresa = getNombreEmpresa();
-        dto.cuitEmpresa = getCuitEmpresa();
         dto.fecha = getFecha();
         dto.cuitProveedor = getCuitProveedor();
         dto.total = getTotal();

@@ -7,18 +7,18 @@ import main.view.abm.TableColumn;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
-public class CCDocumentosRecibidos extends AbstractABMWindow {
+public class CCDocumentosImpagos extends AbstractABMWindow {
 
-    private final ArrayList<Documento.DTODocumento> documentosRecibidos;
+    private final ArrayList<Documento.DTODocumento> documentosImpagos;
 
-    public CCDocumentosRecibidos(ArrayList<Documento.DTODocumento> documentosRecibidos) {
-        this.documentosRecibidos = documentosRecibidos;
+    public CCDocumentosImpagos(ArrayList<Documento.DTODocumento> documentosRecibidos) {
+        this.documentosImpagos = documentosRecibidos;
         initialize();
     }
 
     @Override
     protected String getTitle() {
-        return "Documentos Recibidos";
+        return "Documentos Impagos";
     }
 
     @Override
@@ -29,7 +29,7 @@ public class CCDocumentosRecibidos extends AbstractABMWindow {
         tableColumns.add(new TableColumn("Cuit Proveedor", int.class));
         tableColumns.add(new TableColumn("Fecha", String.class));
         tableColumns.add(new TableColumn("Total", double.class));
-        return new CCDocumentosTable(documentosRecibidos, tableColumns);
+        return new CCDocumentosTable(documentosImpagos, tableColumns);
     }
 
     //Is Not ABM

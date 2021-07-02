@@ -2,6 +2,7 @@ package main.view.ABMNotaDebito;
 
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
+
 import main.java.controllers.ABMController;
 import main.java.models.Documentos.NotaDebito.DTONotaDebito;
 import main.view.abm.AbstractABMWindow;
@@ -22,11 +23,9 @@ public class NotaDebitoABM extends AbstractABMWindow {
     protected AbstractTableModel getTableModel() {
         ABMController controller = ABMController.getInstancia();
         this.notasDebito = controller.getNotasDebito();
-        ArrayList<TableColumn> tableColumns = new ArrayList();
+        ArrayList<TableColumn> tableColumns = new ArrayList<>();
         tableColumns.add(new TableColumn("nNotaDebito", String.class));
         tableColumns.add(new TableColumn("vigente", String.class));
-        tableColumns.add(new TableColumn("nombreEmpresa", String.class));
-        tableColumns.add(new TableColumn("cuitEmpresa", String.class));
         tableColumns.add(new TableColumn("fecha", String.class));
         tableColumns.add(new TableColumn("cuitProveedor", String.class));
         tableColumns.add(new TableColumn("total", String.class));
@@ -64,7 +63,7 @@ public class NotaDebitoABM extends AbstractABMWindow {
     protected void modificar() {
         try {
             NotaDebitoABMDialog dialog = new NotaDebitoABMDialog(this.frame);
-            dialog.setDTO((DTONotaDebito)this.notasDebito.get(this.table.getSelectedRow()));
+            dialog.setDTO(this.notasDebito.get(this.table.getSelectedRow()));
             dialog.setDefaultCloseOperation(2);
             dialog.setVisible(true);
             if (dialog.getModalResult() == ModalResult.OK) {

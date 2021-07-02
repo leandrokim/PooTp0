@@ -74,11 +74,16 @@ public class ABMController {
         for (Proveedor.DTOProveedor dtoProveedor : datos) {
             Proveedor proveedor = DTOUtil.toClass(dtoProveedor, Proveedor.class);
 
+            boolean exists = false;
             for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
                 if (cuentaCorriente.getCuitProveedor() == proveedor.getCuitProveedor()) {
                     cuentaCorriente.setProveedor(proveedor);
                     toSave.add(cuentaCorriente);
+                    exists = true;
                 }
+            }
+            if (!exists) {
+                toSave.add(new CuentaCorriente(proveedor));
             }
         }
 

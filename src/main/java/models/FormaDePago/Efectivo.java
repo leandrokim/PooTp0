@@ -13,12 +13,15 @@ public class Efectivo extends FormaPago {
     }
 
     @Override
-    public DTOFormaPago toDTO() {
-        DTOFormaPago dto = new DTOFormaPago();
+    public DTOEfectivo toDTO() {
+        DTOEfectivo dto = new DTOEfectivo();
         dto.importe = importe;
-        dto.tipo = Efectivo.class.getSimpleName();
         dto.type = type;
         return dto;
+    }
+
+    public static class DTOEfectivo extends FormaPago.DTOFormaPago {
+
     }
 
 }

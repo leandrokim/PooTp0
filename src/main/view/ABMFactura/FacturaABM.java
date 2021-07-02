@@ -28,8 +28,6 @@ public class FacturaABM extends AbstractABMWindow {
         facturas = controller.getFacturas();
         ArrayList<TableColumn> tableColumns = new ArrayList<>();
         tableColumns.add(new TableColumn("Nro Factura", int.class));
-        tableColumns.add(new TableColumn("Cuit Empresa", int.class));
-        tableColumns.add(new TableColumn("Nombre Empresa", String.class));
         tableColumns.add(new TableColumn("Cuit Proveedor", int.class));
         tableColumns.add(new TableColumn("Fecha", LocalDate.class));
         tableColumns.add(new TableColumn("Total", double.class));

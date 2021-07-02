@@ -18,14 +18,9 @@ public class Factura extends Documento {
     public Factura(int nFactura,
                    ResponsableIVA responsabilidadIVA,
                    List<OrdenCompra> ordenesDeCompras,
-                   String nombreEmpresa,
-                   int cuitEmpresa,
                    LocalDate fecha,
                    int cuitProveedor) {
-        super(nombreEmpresa,
-        cuitEmpresa,
-        fecha,
-        cuitProveedor);
+        super(fecha, cuitProveedor);
         this.nFactura = nFactura;
         this.responsabilidadIVA = responsabilidadIVA;
         this.ordenesDeCompras = ordenesDeCompras;
@@ -82,8 +77,6 @@ public class Factura extends Documento {
     @Override
     public DTOFactura toDTO() {
         DTOFactura dto = new DTOFactura();
-        dto.nombreEmpresa = getNombreEmpresa();
-        dto.cuitEmpresa = getCuitEmpresa();
         dto.fecha = getFecha();
         dto.cuitProveedor = getCuitProveedor();
         dto.total = getTotal();

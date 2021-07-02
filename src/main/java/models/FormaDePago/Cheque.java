@@ -60,12 +60,22 @@ public class Cheque extends FormaPago {
     }
 
     @Override
-    public DTOFormaPago toDTO() {
-        DTOFormaPago dto = new DTOFormaPago();
+    public DTOCheque toDTO() {
+        DTOCheque dto = new DTOCheque();
         dto.importe = importe;
-        dto.tipo = Cheque.class.getSimpleName();
+        dto.tipo = getTipo();
+        dto.fechaEmision = getFechaEmision();
+        dto.fechaVencimiento = getFechaVencimiento();
+        dto.firmante = getFirmante();
         dto.type = type;
         return dto;
+    }
+
+    public static class DTOCheque extends FormaPago.DTOFormaPago {
+        public TipoCheque tipo;
+        public LocalDate fechaEmision;
+        public LocalDate fechaVencimiento;
+        public String firmante;
     }
 
 }

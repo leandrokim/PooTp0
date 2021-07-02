@@ -31,13 +31,15 @@ public class CuentaCorrientesProveedoresTable extends AbstractModelTable<DTODocu
             case 3:
                 JButton impagos = new JButton("Visualizar");
                 impagos.addActionListener(e -> {
-
+                    CCDocumentosImpagos documentosImpagos = new CCDocumentosImpagos(dto.documentosImpagos);
+                    documentosImpagos.frame.setVisible(true);
                 });
                 return impagos;
             case 4:
                 JButton pagos = new JButton("Visualizar");
                 pagos.addActionListener(e -> {
-
+                    CCPagosRealizados pagosRealizados = new CCPagosRealizados(dto.pagosRealizados);
+                    pagosRealizados.frame.setVisible(true);
                 });
                 return pagos;
             default:
