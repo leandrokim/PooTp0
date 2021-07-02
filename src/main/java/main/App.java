@@ -24,6 +24,7 @@ import java.util.List;
 public class App {
 
     public static void main(String[] args) {
+        /*
         ProveedorCollection proveedorCollection = new ProveedorCollection();
         RubroCollection rubroCollection = new RubroCollection();
 
@@ -116,6 +117,8 @@ public class App {
         }
 
         cuentaCorrienteCollection.setDatos(cuentaCorrientes);
+
+         */
     }
 
 }

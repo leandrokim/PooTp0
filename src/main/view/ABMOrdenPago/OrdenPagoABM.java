@@ -1,6 +1,7 @@
 package main.view.ABMOrdenPago;
 
 import main.java.controllers.ABMController;
+import main.java.controllers.OrdenesYDocumentosController;
 import main.java.models.Documentos.OrdenPago;
 import main.view.abm.AbstractABMWindow;
 import main.view.abm.ModalResult;
@@ -22,8 +23,8 @@ public class OrdenPagoABM extends AbstractABMWindow {
 
     @Override
     protected OrdenPagoABMTable getTableModel() {
-        ABMController controller = ABMController.getInstancia();
-        ordenesDePago = controller.getOrdenPago();
+        OrdenesYDocumentosController controller = OrdenesYDocumentosController.getInstancia();
+        ordenesDePago = controller.getOrdenesDePago();
         ArrayList<TableColumn> tableColumns = new ArrayList<>();
         tableColumns.add(new TableColumn("Fecha", int.class));
         tableColumns.add(new TableColumn("Documentos Asociados", int.class));

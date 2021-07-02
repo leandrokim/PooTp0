@@ -9,6 +9,7 @@ public class Rubro {
 
     private int idRubro;
     private String nombreRubro;
+    //Solo guarda productos de este proveedor (xq viene de proveedor el rubro)
     private List<Producto> productos;
 
     public Rubro(int idRubro, String nombreRubro) {

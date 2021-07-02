@@ -8,7 +8,7 @@ import main.java.models.FormaDePago.FormaPago;
 
 public class DTOUtil {
 
-    public static Object toClass(Object dto, Class clase) {
+    public static <T,H> T toClass(H dto, Class<T> clase) {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Documento.class, new JsonDeserializerWithInheritance<Documento>());
         builder.registerTypeAdapter(FormaPago.class, new JsonDeserializerWithInheritance<FormaPago>());
@@ -17,4 +17,5 @@ public class DTOUtil {
         String jsonString = gson.toJson(dto);
         return gson.fromJson(jsonString, clase);
     }
+
 }

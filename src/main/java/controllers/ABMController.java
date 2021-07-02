@@ -6,6 +6,7 @@ import main.java.models.Documentos.Factura;
 import main.java.models.Documentos.NotaCredito;
 import main.java.models.Documentos.NotaDebito;
 import main.java.models.Documentos.OrdenPago;
+import main.java.models.Productos.PrecioProductoPorProveedor;
 import main.java.models.Productos.Producto;
 import main.java.models.Productos.Rubro;
 import main.java.models.Proveedor.CuentaCorriente;
@@ -14,7 +15,6 @@ import main.java.models.Usuario.Usuario;
 import main.java.util.DTOUtil;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class ABMController {
@@ -29,13 +29,23 @@ public class ABMController {
     }
 
     private List<Proveedor> getProveedoresCollection() {
-        CuentaCorrienteCollection collection = new CuentaCorrienteCollection();
-        List<CuentaCorriente> cuentaCorrientes = collection.getDatos();
+        List<CuentaCorriente> cuentaCorrientes = getCuentasCorrientesCollection();
         List<Proveedor> proveedores = new ArrayList<>();
         for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
             proveedores.add(cuentaCorriente.getProveedor());
         }
         return proveedores;
+    }
+
+    private ArrayList<CuentaCorriente> getCuentasCorrientesCollection() {
+        CuentaCorrienteCollection collection = new CuentaCorrienteCollection();
+        return collection.getDatos();
+    }
+
+    private void saveCuentaCorrientesCollection(ArrayList<CuentaCorriente> list) {
+        CuentaCorrienteCollection collection = new CuentaCorrienteCollection();
+        collection.setDatos(list);
+        collection.grabar();
     }
 
     public Proveedor.DTOProveedor getProveedor(int cuitProveedor) {
@@ -58,12 +68,11 @@ public class ABMController {
     }
 
     public void guardarProveedores(ArrayList<Proveedor.DTOProveedor> datos) {
-        CuentaCorrienteCollection collection = new CuentaCorrienteCollection();
-        ArrayList<CuentaCorriente> cuentaCorrientes = collection.getDatos();
+        ArrayList<CuentaCorriente> cuentaCorrientes = getCuentasCorrientesCollection();
 
         ArrayList<CuentaCorriente> toSave = new ArrayList<>();
         for (Proveedor.DTOProveedor dtoProveedor : datos) {
-            Proveedor proveedor = (Proveedor) DTOUtil.toClass(dtoProveedor, Proveedor.class);
+            Proveedor proveedor = DTOUtil.toClass(dtoProveedor, Proveedor.class);
 
             for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
                 if (cuentaCorriente.getCuitProveedor() == proveedor.getCuitProveedor()) {
@@ -73,37 +82,97 @@ public class ABMController {
             }
         }
 
-        collection.setDatos(toSave);
-        collection.grabar();
+        saveCuentaCorrientesCollection(toSave);
     }
 
     public ArrayList<Factura.DTOFactura> getFacturas() {
+        ArrayList<CuentaCorriente> cuentaCorrientes = getCuentasCorrientesCollection();
         ArrayList<Factura.DTOFactura> dtoFacturas = new ArrayList<>();
-        FacturaCollection collection = new FacturaCollection();
-        ArrayList<Factura> facturas = collection.getDatos();
-        for (Factura factura : facturas) {
-            dtoFacturas.add(factura.toDTO());
+
+        for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+            for (Factura factura : cuentaCorriente.getFacturas()) {
+                dtoFacturas.add(factura.toDTO());
+            }
         }
         return dtoFacturas;
     }
 
+    // En datos viene TODAS las facturas
     public void guardarFacturas(ArrayList<Factura.DTOFactura> datos) {
-        FacturaCollection collection = new FacturaCollection();
-        collection.grabar(datos);
+        ArrayList<CuentaCorriente> cuentaCorrientes = getCuentasCorrientesCollection();
+
+        for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+            ArrayList<Factura> facturas = new ArrayList<>();
+
+            for (Factura.DTOFactura dtoFactura : datos) {
+                if (dtoFactura.cuitProveedor == cuentaCorriente.getCuitProveedor()) {
+                    facturas.add(DTOUtil.toClass(dtoFactura, Factura.class));
+                }
+            }
+            cuentaCorriente.setFacturas(facturas);
+        }
+
+        saveCuentaCorrientesCollection(cuentaCorrientes);
     }
 
     public int nuevoNumeroFactura() {
-        FacturaCollection collection = new FacturaCollection();
-        ArrayList<Factura> facturas = collection.getDatos();
-        if (facturas == null || facturas.isEmpty()) {
-            return 1;
+        ArrayList<Factura.DTOFactura> facturas = getFacturas();
+        int nroFactura = 0;
+        for (Factura.DTOFactura factura : facturas) {
+            if (factura.nFactura > nroFactura) {
+                nroFactura = factura.nFactura;
+            }
         }
-        return facturas.get(facturas.size() - 1).getnFactura() + 1;
+        return nroFactura + 1;
+    }
+
+    /**
+     * Va a mergear todos los rubros de todos los proveedores, y a su vez va a mergear sus respectivos productos
+     * y a su vez va a mergear todos los respectivos PPPP
+     */
+
+    public ArrayList<Rubro> getRubros() {
+        ArrayList<CuentaCorriente> cuentaCorrientes = getCuentasCorrientesCollection();
+        ArrayList<Rubro> rubros = new ArrayList<>();
+
+        //Tengo que mergear todos los rubros
+        for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+            for (Rubro rubroProveedor : cuentaCorriente.getProveedor().getRubros()) {
+                //Si no tengo rubros inicialmente, agregas uno
+                if (rubros.isEmpty()) {
+                    rubros.add(rubroProveedor);
+                } else {
+                    //Tengo que mergear todos los productos de los rubros
+                    for (Rubro rubro : rubros) {
+                        if (rubroProveedor.getIdRubro() == rubro.getIdRubro()) {
+                            //Es el mismo rubro
+                            for (Producto productoProveedor : rubroProveedor.getProductos()) {
+                                boolean noTieneProducto = true;
+                                //Quiero mergear los PPPP de cada producto igual
+                                for (Producto producto : rubro.getProductos()) {
+                                    if (productoProveedor.getIdProducto() == producto.getIdProducto()) {
+                                        List<PrecioProductoPorProveedor> precios = producto.getPreciosPorProveedor();
+                                        precios.addAll(productoProveedor.getPreciosPorProveedor());
+                                        producto.setPreciosPorProveedor(precios);
+                                        noTieneProducto = false;
+                                    }
+                                }
+                                //Si no encontre el producto, agrego
+                                if (noTieneProducto) {
+                                    rubro.addProducto(productoProveedor);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return rubros;
     }
 
     public boolean existeRubro(int rubroId) {
-        RubroCollection collection = new RubroCollection();
-        ArrayList<Rubro> rubros = collection.getDatos();
+        ArrayList<Rubro> rubros = getRubros();
         for (Rubro rubro : rubros) {
             if (rubro.getIdRubro() == rubroId) {
                 return true;
@@ -113,8 +182,7 @@ public class ABMController {
     }
 
     public boolean existeProducto(int rubroId, int productoId) {
-        RubroCollection collection = new RubroCollection();
-        ArrayList<Rubro> rubros = collection.getDatos();
+        ArrayList<Rubro> rubros = getRubros();
         for (Rubro rubro : rubros) {
             if (rubro.getIdRubro() == rubroId) {
                 for (Producto producto : rubro.getProductos()) {
@@ -128,56 +196,94 @@ public class ABMController {
     }
 
     public ArrayList<NotaCredito.DTONotaCredito> getNotasCredito() {
-        ArrayList<NotaCredito.DTONotaCredito> dtoNotasCredito = new ArrayList();
-        NotaCreditoCollection collection = new NotaCreditoCollection();
-        ArrayList<NotaCredito> notasCredito = collection.getDatos();
-        Iterator var4 = notasCredito.iterator();
+        ArrayList<NotaCredito.DTONotaCredito> dtoNotasCredito = new ArrayList<>();
+        ArrayList<NotaCredito> notasCredito = getNotasCreditoCollection();
 
-        while (var4.hasNext()) {
-            NotaCredito notaCredito = (NotaCredito) var4.next();
+        for (NotaCredito notaCredito : notasCredito) {
             dtoNotasCredito.add(notaCredito.toDTO());
         }
 
         return dtoNotasCredito;
     }
 
+    private ArrayList<NotaCredito> getNotasCreditoCollection() {
+        ArrayList<CuentaCorriente> cuentaCorrientes = getCuentasCorrientesCollection();
+        ArrayList<NotaCredito> notaCreditos = new ArrayList<>();
+        for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+            notaCreditos.addAll(cuentaCorriente.getNotasCredito());
+        }
+        return notaCreditos;
+    }
+
     public void guardarNotasCredito(ArrayList<NotaCredito.DTONotaCredito> datos) {
-        NotaCreditoCollection collection = new NotaCreditoCollection();
-        collection.grabar(datos);
+        ArrayList<CuentaCorriente> cuentaCorrientes = getCuentasCorrientesCollection();
+
+        for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+            ArrayList<NotaCredito> notaCreditos = new ArrayList<>();
+
+            for (NotaCredito.DTONotaCredito dto : datos) {
+                if (dto.cuitProveedor == cuentaCorriente.getCuitProveedor()) {
+                    notaCreditos.add(DTOUtil.toClass(dto, NotaCredito.class));
+                }
+            }
+            cuentaCorriente.setNotaCreditos(notaCreditos);
+        }
+
+        saveCuentaCorrientesCollection(cuentaCorrientes);
     }
 
     public ArrayList<NotaDebito.DTONotaDebito> getNotasDebito() {
-        ArrayList<NotaDebito.DTONotaDebito> dtoNotasDebito = new ArrayList();
-        NotaDebitoCollection collection = new NotaDebitoCollection();
-        ArrayList<NotaDebito> notasDebito = collection.getDatos();
-        Iterator var4 = notasDebito.iterator();
+        ArrayList<NotaDebito.DTONotaDebito> dtoNotasDebito = new ArrayList<>();
+        ArrayList<NotaDebito> notasDebito = getNotasDebitoCollection();
 
-        while (var4.hasNext()) {
-            NotaDebito notaDebito = (NotaDebito) var4.next();
+        for (NotaDebito notaDebito : notasDebito) {
             dtoNotasDebito.add(notaDebito.toDTO());
         }
 
         return dtoNotasDebito;
     }
 
-    public void guardarNotasDebito(ArrayList<NotaDebito.DTONotaDebito> datos) {
-        NotaDebitoCollection collection = new NotaDebitoCollection();
-        collection.grabar(datos);
+    private ArrayList<NotaDebito> getNotasDebitoCollection() {
+        ArrayList<CuentaCorriente> cuentaCorrientes = getCuentasCorrientesCollection();
+        ArrayList<NotaDebito> notaDebitos = new ArrayList<>();
+        for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+            notaDebitos.addAll(cuentaCorriente.getNotasDebito());
+        }
+        return notaDebitos;
     }
 
-    public ArrayList<OrdenPago.DTOOrdenPago> getOrdenPago() {
-        ArrayList<OrdenPago.DTOOrdenPago> dtoOrdenPago = new ArrayList<>();
-        OrdenPagoCollection collection = new OrdenPagoCollection();
-        ArrayList<OrdenPago> ordenesDePago = collection.getDatos();
-        for (OrdenPago ordenDePago : ordenesDePago) {
-            dtoOrdenPago.add(ordenDePago.toDTO());
+    public void guardarNotasDebito(ArrayList<NotaDebito.DTONotaDebito> datos) {
+        ArrayList<CuentaCorriente> cuentaCorrientes = getCuentasCorrientesCollection();
+
+        for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+            ArrayList<NotaDebito> notaDebitos = new ArrayList<>();
+
+            for (NotaDebito.DTONotaDebito dto : datos) {
+                if (dto.cuitProveedor == cuentaCorriente.getCuitProveedor()) {
+                    notaDebitos.add(DTOUtil.toClass(dto, NotaDebito.class));
+                }
+            }
+            cuentaCorriente.setNotaDebitos(notaDebitos);
         }
-        return dtoOrdenPago;
+
+        saveCuentaCorrientesCollection(cuentaCorrientes);
     }
 
     public void guardarOrdenesPago(ArrayList<OrdenPago.DTOOrdenPago> datos) {
-        OrdenPagoCollection collection = new OrdenPagoCollection();
-        collection.grabar(datos);
+        ArrayList<CuentaCorriente> cuentaCorrientes = getCuentasCorrientesCollection();
+
+        for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+            ArrayList<OrdenPago> ordenPagos = new ArrayList<>();
+
+            for (OrdenPago.DTOOrdenPago dto : datos) {
+                if (dto.cuitProveedor == cuentaCorriente.getCuitProveedor()) {
+                    ordenPagos.add(DTOUtil.toClass(dto, OrdenPago.class));
+                }
+            }
+            cuentaCorriente.setOrdenesDePago(ordenPagos);
+        }
+
+        saveCuentaCorrientesCollection(cuentaCorrientes);
     }
 
     public ArrayList<Usuario.DTOUsuario> getUsuarios() {
@@ -194,6 +300,5 @@ public class ABMController {
         UsuarioCollection collection = new UsuarioCollection();
         collection.grabar(datos);
     }
-
 
 }

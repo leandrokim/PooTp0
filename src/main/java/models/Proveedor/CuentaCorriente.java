@@ -6,6 +6,7 @@ import main.java.models.dto.DTOConsultasDeLibroIVA;
 import main.java.models.dto.DTODocumentosPagosYDeudas;
 import main.java.models.dto.DTOListadoDeImpuestosConNombreYTotalRetenido;
 
+import javax.print.Doc;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +15,16 @@ import java.util.stream.Collectors;
 public class CuentaCorriente {
 
     private Proveedor proveedor;
-    private List<Documento> documentos;
-    private List<OrdenPago> ordenesDePago;
+    private ArrayList<Factura> facturas;
+    private ArrayList<NotaCredito> notaCreditos;
+    private ArrayList<NotaDebito> notaDebitos;
+    private ArrayList<OrdenPago> ordenesDePago;
 
     public CuentaCorriente(Proveedor proveedor) {
         this.proveedor = proveedor;
-        this.documentos = new ArrayList<>();
+        this.facturas = new ArrayList<>();
+        this.notaCreditos = new ArrayList<>();
+        this.notaDebitos = new ArrayList<>();
         this.ordenesDePago = new ArrayList<>();
     }
 
@@ -35,24 +40,52 @@ public class CuentaCorriente {
         this.proveedor = proveedor;
     }
 
-    public List<Documento> getDocumentos() {
+    public ArrayList<Documento> getDocumentos() {
+        ArrayList<Documento> documentos = new ArrayList<>();
+        documentos.addAll(facturas);
+        documentos.addAll(notaDebitos);
+        documentos.addAll(notaCreditos);
         return documentos;
     }
 
-    public void setDocumentos(List<Documento> documentos) {
-        this.documentos = documentos;
+    public void setDocumentos(ArrayList<Documento> documentos) {
+        facturas = new ArrayList<>();
+        notaCreditos = new ArrayList<>();
+        notaDebitos = new ArrayList<>();
+
+        for (Documento documento : documentos) {
+            if (documento.getTipoDocumento().equals(Factura.class.getName())) {
+                facturas.add((Factura) documento);
+            } else if (documento.getTipoDocumento().equals(NotaDebito.class.getName())) {
+                notaDebitos.add((NotaDebito) documento);
+            } else {
+                notaCreditos.add((NotaCredito) documento);
+            }
+        }
     }
 
     public List<OrdenPago> getOrdenesDePago() {
         return ordenesDePago;
     }
 
-    public void setOrdenesDePago(List<OrdenPago> ordenesDePago) {
+    public void setOrdenesDePago(ArrayList<OrdenPago> ordenesDePago) {
         this.ordenesDePago = ordenesDePago;
     }
 
     public DTOCuentaCorriente toDTO() {
         return null;
+    }
+
+    public void setFacturas(ArrayList<Factura> facturas) {
+        this.facturas = facturas;
+    }
+
+    public void setNotaCreditos(ArrayList<NotaCredito> notaCreditos) {
+        this.notaCreditos = notaCreditos;
+    }
+
+    public void setNotaDebitos(ArrayList<NotaDebito> notaDebitos) {
+        this.notaDebitos = notaDebitos;
     }
 
     public static class DTOCuentaCorriente {
@@ -64,31 +97,20 @@ public class CuentaCorriente {
     }
 
     public List<NotaCredito> getNotasCredito() {
-        return documentos.stream().filter(documento -> documento instanceof NotaCredito)
-                .map(documento -> (NotaCredito) documento)
-                .collect(Collectors.toList());
+        return notaCreditos;
     }
 
     public List<NotaDebito> getNotasDebito() {
-        return documentos.stream().filter(documento -> documento instanceof NotaDebito)
-                .map(documento -> (NotaDebito) documento)
-                .collect(Collectors.toList());
+        return notaDebitos;
     }
 
     public List<Factura> getFacturas() {
-        return documentos.stream().filter(documento -> documento instanceof Factura)
-                .map(documento -> (Factura) documento)
-                .collect(Collectors.toList());
-    }
-
-    public double deudaProveedor(int cuitProveedor) {
-        return 0;
+        return facturas;
     }
 
     public List<Factura> getFacturasPorDia(LocalDate dia) {
-        return documentos.stream().filter(documento -> documento instanceof Factura)
-                .filter(documento -> documento.getFecha().isEqual(dia))
-                .map(documento -> (Factura) documento)
+        return facturas.stream()
+                .filter(factura -> factura.getFecha().isEqual(dia))
                 .collect(Collectors.toList());
     }
 
@@ -98,24 +120,21 @@ public class CuentaCorriente {
 
         ArrayList<Documento.DTODocumento> documentosRecibidos = new ArrayList<>();
         ArrayList<Documento.DTODocumento> facturasImpagas = new ArrayList<>();
-        for (Documento documento : documentos) {
-            documentosRecibidos.add(documento.toDTO());
-            if (documento instanceof Factura) {
-                Factura factura = (Factura) documento;
-                if (!factura.isFacturaPaga()) {
-                    facturasImpagas.add(factura.toDTO());
+        for (Factura factura : facturas) {
+            documentosRecibidos.add(factura.toDTO());
+            if (!factura.isFacturaPaga()) {
+                facturasImpagas.add(factura.toDTO());
 
-                    totalDeuda += factura.getTotal();
-                }
+                totalDeuda += factura.getTotal();
             }
-
-            if (documento instanceof NotaDebito) {
-                totalDeuda -= documento.getTotal();
-            }
-
-            if (documento instanceof NotaCredito) {
-                totalDeuda += documento.getTotal();
-            }
+        }
+        for (NotaDebito notaDebito : notaDebitos) {
+            documentosRecibidos.add(notaDebito.toDTO());
+            totalDeuda -= notaDebito.getTotal();
+        }
+        for (NotaCredito notaCredito : notaCreditos) {
+            documentosRecibidos.add(notaCredito.toDTO());
+            totalDeuda += notaCredito.getTotal();
         }
 
         ArrayList<OrdenPago.DTOOrdenPago> pagosRealizados = new ArrayList<>();
@@ -137,7 +156,7 @@ public class CuentaCorriente {
     public List<DTOConsultasDeLibroIVA> getIvaPorDocumento() {
         List<DTOConsultasDeLibroIVA> dto = new ArrayList<>();
 
-        for (Documento documento : documentos) {
+        for (Documento documento : getDocumentos()) {
             List<Iva> ivaDocumentos = documento.getDocumentIva();
             dto.add(new DTOConsultasDeLibroIVA(getCuitProveedor(),
                     getNombreProveedor(),

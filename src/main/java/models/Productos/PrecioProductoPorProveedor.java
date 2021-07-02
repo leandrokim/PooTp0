@@ -1,5 +1,6 @@
 package main.java.models.Productos;
 
+import main.java.controllers.ABMController;
 import main.java.models.Proveedor.Proveedor;
 
 import java.util.ArrayList;
@@ -7,12 +8,12 @@ import java.util.ArrayList;
 public class PrecioProductoPorProveedor {
 
     private double precio;
-    private Proveedor proveedor;
+    private int cuitProveedor;
     private int producto;
 
-    public PrecioProductoPorProveedor(double precio, Proveedor proveedor, int producto) {
+    public PrecioProductoPorProveedor(double precio, int cuitProveedor, int producto) {
         this.precio = precio;
-        this.proveedor = proveedor;
+        this.cuitProveedor = cuitProveedor;
         this.producto = producto;
     }
 
@@ -24,17 +25,17 @@ public class PrecioProductoPorProveedor {
         this.precio = precio;
     }
 
-    public Proveedor getProveedor() {
-        return proveedor;
+    public int getCuitProveedor() {
+        return cuitProveedor;
     }
 
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
+    public void setProveedor(int cuitProveedor) {
+        this.cuitProveedor = cuitProveedor;
     }
 
     public Producto getProducto() {
-        RubroCollection collection = new RubroCollection();
-        ArrayList<Rubro> rubros = collection.getDatos();
+        ABMController controller = ABMController.getInstancia();
+        ArrayList<Rubro> rubros = controller.getRubros();
         for (Rubro rubro : rubros) {
             for (Producto producto : rubro.getProductos()) {
                 if (producto.getIdProducto() == this.producto) {
@@ -53,11 +54,17 @@ public class PrecioProductoPorProveedor {
         return getProducto().getTipoDeIva().getValue() * precio / 100;
     }
 
+    public Proveedor.DTOProveedor getProveedor() {
+        ABMController controller = ABMController.getInstancia();
+        return controller.getProveedor(cuitProveedor);
+    }
+
     public DTOPrecioProductoPorProveedor toDTO() {
+
         DTOPrecioProductoPorProveedor dto = new DTOPrecioProductoPorProveedor();
         dto.precio = getPrecio();
         dto.producto = getProducto().toDTO();
-        dto.proveedor = getProveedor().toDTO();
+        dto.proveedor = getProveedor();
         return dto;
     }
 

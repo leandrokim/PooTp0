@@ -10,6 +10,7 @@ public class Producto {
     private int idProducto;
     private String nombreProducto;
     private Unidad unidad;
+    //Guarda solamente precios de este proveedor
     private List<PrecioProductoPorProveedor> preciosPorProveedor;
     private TipoIVA tipoDeIva;
 

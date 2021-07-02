@@ -1,15 +1,14 @@
 package main.java.controllers;
 
-import main.java.models.Proveedor.Impuesto;
+import main.java.collections.CuentaCorrienteCollection;
 import main.java.models.Documentos.OrdenPago;
+import main.java.models.Proveedor.CuentaCorriente;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class OrdenesYDocumentosController {
 
     private static OrdenesYDocumentosController instancia;
-    private List<OrdenPago> ordenesDePago;
 
     public static OrdenesYDocumentosController getInstancia() {
         if (instancia == null) {
@@ -18,22 +17,29 @@ public class OrdenesYDocumentosController {
         return instancia;
     }
 
-    public List<Impuesto> getImpuestos() {
-        ImpuestoCollection collection = new ImpuestoCollection();
-        return collection.getDatos();
-    }
+    public ArrayList<OrdenPago> getOrdenPagoCollection() {
+        ArrayList<CuentaCorriente> cuentaCorrientes = getCuentasCorrientesCollection();
+        ArrayList<OrdenPago> ordenPagos = new ArrayList<>();
 
-    public List<OrdenPago> getOrdenesDePago() {
-        OrdenPagoCollection collection = new OrdenPagoCollection();
-        return collection.getDatos();
-    }
-
-    public List<OrdenPago.DTOOrdenPago> ordenesDePagoEmitidas() {
-        List<OrdenPago.DTOOrdenPago> res = new ArrayList<>();
-        for (OrdenPago ordenPago : getOrdenesDePago()) {
-            res.add(ordenPago.toDTO());
+        for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+            ordenPagos.addAll(cuentaCorriente.getOrdenesDePago());
         }
-        return res;
+
+        return ordenPagos;
+    }
+
+    public ArrayList<OrdenPago.DTOOrdenPago> getOrdenesDePago() {
+        ArrayList<OrdenPago.DTOOrdenPago> dtoOrdenPago = new ArrayList<>();
+        ArrayList<OrdenPago> ordenesDePago = getOrdenPagoCollection();
+        for (OrdenPago ordenDePago : ordenesDePago) {
+            dtoOrdenPago.add(ordenDePago.toDTO());
+        }
+        return dtoOrdenPago;
+    }
+
+    private ArrayList<CuentaCorriente> getCuentasCorrientesCollection() {
+        CuentaCorrienteCollection collection = new CuentaCorrienteCollection();
+        return collection.getDatos();
     }
 
 }

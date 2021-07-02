@@ -10,16 +10,22 @@ import java.util.List;
 
 public class OrdenPago {
 
-    private int nroOrdenPago;//TODO
+    private int nroOrdenPago;
+    private int cuitProveedor;
     private List<Documento> documentosAsociados;
     private List<Retencion> retenciones;
     private List<FormaPago> formasDePagos;
     private LocalDate fecha;
 
-    public OrdenPago(List<Documento> documentosAsociados,
-                     List<Retencion> retenciones,
-                     List<FormaPago> formasDePagos,
-                     LocalDate fecha) {
+    public OrdenPago(
+            int nroOrdenPago,
+            int cuitProveedor,
+            List<Documento> documentosAsociados,
+            List<Retencion> retenciones,
+            List<FormaPago> formasDePagos,
+            LocalDate fecha) {
+        this.nroOrdenPago = nroOrdenPago;
+        this.cuitProveedor = cuitProveedor;
         this.documentosAsociados = documentosAsociados;
         this.formasDePagos = formasDePagos;
         this.fecha = fecha;
@@ -105,6 +111,8 @@ public class OrdenPago {
 
     public DTOOrdenPago toDTO() {
         DTOOrdenPago dto = new DTOOrdenPago();
+        dto.nroOrdenPago = nroOrdenPago;
+        dto.cuitProveedor = cuitProveedor;
         dto.fecha = getFecha();
         dto.totalACancelar = getTotalACancelar();
         dto.documentosAsociados = new ArrayList<>();
@@ -126,6 +134,8 @@ public class OrdenPago {
     }
 
     public static class DTOOrdenPago {
+        public int nroOrdenPago;
+        public int cuitProveedor;
         public LocalDate fecha;
         public double totalACancelar;
         public List<Documento.DTODocumento> documentosAsociados;

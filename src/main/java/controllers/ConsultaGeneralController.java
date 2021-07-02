@@ -33,19 +33,13 @@ public class ConsultaGeneralController {
     }
 
     public List<Rubro> getRubros() {
-        RubroCollection collection = new RubroCollection();
-        return collection.getDatos();
-    }
-
-    public List<Proveedor> getProveedores() {
-        ProveedorCollection collection = new ProveedorCollection();
-        return collection.getDatos();
-
+        ABMController controller = ABMController.getInstancia();
+        return controller.getRubros();
     }
 
     public List<OrdenPago> getOrdenPago() {
-        OrdenPagoCollection collection = new OrdenPagoCollection();
-        return collection.getDatos();
+        OrdenesYDocumentosController controller = OrdenesYDocumentosController.getInstancia();
+        return controller.getOrdenPagoCollection();
     }
 
     public ArrayList<DTODocumentosPagosYDeudas> consultaCuentaCorrienteProveedores() {
