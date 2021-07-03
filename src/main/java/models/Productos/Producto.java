@@ -75,6 +75,11 @@ public class Producto {
         dto.nombreProducto = getNombreProducto();
         dto.tipoDeIva = getTipoDeIva();
         dto.unidad = getUnidad();
+        dto.preciosPorProveedor = new ArrayList<>();
+        if (preciosPorProveedor != null)
+            for (PrecioProductoPorProveedor precio : preciosPorProveedor) {
+                dto.preciosPorProveedor.add(precio.toDTO());
+            }
         return dto;
     }
 
@@ -82,6 +87,7 @@ public class Producto {
         public int idProducto;
         public String nombreProducto;
         public Unidad unidad;
+        private List<PrecioProductoPorProveedor.DTOPrecioProductoPorProveedor> preciosPorProveedor;
         public TipoIVA tipoDeIva;
     }
 

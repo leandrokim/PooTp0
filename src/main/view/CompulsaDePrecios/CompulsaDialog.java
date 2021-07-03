@@ -30,13 +30,19 @@ public class CompulsaDialog extends JFrame {
             int productoId = Integer.parseInt(idProducto.getText());
             int rubroId = Integer.parseInt(idRubro.getText());
 
-            if (!ABMController.getInstancia().existeRubro(rubroId)) {
-                JOptionPane.showMessageDialog(null, "El Rubro " + rubroId + " no existe");
-                return;
-            }
+            try {
 
-            if (!ABMController.getInstancia().existeProducto(rubroId, productoId)) {
-                JOptionPane.showMessageDialog(null, "El Producto " + productoId + " no existe");
+                if (!ABMController.getInstancia().existeRubro(rubroId)) {
+                    JOptionPane.showMessageDialog(null, "El Rubro " + rubroId + " no existe");
+                    return;
+                }
+
+                if (!ABMController.getInstancia().existeProducto(rubroId, productoId)) {
+                    JOptionPane.showMessageDialog(null, "El Producto " + productoId + " no existe");
+                    return;
+                }
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(null, "No existen rubros o productos todavia");
                 return;
             }
 

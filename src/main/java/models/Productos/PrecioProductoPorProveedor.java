@@ -46,6 +46,10 @@ public class PrecioProductoPorProveedor {
         return null;
     }
 
+    public int getProductoId() {
+        return producto;
+    }
+
     public void setProductoId(int producto) {
         this.producto = producto;
     }
@@ -63,15 +67,15 @@ public class PrecioProductoPorProveedor {
 
         DTOPrecioProductoPorProveedor dto = new DTOPrecioProductoPorProveedor();
         dto.precio = getPrecio();
-        dto.producto = getProducto().toDTO();
-        dto.proveedor = getProveedor();
+        dto.producto = getProductoId();
+        dto.cuitProveedor = getCuitProveedor();
         return dto;
     }
 
     public static class DTOPrecioProductoPorProveedor {
         public double precio;
-        public Producto.DTOProducto producto;
-        public Proveedor.DTOProveedor proveedor;
+        public int cuitProveedor;
+        public int producto;
     }
 
 }

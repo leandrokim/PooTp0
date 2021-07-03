@@ -5,10 +5,8 @@ import main.java.models.dto.DTOConsultasDeLibroIVA;
 import main.view.abm.AbstractABMWindow;
 import main.view.abm.TableColumn;
 
-import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ConsultaIVA extends AbstractABMWindow {
 

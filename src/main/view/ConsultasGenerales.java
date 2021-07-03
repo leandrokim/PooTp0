@@ -66,8 +66,12 @@ public class ConsultasGenerales extends JFrame {
         });
 
         ivaButton.addActionListener(e -> {
-            ConsultaIVA consultaIVA = new ConsultaIVA();
-            consultaIVA.frame.setVisible(true);
+            try {
+                ConsultaIVA consultaIVA = new ConsultaIVA();
+                consultaIVA.frame.setVisible(true);
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(null, "No existen documentos con IVA");
+            }
         });
     }
 

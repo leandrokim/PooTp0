@@ -15,6 +15,7 @@ public class Rubro {
     public Rubro(int idRubro, String nombreRubro) {
         this.idRubro = idRubro;
         this.nombreRubro = nombreRubro;
+        productos = new ArrayList<>();
     }
 
     public int getIdRubro() {
@@ -62,12 +63,18 @@ public class Rubro {
         DTORubro dto = new DTORubro();
         dto.idRubro = getIdRubro();
         dto.nombreRubro = getNombreRubro();
+        dto.productos = new ArrayList<>();
+        if (productos != null)
+            for (Producto producto : productos) {
+                dto.productos.add(producto.toDTO());
+            }
         return dto;
     }
 
     public static class DTORubro {
         public Integer idRubro;
         public String nombreRubro;
+        public List<Producto.DTOProducto> productos;
     }
 
 }
