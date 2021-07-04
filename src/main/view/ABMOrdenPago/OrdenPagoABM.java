@@ -30,7 +30,7 @@ public class OrdenPagoABM extends AbstractABMWindow {
         tableColumns.add(new TableColumn("Documentos Asociados", int.class));
         tableColumns.add(new TableColumn("Total A Cancelar", String.class));
         tableColumns.add(new TableColumn("Retenciones", int.class));
-        tableColumns.add(new TableColumn("Formas de Pago", LocalDate.class));
+        tableColumns.add(new TableColumn("Formas de Pago", JButton.class));
         tableModel = new OrdenPagoABMTable(ordenesDePago, tableColumns);
 
         return tableModel;
