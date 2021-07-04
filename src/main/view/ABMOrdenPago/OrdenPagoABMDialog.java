@@ -12,18 +12,12 @@ public class OrdenPagoABMDialog extends AbstractABMDialog<OrdenPago.DTOOrdenPago
 
     private JLabel fechaLabel;
     private JFormattedTextField fechaField;
-    private JLabel documentosAsociadosLabel;
-    private JTextField documentosAsociadosField;
-    private JLabel retencionesLabel;
-    private JTextField retencionesField;
+    private JButton documentosAsociadosButton;
+    private JButton retenciones;
     private JLabel totalLabel;
     private JTextField totalField;
     private JLabel formaPagoLabel;
-    private JTextField formaPagoField;
-    private JLabel chequeLabel;
-    private JTextField chequeField;
-    private JLabel efectivoLabel; //dudoso todo
-    private JTextField efectivoField;
+    private JComboBox formaPagoField;
 
     public OrdenPagoABMDialog(JFrame frame) {
         super(frame, "Orden de Pago", true);
@@ -39,10 +33,10 @@ public class OrdenPagoABMDialog extends AbstractABMDialog<OrdenPago.DTOOrdenPago
             e.printStackTrace();
         }
 
-        documentosAsociadosLabel = new JLabel("Documentos Asociados");
-
-        documentosAsociadosField = new JTextField();
-        documentosAsociadosField.setColumns(10);
+        documentosAsociadosButton.addActionListener(e -> {
+            Documento documentosAsociados= new Documento();
+            documentosAsociados.frame.setVisible(true);
+        });
 
         retencionesLabel = new JLabel("Retenciones");
 
@@ -54,20 +48,9 @@ public class OrdenPagoABMDialog extends AbstractABMDialog<OrdenPago.DTOOrdenPago
         totalField = new JTextField();
         totalField.setColumns(10);
 
-        formaPagoLabel = new JLabel("Formas de Pago");
-
-        formaPagoField = new JTextField();
-        formaPagoField.setColumns(10);
-
-        chequeLabel = new JLabel("Cheque");
-
-        chequeField = new JTextField(); //nose si cheque y efect. van. Los inclui en la pantalla
-        chequeField.setColumns(10); // pero nose si aca van
-
-        efectivoLabel = new JLabel("Efectivo");
-
-        efectivoField = new JTextField();
-        efectivoField.setColumns(10);
+        String[] tipoStrings = {FormaDePago.CHEQUE.name(), FormaDePago.EFECTIVO.name()};
+        formaPagoField = new JComboBox(tipoStrings);
+        formaPagoField.setSelectedIndex(0);
 
 
     }
@@ -90,9 +73,7 @@ public class OrdenPagoABMDialog extends AbstractABMDialog<OrdenPago.DTOOrdenPago
                         .addComponent(documentosAsociadosField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addComponent(retencionesField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
                         .addComponent(totalField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(formaPagoField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(chequeField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(efectivoField))
+                        .addComponent(formaPagoField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(108, Short.MAX_VALUE);
     }
 
@@ -120,12 +101,7 @@ public class OrdenPagoABMDialog extends AbstractABMDialog<OrdenPago.DTOOrdenPago
                         .addComponent(formaPagoLabel)
                         .addComponent(fechaField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(chequeLabel)
-                        .addComponent(chequeField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(efectivoLabel).addComponent(efectivoLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE))
                 .addContainerGap(60, Short.MAX_VALUE);
     }
 
@@ -136,10 +112,10 @@ public class OrdenPagoABMDialog extends AbstractABMDialog<OrdenPago.DTOOrdenPago
             ordenPago = new OrdenPago.DTOOrdenPago();
         }
         ordenPago.fecha = DateUtil.toDate(fechaField.getText());
-//        ordenPago.documentosAsociados = documentosAsociadosField.getText(); // son listas, me pide que lo cambie a string pero rompe el DTO
+//        ordenPago.documentosAsociados = documentosAsociadosField.getText(); 
 //        ordenPago.retenciones = Double.parseDouble(retencionesField.getText());
         ordenPago.totalACancelar = Double.parseDouble(totalField.getText());
-//        ordenPago.formasDePago = formaPagoField.getText();
+        ordenPago.tipo = index == 0 ? FormaDePago.CHEQUE : FormaDePago.EFECTIVO;
         dto = ordenPago;
     }
 
@@ -150,7 +126,8 @@ public class OrdenPagoABMDialog extends AbstractABMDialog<OrdenPago.DTOOrdenPago
         documentosAsociadosField.setText(String.valueOf(ordenPago.documentosAsociados));
         retencionesField.setText(String.valueOf(ordenPago.retenciones));
         totalField.setText(String.valueOf(ordenPago.totalACancelar));
-        formaPagoField.setText(String.valueOf(ordenPago.formasDePago));
+        formaPagoField.setSelectedIndex(formaPago
+                .tipo.equals(FromaDePago.CHEQUE) ? 0 : 1);
     }
 
     @Override
