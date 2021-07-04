@@ -13,7 +13,7 @@ public class OrdenPagoABMDialog extends AbstractABMDialog<OrdenPago.DTOOrdenPago
     private JLabel fechaLabel;
     private JFormattedTextField fechaField;
     private JButton documentosAsociadosButton;
-    private JButton retenciones;
+    private JButton retencionesButton;
     private JLabel totalLabel;
     private JTextField totalField;
     private JLabel formaPagoLabel;
@@ -38,10 +38,10 @@ public class OrdenPagoABMDialog extends AbstractABMDialog<OrdenPago.DTOOrdenPago
             documentosAsociados.frame.setVisible(true);
         });
 
-        retencionesLabel = new JLabel("Retenciones");
-
-        retencionesField = new JTextField();
-        retencionesField.setColumns(10);
+        retencionesButton.addActionListener(e -> {
+            Retencion retenciones= new Retencion();
+            retenciones.frame.setVisible(true);
+        });
 
         totalLabel = new JLabel("Total a Cancelar");
 
