@@ -3,12 +3,16 @@ package main.view.ABMFactura;
 import main.java.controllers.ABMController;
 import main.java.models.Documentos.Factura;
 import main.java.models.IVA.ResponsableIVA;
+import main.view.ABMOrdenPago.OrdenPagoABM;
 import main.view.abm.AbstractABMWindow;
 import main.view.abm.ModalResult;
 import main.view.abm.TableColumn;
+import main.view.util.JTableButtonMouseListener;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellRenderer;
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -16,6 +20,10 @@ public class FacturaABM extends AbstractABMWindow {
 
     private FacturaABMTable tableModel;
     private ArrayList<Factura.DTOFactura> facturas;
+
+    public FacturaABM() {
+        super();
+    }
 
     @Override
     protected String getTitle() {
@@ -33,9 +41,19 @@ public class FacturaABM extends AbstractABMWindow {
         tableColumns.add(new TableColumn("Total", double.class));
         tableColumns.add(new TableColumn("Paga", boolean.class));
         tableColumns.add(new TableColumn("Responsable IVA", ResponsableIVA.class));
+        tableColumns.add(new TableColumn("Productos", JButton.class));
         tableModel = new FacturaABMTable(facturas, tableColumns);
 
         return tableModel;
+    }
+
+    @Override
+    protected void initialize() {
+        super.initialize();
+
+        TableCellRenderer buttonRenderer = new JTableButtonRenderer();
+        table.getColumn("Productos").setCellRenderer(buttonRenderer);
+        table.addMouseListener(new JTableButtonMouseListener(table));
     }
 
     @Override
@@ -81,6 +99,13 @@ public class FacturaABM extends AbstractABMWindow {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private static class JTableButtonRenderer implements TableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            return (JButton) value;
         }
     }
 

@@ -1,8 +1,8 @@
 package main.java.models.Documentos;
 
 import main.java.models.IVA.Iva;
-import main.java.models.Productos.PrecioProductoPorProveedor;
 import main.java.models.IVA.ResponsableIVA;
+import main.java.models.Productos.PrecioProductoPorProveedor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class Factura extends Documento {
     }
 
     @Override
-    public List<Iva> getDocumentIva() {
+    public ArrayList<Iva> getDocumentIva() {
         return super.getDocumentIva();
     }
 
@@ -72,6 +72,20 @@ public class Factura extends Documento {
     @Override
     public LocalDate getFecha() {
         return super.getFecha();
+    }
+
+    @Override
+    public void setProductos(List<PrecioProductoPorProveedor> productos) {
+        super.setProductos(productos);
+
+        if (!getProveedor().isResponsableIva()) {
+            double totalIva = 0d;
+            ArrayList<Iva> ivas = getDocumentIva();
+            for (Iva iva : ivas) {
+                totalIva += iva.getTotal();
+            }
+            setTotal(getTotal() + totalIva);
+        }
     }
 
     @Override

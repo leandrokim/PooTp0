@@ -88,6 +88,23 @@ public class CuentaCorriente {
         this.notaDebitos = notaDebitos;
     }
 
+    public void addOrdenPago(OrdenPago ordenPago) {
+        if (ordenesDePago == null) {
+            ordenesDePago = new ArrayList<>();
+        }
+        ordenesDePago.add(ordenPago);
+    }
+
+    public void removeOrdenPago(OrdenPago ordenPago) {
+        int index = 0;
+        for (int i = 0; i < ordenesDePago.size(); i++) {
+            if (ordenesDePago.get(i).getNroOrdenPago() == ordenPago.getNroOrdenPago()) {
+                index = i;
+            }
+        }
+        ordenesDePago.remove(index);
+    }
+
     public static class DTOCuentaCorriente {
 
     }
@@ -96,15 +113,15 @@ public class CuentaCorriente {
         return proveedor.getCuitProveedor();
     }
 
-    public List<NotaCredito> getNotasCredito() {
+    public ArrayList<NotaCredito> getNotasCredito() {
         return notaCreditos;
     }
 
-    public List<NotaDebito> getNotasDebito() {
+    public ArrayList<NotaDebito> getNotasDebito() {
         return notaDebitos;
     }
 
-    public List<Factura> getFacturas() {
+    public ArrayList<Factura> getFacturas() {
         return facturas;
     }
 

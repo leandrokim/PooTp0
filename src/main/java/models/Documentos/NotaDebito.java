@@ -35,7 +35,7 @@ public class NotaDebito extends Documento {
         this.vigente = vigente;
     }
 
-    public List<Iva> getDocumentIva() {
+    public ArrayList<Iva> getDocumentIva() {
         return super.getDocumentIva();
     }
 

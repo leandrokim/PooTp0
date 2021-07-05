@@ -2,6 +2,8 @@ package main.java.controllers;
 
 import main.java.collections.CuentaCorrienteCollection;
 import main.java.models.Documentos.Factura;
+import main.java.models.Documentos.NotaCredito;
+import main.java.models.Documentos.NotaDebito;
 import main.java.models.Documentos.OrdenPago;
 import main.java.models.Productos.PrecioProductoPorProveedor;
 import main.java.models.Productos.Rubro;
@@ -79,12 +81,28 @@ public class ConsultaGeneralController {
 
     public double totalDeudaPorProveedor(int cuitProveedor) {
         double totalDeudaPorProveedor = 0;
-        List<CuentaCorriente> cuentaCorrientes = getCuentaCorrientes();
+        ArrayList<CuentaCorriente> cuentaCorrientes = getCuentaCorrientes();
         for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
             if (cuitProveedor == cuentaCorriente.getCuitProveedor()) {
-                List<OrdenPago> ordenesDePago = getOrdenPago();
-                for (OrdenPago ordenPago : ordenesDePago) {
-                    totalDeudaPorProveedor += ordenPago.getTotalACancelar();
+                ArrayList<Factura> facturas = cuentaCorriente.getFacturas();
+                for (Factura factura : facturas) {
+                    if (!factura.isFacturaPaga()) {
+                        totalDeudaPorProveedor += factura.getTotal();
+                    }
+                }
+
+                ArrayList<NotaDebito> notaDebitos = cuentaCorriente.getNotasDebito();
+                for (NotaDebito notaDebito : notaDebitos) {
+                    if (notaDebito.isVigente()) {
+                        totalDeudaPorProveedor -= notaDebito.getTotal();
+                    }
+                }
+
+                ArrayList<NotaCredito> notaCreditos = cuentaCorriente.getNotasCredito();
+                for (NotaCredito notaCredito : notaCreditos) {
+                    if (notaCredito.isVigente()) {
+                        totalDeudaPorProveedor += notaCredito.getTotal();
+                    }
                 }
             }
         }

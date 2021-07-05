@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class AbstractModelTable<T> extends AbstractTableModel {
 
-    public final ArrayList<T> lista;
+    public ArrayList<T> lista;
 
     protected ArrayList<TableColumn> tableColumns;
 
@@ -57,6 +57,11 @@ public class AbstractModelTable<T> extends AbstractTableModel {
 
     public void eliminar(int fila) {
         lista.remove(fila);
+        fireTableDataChanged();
+    }
+
+    public void nuevaLista(ArrayList<T> lista) {
+        this.lista = lista;
         fireTableDataChanged();
     }
 

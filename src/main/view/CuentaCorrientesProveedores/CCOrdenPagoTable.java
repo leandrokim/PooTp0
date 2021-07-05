@@ -2,8 +2,10 @@ package main.view.CuentaCorrientesProveedores;
 
 import main.java.models.Documentos.*;
 import main.java.util.DateUtil;
+import main.view.FormaDePago.FormasDePago;
 import main.view.abm.AbstractModelTable;
 import main.view.abm.TableColumn;
+import main.view.retenciones.Retenciones;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -49,14 +51,14 @@ public class CCOrdenPagoTable extends AbstractModelTable<OrdenPago.DTOOrdenPago>
             case 5:
                 JButton impagos = new JButton("Visualizar");
                 impagos.addActionListener(e -> {
-                    CCFormasDePago formasDePago = new CCFormasDePago(dto.formasDePago);
+                    FormasDePago formasDePago = new FormasDePago(dto.formasDePago);
                     formasDePago.frame.setVisible(true);
                 });
                 return impagos;
             case 6:
                 JButton pagos = new JButton("Visualizar");
                 pagos.addActionListener(e -> {
-                    CCRetenciones retenciones = new CCRetenciones(dto.retenciones);
+                    Retenciones retenciones = new Retenciones(dto.retenciones);
                     retenciones.frame.setVisible(true);
                 });
                 return pagos;

@@ -45,7 +45,6 @@ public class OrdenPago {
     }
 
     public List<Retencion> getRetenciones() {
-
         return retenciones;
     }
 
@@ -59,11 +58,10 @@ public class OrdenPago {
             DTOListadoDeImpuestosConNombreYTotalRetenido busq = verificarImpuesto(dto, nombreImpuesto);
             if (busq != null) {
                 busq.totalRetenido = busq.totalRetenido + total;
-                dto.replaceAll(p -> p.nombreDelImpuesto == busq.nombreDelImpuesto ? busq : p);//dto.replaceAll(DTOListadoDeImpuestosConNombreYTotalRetenido ->DTOListadoDeImpuestosConNombreYTotalRetenido.nombreDelImpuesto==busq.nombreDelImpuesto?busq:DTOListadoDeImpuestosConNombreYTotalRetenido);
+                dto.replaceAll(p -> p.nombreDelImpuesto.equals(busq.nombreDelImpuesto) ? busq : p);//dto.replaceAll(DTOListadoDeImpuestosConNombreYTotalRetenido ->DTOListadoDeImpuestosConNombreYTotalRetenido.nombreDelImpuesto==busq.nombreDelImpuesto?busq:DTOListadoDeImpuestosConNombreYTotalRetenido);
             } else {
                 dto.add(new DTOListadoDeImpuestosConNombreYTotalRetenido(total, nombreImpuesto));
             }
-
         }
 
         return dto;
@@ -107,6 +105,24 @@ public class OrdenPago {
         }
 
         return totalACancelar;
+    }
+
+    public double getTotalRetencion() {
+        double totalRetenciones = 0d;
+
+        for (Retencion retencion : getRetenciones()) {
+            totalRetenciones += retencion.getTotal();
+        }
+
+        return totalRetenciones;
+    }
+
+    public int getCuitProveedor() {
+        return cuitProveedor;
+    }
+
+    public int getNroOrdenPago() {
+        return nroOrdenPago;
     }
 
     public DTOOrdenPago toDTO() {

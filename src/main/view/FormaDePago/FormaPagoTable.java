@@ -1,4 +1,4 @@
-package main.view.CuentaCorrientesProveedores;
+package main.view.FormaDePago;
 
 import main.java.models.FormaDePago.Cheque;
 import main.java.models.FormaDePago.FormaPago;
@@ -8,9 +8,9 @@ import main.view.abm.TableColumn;
 
 import java.util.ArrayList;
 
-public class CCFormaPagoTable extends AbstractModelTable<FormaPago.DTOFormaPago> {
+public class FormaPagoTable extends AbstractModelTable<FormaPago.DTOFormaPago> {
 
-    public CCFormaPagoTable(ArrayList<FormaPago.DTOFormaPago> lista, ArrayList<TableColumn> columnas) {
+    public FormaPagoTable(ArrayList<FormaPago.DTOFormaPago> lista, ArrayList<TableColumn> columnas) {
         super(lista, columnas);
     }
 

@@ -3,6 +3,7 @@ package main.view.CuentaCorrientesProveedores;
 import main.java.models.Documentos.Documento;
 import main.view.abm.AbstractABMWindow;
 import main.view.abm.TableColumn;
+import main.view.documentos.DocumentosTable;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class CCDocumentosImpagos extends AbstractABMWindow {
         tableColumns.add(new TableColumn("Cuit Proveedor", int.class));
         tableColumns.add(new TableColumn("Fecha", String.class));
         tableColumns.add(new TableColumn("Total", double.class));
-        return new CCDocumentosTable(documentosImpagos, tableColumns);
+        return new DocumentosTable(documentosImpagos, tableColumns);
     }
 
     //Is Not ABM

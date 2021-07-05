@@ -29,6 +29,8 @@ public class FacturaABMTable extends AbstractModelTable<Factura.DTOFactura> {
                 return dto.facturaPaga;
             case 5:
                 return dto.responsabilidadIVA;
+            case 6:
+                return null;//TODO
             default:
                 return "";
         }

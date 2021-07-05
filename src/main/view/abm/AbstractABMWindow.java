@@ -56,30 +56,55 @@ public abstract class AbstractABMWindow {
 
             JSeparator separator = new JSeparator();
             GroupLayout gl_panel = new GroupLayout(panel);
-            gl_panel.setHorizontalGroup(
-                    gl_panel.createParallelGroup(Alignment.LEADING)
-                            .addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-                                    .addContainerGap(423, Short.MAX_VALUE)
-                                    .addComponent(btnAgregar)
-                                    .addGap(18)
-                                    .addComponent(btnModificar)
-                                    .addGap(18)
-                                    .addComponent(btnEliminar)
-                                    .addContainerGap())
-                            .addComponent(separator, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
-            );
-            gl_panel.setVerticalGroup(
-                    gl_panel.createParallelGroup(Alignment.LEADING)
-                            .addGroup(gl_panel.createSequentialGroup()
-                                    .addContainerGap()
-                                    .addComponent(separator, GroupLayout.PREFERRED_SIZE, 2, GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-                                            .addComponent(btnEliminar)
-                                            .addComponent(btnModificar)
-                                            .addComponent(btnAgregar))
-                                    .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            );
+            if (isModificar()) {
+                gl_panel.setHorizontalGroup(
+                        gl_panel.createParallelGroup(Alignment.LEADING)
+                                .addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+                                        .addContainerGap(423, Short.MAX_VALUE)
+                                        .addComponent(btnAgregar)
+                                        .addGap(18)
+                                        .addComponent(btnModificar)
+                                        .addGap(18)
+                                        .addComponent(btnEliminar)
+                                        .addContainerGap())
+                                .addComponent(separator, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
+                );
+                gl_panel.setVerticalGroup(
+                        gl_panel.createParallelGroup(Alignment.LEADING)
+                                .addGroup(gl_panel.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(separator, GroupLayout.PREFERRED_SIZE, 2, GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                        .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+                                                .addComponent(btnEliminar)
+                                                .addComponent(btnModificar)
+                                                .addComponent(btnAgregar))
+                                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                );
+            } else {
+                gl_panel.setHorizontalGroup(
+                        gl_panel.createParallelGroup(Alignment.LEADING)
+                                .addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+                                        .addContainerGap(423, Short.MAX_VALUE)
+                                        .addComponent(btnAgregar)
+                                        .addGap(18)
+                                        .addComponent(btnEliminar)
+                                        .addContainerGap())
+                                .addComponent(separator, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
+                );
+                gl_panel.setVerticalGroup(
+                        gl_panel.createParallelGroup(Alignment.LEADING)
+                                .addGroup(gl_panel.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(separator, GroupLayout.PREFERRED_SIZE, 2, GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                        .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+                                                .addComponent(btnEliminar)
+                                                .addComponent(btnAgregar))
+                                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                );
+            }
+
             panel.setLayout(gl_panel);
         }
 
@@ -111,6 +136,10 @@ public abstract class AbstractABMWindow {
     }
 
     protected boolean isABM() {
+        return true;
+    }
+
+    protected boolean isModificar() {
         return true;
     }
 

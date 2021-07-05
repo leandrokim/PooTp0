@@ -1,8 +1,5 @@
 package main.java.models.dto;
 
-import java.time.LocalDate;
-import java.util.List;
-
 public class DTOListadoDeImpuestosConNombreYTotalRetenido {
 
     public double totalRetenido;

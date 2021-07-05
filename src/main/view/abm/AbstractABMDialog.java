@@ -61,80 +61,10 @@ public abstract class AbstractABMDialog<T> extends JDialog {
         buttonPane.add(cancelButton);
     }
 
-    /*
-        protected abstract void inicializarCampos(){
-            lblNewLabel = new JLabel("DNI");
-
-            txtDNI = new JTextField();
-            txtDNI.setColumns(10);
-
-            lblNewLabel_1 = new JLabel("Apellido");
-
-            txtApellido = new JTextField();
-            txtApellido.setColumns(10);
-
-            lblNombre = new JLabel("Nombre");
-
-            txtNombre = new JTextField();
-            txtNombre.setColumns(10);
-
-            chcSindicalizado = new JCheckBox("Sindicalizado");
-
-            lblNewLabel_2 = new JLabel("Nacimiento");
-
-            txtFNacimiento = new JFormattedTextField();
-        }
-     */
     protected abstract void inicializarCampos();
 
-    /*
-    gl_contentPanel.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-                .addComponent(lblNewLabel_1)
-                .addComponent(lblNewLabel)
-                .addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-                .addComponent(lblNewLabel_2)
-                .addComponent(lblNewLabel_3))
-        .addPreferredGap(ComponentPlacement.RELATED)
-        .addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-                .addComponent(chcSindicalizado)
-                .addComponent(txtDNI, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addComponent(txtApellido, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
-                .addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
-                .addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING, false)
-                        .addComponent(txtSueldo, Alignment.LEADING)
-                        .addComponent(txtFNacimiento, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)))
-        .addContainerGap(108, Short.MAX_VALUE)
-     */
     protected abstract GroupLayout.SequentialGroup getHorizontalGroup(GroupLayout group);
 
-    /*
-     gl_contentPanel.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-                .addComponent(lblNewLabel)
-                .addComponent(txtDNI, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        .addGap(4)
-        .addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-                .addComponent(lblNewLabel_1)
-                .addComponent(txtApellido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(ComponentPlacement.RELATED)
-        .addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-                .addComponent(lblNombre)
-                .addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(ComponentPlacement.RELATED)
-        .addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-                .addComponent(lblNewLabel_2)
-                .addComponent(txtFNacimiento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(ComponentPlacement.RELATED)
-        .addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-                .addComponent(lblNewLabel_3)
-                .addComponent(txtSueldo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(ComponentPlacement.RELATED)
-        .addComponent(chcSindicalizado)
-        .addContainerGap(60, Short.MAX_VALUE)
-     */
     protected abstract GroupLayout.SequentialGroup getVerticalGroup(GroupLayout group);
 
     public T getDTO() {

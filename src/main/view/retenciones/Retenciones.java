@@ -1,4 +1,4 @@
-package main.view.CuentaCorrientesProveedores;
+package main.view.retenciones;
 
 import main.java.models.Proveedor.Retencion;
 import main.view.abm.AbstractABMWindow;
@@ -7,11 +7,11 @@ import main.view.abm.TableColumn;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
-public class CCRetenciones extends AbstractABMWindow {
+public class Retenciones extends AbstractABMWindow {
 
     private final ArrayList<Retencion.DTORetencion> retencions;
 
-    public CCRetenciones(ArrayList<Retencion.DTORetencion> retencions) {
+    public Retenciones(ArrayList<Retencion.DTORetencion> retencions) {
         this.retencions = retencions;
         initialize();
     }
@@ -29,7 +29,7 @@ public class CCRetenciones extends AbstractABMWindow {
         tableColumns.add(new TableColumn("Nombre Impuesto", String.class));
         tableColumns.add(new TableColumn("Porcentaje", double.class));
         tableColumns.add(new TableColumn("Total", double.class));
-        return new CCRetencionesTable(retencions, tableColumns);
+        return new RetencionesTable(retencions, tableColumns);
     }
 
     //Is Not ABM

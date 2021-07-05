@@ -1,4 +1,4 @@
-package main.view.CuentaCorrientesProveedores;
+package main.view.retenciones;
 
 import main.java.models.Proveedor.Retencion;
 import main.view.abm.AbstractModelTable;
@@ -6,9 +6,9 @@ import main.view.abm.TableColumn;
 
 import java.util.ArrayList;
 
-public class CCRetencionesTable extends AbstractModelTable<Retencion.DTORetencion> {
+public class RetencionesTable extends AbstractModelTable<Retencion.DTORetencion> {
 
-    public CCRetencionesTable(ArrayList<Retencion.DTORetencion> lista, ArrayList<TableColumn> columnas) {
+    public RetencionesTable(ArrayList<Retencion.DTORetencion> lista, ArrayList<TableColumn> columnas) {
         super(lista, columnas);
     }
 

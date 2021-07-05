@@ -1,8 +1,11 @@
 package main.java.models.Documentos;
 
+import main.java.controllers.ABMController;
 import main.java.models.IVA.Iva;
 import main.java.models.Productos.PrecioProductoPorProveedor;
 import main.java.models.IVA.TipoIVA;
+import main.java.models.Proveedor.Proveedor;
+import main.java.util.DTOUtil;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -53,6 +56,11 @@ public abstract class Documento {
         }
     }
 
+    public Proveedor getProveedor() {
+        ABMController controller = ABMController.getInstancia();
+        return DTOUtil.toClass(controller.getProveedor(cuitProveedor), Proveedor.class);
+    }
+
     public void setTotal(double total) {
         this.total = total;
     }
@@ -61,8 +69,8 @@ public abstract class Documento {
         return total;
     }
 
-    public List<Iva> getDocumentIva() {
-        List<Iva> res = new ArrayList<>();
+    public ArrayList<Iva> getDocumentIva() {
+        ArrayList<Iva> res = new ArrayList<>();
         for (PrecioProductoPorProveedor precioProductoPorProveedor : productos) {
             TipoIVA tipoIVA = precioProductoPorProveedor.getProducto().getTipoDeIva();
 

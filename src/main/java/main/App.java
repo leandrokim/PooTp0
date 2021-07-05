@@ -1,6 +1,5 @@
 package main.java.main;
 
-import main.java.collections.CuentaCorrienteCollection;
 import main.java.controllers.ABMController;
 import main.java.models.Documentos.*;
 import main.java.models.FormaDePago.Efectivo;
@@ -11,7 +10,10 @@ import main.java.models.Productos.PrecioProductoPorProveedor;
 import main.java.models.Productos.Producto;
 import main.java.models.Productos.Rubro;
 import main.java.models.Productos.Unidad;
-import main.java.models.Proveedor.*;
+import main.java.models.Proveedor.Certificado;
+import main.java.models.Proveedor.Impuesto;
+import main.java.models.Proveedor.Proveedor;
+import main.java.models.Proveedor.Retencion;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,9 +29,7 @@ public class App {
                 LocalDate.of(2021, 6, 27),
                 LocalDate.of(2030, 6, 27),
                 false,
-                new Impuesto(1,
-                        "choreo",
-                        21)));
+                new Impuesto(1)));
 
         Proveedor ricki = new Proveedor(666,
                 "Ricardo Fort",
@@ -40,18 +40,17 @@ public class App {
                 "1122223333",
                 "Miameeeeee");
 
-        Rubro rubro = new Rubro(1, "Limpieza");
+        Rubro rubro = new Rubro(1, "Golosinas");
 
         Producto producto = new Producto(
                 1,
-                "Magistral",
+                "Chocolate Felfort",
                 Unidad.UNIDAD,
                 new ArrayList<>(),
                 TipoIVA.VEINTIUNO
         );
         List<Producto> productos = new ArrayList<>();
         productos.add(producto);
-
 
         PrecioProductoPorProveedor precioProductoPorProveedor = new PrecioProductoPorProveedor(
                 10d,
@@ -92,9 +91,7 @@ public class App {
 
         List<Retencion> retenciones = new ArrayList<>();
         retenciones.add(new Retencion(1,
-                new Impuesto(1,
-                        "choreo",
-                        21),
+                new Impuesto(1),
                 10));
 
         OrdenPago ordenPago = new OrdenPago(1,

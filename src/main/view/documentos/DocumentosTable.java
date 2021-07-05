@@ -1,4 +1,4 @@
-package main.view.CuentaCorrientesProveedores;
+package main.view.documentos;
 
 import main.java.models.Documentos.Documento;
 import main.java.models.Documentos.Factura;
@@ -10,9 +10,9 @@ import main.view.abm.TableColumn;
 
 import java.util.ArrayList;
 
-public class CCDocumentosTable extends AbstractModelTable<Documento.DTODocumento> {
+public class DocumentosTable extends AbstractModelTable<Documento.DTODocumento> {
 
-    public CCDocumentosTable(ArrayList<Documento.DTODocumento> lista, ArrayList<TableColumn> columnas) {
+    public DocumentosTable(ArrayList<Documento.DTODocumento> lista, ArrayList<TableColumn> columnas) {
         super(lista, columnas);
     }
 

@@ -3,6 +3,7 @@ package main.view.CuentaCorrientesProveedores;
 import main.java.models.dto.DTODocumentosPagosYDeudas;
 import main.view.abm.AbstractModelTable;
 import main.view.abm.TableColumn;
+import main.view.documentos.Documentos;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class CuentaCorrientesProveedoresTable extends AbstractModelTable<DTODocu
             case 2:
                 JButton recibidos = new JButton("Visualizar");
                 recibidos.addActionListener(e -> {
-                    CCDocumentosRecibidos documentosRecibidos = new CCDocumentosRecibidos(dto.documentosRecibidos);
+                    Documentos documentosRecibidos = new Documentos(dto.documentosRecibidos);
                     documentosRecibidos.frame.setVisible(true);
                 });
                 return recibidos;

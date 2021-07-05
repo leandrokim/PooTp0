@@ -1,4 +1,4 @@
-package main.view.CuentaCorrientesProveedores;
+package main.view.FormaDePago;
 
 import main.java.models.FormaDePago.FormaPago;
 import main.view.abm.AbstractABMWindow;
@@ -7,11 +7,11 @@ import main.view.abm.TableColumn;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
-public class CCFormasDePago extends AbstractABMWindow {
+public class FormasDePago extends AbstractABMWindow {
 
     private final ArrayList<FormaPago.DTOFormaPago> formaPagos;
 
-    public CCFormasDePago(ArrayList<FormaPago.DTOFormaPago> formaPagos) {
+    public FormasDePago(ArrayList<FormaPago.DTOFormaPago> formaPagos) {
         this.formaPagos = formaPagos;
         initialize();
     }
@@ -30,7 +30,7 @@ public class CCFormasDePago extends AbstractABMWindow {
         tableColumns.add(new TableColumn("Fecha de Emision", String.class));
         tableColumns.add(new TableColumn("Fecha de Vencimiento", String.class));
         tableColumns.add(new TableColumn("Firmante", String.class));
-        return new CCFormaPagoTable(formaPagos, tableColumns);
+        return new FormaPagoTable(formaPagos, tableColumns);
     }
 
     //Is Not ABM
