@@ -19,6 +19,8 @@ public class UsuarioABMTable extends AbstractModelTable<Usuario.DTOUsuario> {
             case 0:
                 return dto.nombre;
             case 1:
+                return dto.password;
+            case 2:
                 return dto.tipo;
             default:
                 return "";

@@ -70,6 +70,7 @@ public class ConsultasGenerales extends JFrame {
                 ConsultaIVA consultaIVA = new ConsultaIVA();
                 consultaIVA.frame.setVisible(true);
             } catch (Exception exception) {
+                exception.printStackTrace();
                 JOptionPane.showMessageDialog(null, "No existen documentos con IVA");
             }
         });

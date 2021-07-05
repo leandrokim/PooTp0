@@ -40,6 +40,11 @@ public class App {
                 "1122223333",
                 "Miameeeeee");
 
+        ArrayList<Proveedor.DTOProveedor> aux = new ArrayList<>();
+        aux.add(ricki.toDTO());
+
+        abmController.guardarProveedores(aux);
+
         Rubro rubro = new Rubro(1, "Golosinas");
 
         Producto producto = new Producto(
@@ -74,6 +79,8 @@ public class App {
                 ordenCompras,
                 LocalDate.of(2021, 6, 27),
                 ricki.getCuitProveedor());
+
+        ricki.setOrdenesDeCompra(ordenCompras);
 
         factura.setProductos(precios);
 
@@ -120,6 +127,7 @@ public class App {
         abmController.guardarFacturas(facturas);
         abmController.guardarNotasDebito(notaDebitos);
 
+        //TODO agregar orden pago con metodo
     }
 
 }

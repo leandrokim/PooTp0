@@ -1,13 +1,18 @@
 
 package main.view.ABMNotaCredito;
 
-import java.util.ArrayList;
-import javax.swing.table.AbstractTableModel;
 import main.java.controllers.ABMController;
 import main.java.models.Documentos.NotaCredito.DTONotaCredito;
 import main.view.abm.AbstractABMWindow;
 import main.view.abm.ModalResult;
 import main.view.abm.TableColumn;
+import main.view.util.JTableButtonMouseListener;
+
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellRenderer;
+import java.awt.*;
+import java.util.ArrayList;
 
 public class NotaCreditoABM extends AbstractABMWindow {
     private NotaCreditoABMTable tableModel;
@@ -29,8 +34,18 @@ public class NotaCreditoABM extends AbstractABMWindow {
         tableColumns.add(new TableColumn("fecha", String.class));
         tableColumns.add(new TableColumn("cuitProveedor", String.class));
         tableColumns.add(new TableColumn("total", String.class));
+        tableColumns.add(new TableColumn("Productos", JButton.class));
         this.tableModel = new NotaCreditoABMTable(this.notasCredito, tableColumns);
         return this.tableModel;
+    }
+
+    @Override
+    protected void initialize() {
+        super.initialize();
+
+        TableCellRenderer buttonRenderer = new JTableButtonRenderer();
+        table.getColumn("Productos").setCellRenderer(buttonRenderer);
+        table.addMouseListener(new JTableButtonMouseListener(table));
     }
 
     protected void agregar() {
@@ -63,7 +78,7 @@ public class NotaCreditoABM extends AbstractABMWindow {
     protected void modificar() {
         try {
             NotaCreditoABMDialog dialog = new NotaCreditoABMDialog(this.frame);
-            dialog.setDTO((DTONotaCredito)this.notasCredito.get(this.table.getSelectedRow()));
+            dialog.setDTO(this.notasCredito.get(this.table.getSelectedRow()));
             dialog.setDefaultCloseOperation(2);
             dialog.setVisible(true);
             if (dialog.getModalResult() == ModalResult.OK) {
@@ -76,4 +91,12 @@ public class NotaCreditoABM extends AbstractABMWindow {
         }
 
     }
+
+    private static class JTableButtonRenderer implements TableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            return (JButton) value;
+        }
+    }
+
 }

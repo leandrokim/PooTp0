@@ -1,6 +1,10 @@
 package main.view.TotalFactura;
 
+import main.java.util.DateUtil;
+
 import javax.swing.*;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -28,25 +32,48 @@ public class TotalFacturaDialog extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        try {
+            dialabel.setFormatterFactory(new DefaultFormatterFactory(new MaskFormatter("##/##/####")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         buscarButton.addActionListener(e -> {
-            int cuitDelProveedor = Integer.parseInt(cuitProveedor.getText());
+            String cuitDelProveedor = cuitProveedor.getText();
 
             String diaStr = dialabel.getText();
+            diaStr = diaStr.replace(" ", "");
 
-            boolean EsValido = isValid(diaStr);
+            boolean esValido = isValid(diaStr);
 
-            if (EsValido == false){
+            if (diaStr.length() > 2 && !esValido) {
                 JOptionPane.showMessageDialog(null, "El dia " + diaStr + " no cumple con el formato dd/MM/yyyy");
                 return;
             }
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate dia = LocalDate.parse(diaStr,formatter);
+            TotalFactura totalFactura;
 
-            TotalFactura totalFactura = new TotalFactura(
-                    cuitDelProveedor,
-                    dia
-            );
+            if (cuitDelProveedor.isEmpty() && diaStr.length() == 2) {
+                JOptionPane.showMessageDialog(null, "Ingrese un dia y/o un cuit");
+                return;
+            }
+
+            if (!cuitDelProveedor.isEmpty() && diaStr.length() == 2) {
+                totalFactura = new TotalFactura(
+                        Integer.parseInt(cuitDelProveedor),
+                        null
+                );
+            } else if (cuitDelProveedor.isEmpty() && diaStr.length() > 2 && esValido) {
+                totalFactura = new TotalFactura(
+                        0,
+                        DateUtil.toDate(diaStr)
+                );
+            } else {
+                totalFactura = new TotalFactura(
+                        Integer.parseInt(cuitDelProveedor),
+                        DateUtil.toDate(diaStr)
+                );
+            }
 
             totalFactura.frame.setVisible(true);
 
@@ -55,22 +82,15 @@ public class TotalFacturaDialog extends JFrame {
     }
 
     public static boolean isValid(final String dia) {
-
         boolean valid = false;
 
         try {
-            // ResolverStyle.STRICT chequea los dias 30, 31 y tambien los años bisiesto.
-            LocalDate.parse(dia,
-                    DateTimeFormatter.ofPattern("dd/MM/yyyy")
-                            .withResolverStyle(ResolverStyle.STRICT)
-            );
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+            LocalDate.parse(dia, formatter);
 
             valid = true;
-
-        }
-        catch (DateTimeParseException e) {
+        } catch (DateTimeParseException e) {
             e.printStackTrace();
-            valid = false;
         }
 
         return valid;

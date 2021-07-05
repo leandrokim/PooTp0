@@ -72,7 +72,6 @@ public class ConsultaGeneralController {
         ArrayList<DTOConsultasDeLibroIVA> dto = new ArrayList<>();
         ArrayList<CuentaCorriente> cuentaCorrientes = getCuentaCorrientes();
         for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
-
             List<DTOConsultasDeLibroIVA> listadoIVAPorDocumento = cuentaCorriente.getIvaPorDocumento();
             dto.addAll(listadoIVAPorDocumento);
         }

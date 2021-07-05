@@ -317,12 +317,18 @@ public class ABMController {
     public void saveCuentaCorriente(CuentaCorriente cuentaCorriente) {
         ArrayList<CuentaCorriente> cuentaCorrientes = getCuentasCorrientesCollection();
 
+        boolean existe = false;
         for (int i = 0; i < cuentaCorrientes.size(); i++) {
             CuentaCorriente cc = cuentaCorrientes.get(i);
             if (cc.getCuitProveedor() == cuentaCorriente.getCuitProveedor()) {
                 cuentaCorrientes.set(i, cuentaCorriente);
+                existe = true;
             }
         }
+        if (!existe) {
+            cuentaCorrientes.add(cuentaCorriente);
+        }
+
         saveCuentaCorrientesCollection(cuentaCorrientes);
     }
 
@@ -517,6 +523,55 @@ public class ABMController {
         cuentaCorriente.setNotaCreditos(notaCreditos);
         cuentaCorriente.removeOrdenPago(DTOUtil.toClass(dto, OrdenPago.class));
         saveCuentaCorriente(cuentaCorriente);
+    }
+
+    public Producto.DTOProducto getProducto(int productoId) {
+        ArrayList<Rubro> rubros = getRubros();
+        for (Rubro rubro : rubros) {
+            for (Producto producto : rubro.getProductos()) {
+                if (producto.getIdProducto() == productoId) {
+                    return producto.toDTO();
+                }
+            }
+        }
+        return null;
+    }
+
+    public void guardarFactura(Factura.DTOFactura dto) {
+        ArrayList<CuentaCorriente> cuentaCorrientes = getCuentasCorrientesCollection();
+
+        for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+            if (cuentaCorriente.getCuitProveedor() == dto.cuitProveedor) {
+                for (OrdenCompra ordenCompra : cuentaCorriente.getProveedor().getOrdenesDeCompra()) {
+                    for (int i = 0; i < dto.ordenesDeCompras.size(); i++) {
+                        OrdenCompra.DTOOrdenCompra dtoOrdenCompra = dto.ordenesDeCompras.get(i);
+                        if (ordenCompra.getNOrdenCompra() == dtoOrdenCompra.nOrdenCompra) {
+                            dto.ordenesDeCompras.set(i, ordenCompra.toDTO());
+                        }
+                    }
+                }
+            }
+        }
+
+        for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+            if (cuentaCorriente.getCuitProveedor() == dto.cuitProveedor) {
+                boolean existe = false;
+
+                for (int i = 0; i < cuentaCorriente.getFacturas().size(); i++) {
+                    Factura factura = cuentaCorriente.getFacturas().get(i);
+                    if (factura.getnFactura() == dto.nFactura) {
+                        cuentaCorriente.getFacturas().set(i, DTOUtil.toClass(dto, Factura.class));
+                        existe = true;
+                    }
+                }
+
+                if (!existe) {
+                    cuentaCorriente.getFacturas().add(DTOUtil.toClass(dto, Factura.class));
+                }
+            }
+        }
+
+        saveCuentaCorrientesCollection(cuentaCorrientes);
     }
 
 }

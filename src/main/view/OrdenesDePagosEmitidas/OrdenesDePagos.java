@@ -1,8 +1,7 @@
 package main.view.OrdenesDePagosEmitidas;
 
-import main.java.controllers.ConsultaGeneralController;
-import main.java.models.dto.DTODocumentosPagosYDeudas;
-import main.view.CuentaCorrientesProveedores.CuentaCorrientesProveedoresTable;
+import main.java.controllers.OrdenesYDocumentosController;
+import main.java.models.Documentos.OrdenPago;
 import main.view.abm.AbstractABMWindow;
 import main.view.abm.TableColumn;
 import main.view.util.JTableButtonMouseListener;
@@ -25,14 +24,17 @@ public class OrdenesDePagos extends AbstractABMWindow {
 
     @Override
     protected AbstractTableModel getTableModel() {
-        ConsultaGeneralController controller = ConsultaGeneralController.getInstancia();
-        ArrayList<DTODocumentosPagosYDeudas> datos = controller.consultaCuentaCorrienteProveedores();
+        OrdenesYDocumentosController controller = OrdenesYDocumentosController.getInstancia();
+        ArrayList<OrdenPago.DTOOrdenPago> datos = controller.getOrdenesDePago();
         ArrayList<TableColumn> tableColumns = new ArrayList<>();
-        tableColumns.add(new TableColumn("Retenciones", int.class)); //JButton.class    //TODO
-        tableColumns.add(new TableColumn("Total a cancelar", double.class));
+        tableColumns.add(new TableColumn("Numero", int.class));
+        tableColumns.add(new TableColumn("Cuit Proveedor", int.class));
+        tableColumns.add(new TableColumn("Fecha", String.class));
+        tableColumns.add(new TableColumn("Total", double.class));
         tableColumns.add(new TableColumn("Documentos asociados", JButton.class));
-        tableColumns.add(new TableColumn("Formas de pago", int.class)); //JButton.class //TODO
-        return new CuentaCorrientesProveedoresTable(datos, tableColumns);
+        tableColumns.add(new TableColumn("Formas de pago", JButton.class));
+        tableColumns.add(new TableColumn("Retenciones", JButton.class));
+        return new OrdenesDePagoTable(datos, tableColumns);
     }
 
     @Override
@@ -42,6 +44,7 @@ public class OrdenesDePagos extends AbstractABMWindow {
         TableCellRenderer buttonRenderer = new JTableButtonRenderer();
         table.getColumn("Documentos asociados").setCellRenderer(buttonRenderer);
         table.getColumn("Formas de pago").setCellRenderer(buttonRenderer);
+        table.getColumn("Retenciones").setCellRenderer(buttonRenderer);
         table.addMouseListener(new JTableButtonMouseListener(table));
     }
 

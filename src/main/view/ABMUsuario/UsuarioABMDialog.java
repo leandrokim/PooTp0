@@ -11,6 +11,8 @@ public class UsuarioABMDialog extends AbstractABMDialog<Usuario.DTOUsuario> {
 
     private JLabel nombreLabel;
     private JTextField nombreField;
+    private JLabel passwordLabel;
+    private JTextField passwordField;
     private JLabel tipoLabel;
     private JComboBox tipoField;
 
@@ -25,7 +27,12 @@ public class UsuarioABMDialog extends AbstractABMDialog<Usuario.DTOUsuario> {
         nombreField = new JTextField();
         nombreField.setColumns(10);
 
-        tipoLabel = new JLabel("Contraseña");
+        passwordLabel = new JLabel("Contraseña");
+
+        passwordField = new JTextField();
+        passwordField.setColumns(10);
+
+        tipoLabel = new JLabel("Tipo de usuario");
 
         String[] tipoStrings = {TipoUsuario.USUARIO.name(), TipoUsuario.SUPERVISOR.name()};
         tipoField = new JComboBox(tipoStrings);
@@ -38,11 +45,13 @@ public class UsuarioABMDialog extends AbstractABMDialog<Usuario.DTOUsuario> {
                 .addContainerGap()
                 .addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(nombreLabel)
+                        .addComponent(passwordLabel)
                         .addComponent(tipoLabel))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(nombreField)
-                        .addComponent(tipoField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(nombreField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tipoField))
                 .addContainerGap(108, Short.MAX_VALUE);
     }
 
@@ -50,10 +59,15 @@ public class UsuarioABMDialog extends AbstractABMDialog<Usuario.DTOUsuario> {
     protected GroupLayout.SequentialGroup getVerticalGroup(GroupLayout group) {
         return group.createSequentialGroup()
                 .addContainerGap()
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(nombreLabel)
                         .addComponent(nombreField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addGap(4)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(passwordLabel)
+                        .addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(tipoLabel)
                         .addComponent(tipoField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -66,7 +80,8 @@ public class UsuarioABMDialog extends AbstractABMDialog<Usuario.DTOUsuario> {
         if (usuario == null) {
             usuario = new Usuario.DTOUsuario();
         }
-        usuario.nombre = (nombreField).getText();
+        usuario.nombre = nombreField.getText();
+        usuario.password = passwordField.getText();
         int index = tipoField.getSelectedIndex();
         usuario.tipo = index == 0 ? TipoUsuario.USUARIO : TipoUsuario.SUPERVISOR;
         dto = usuario;
@@ -76,6 +91,7 @@ public class UsuarioABMDialog extends AbstractABMDialog<Usuario.DTOUsuario> {
     protected void asignarDatosForm() {
         Usuario.DTOUsuario usuario = dto;
         nombreField.setText(usuario.nombre);
+        passwordField.setText(usuario.password);
         tipoField.setSelectedIndex(usuario
                 .tipo.equals(TipoUsuario.USUARIO) ? 0 : 1);
     }
@@ -84,4 +100,5 @@ public class UsuarioABMDialog extends AbstractABMDialog<Usuario.DTOUsuario> {
     public Usuario.DTOUsuario getDTO() {
         return dto;
     }
+
 }

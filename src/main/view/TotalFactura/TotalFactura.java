@@ -28,7 +28,7 @@ public class TotalFactura extends AbstractABMWindow {
     @Override
     protected AbstractTableModel getTableModel() {
         ConsultaGeneralController controller = ConsultaGeneralController.getInstancia();
-        ArrayList<DTOFacturas> factura = controller.facturasPorDiaOProveedor(fecha,cuitProveedor);
+        ArrayList<DTOFacturas> factura = controller.facturasPorDiaOProveedor(fecha, cuitProveedor);
         ArrayList<TableColumn> tableColumns = new ArrayList<>();
         tableColumns.add(new TableColumn("Cuit del proveedor", int.class));
         tableColumns.add(new TableColumn("Fecha", LocalDate.class));

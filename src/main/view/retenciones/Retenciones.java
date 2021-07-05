@@ -18,7 +18,7 @@ public class Retenciones extends AbstractABMWindow {
 
     @Override
     protected String getTitle() {
-        return "Formas de Pago";
+        return "Retenciones";
     }
 
     @Override

@@ -2,6 +2,7 @@ package main.view.ABMFactura;
 
 import main.java.controllers.ABMController;
 import main.java.models.Documentos.Factura;
+import main.java.models.Documentos.OrdenPago;
 import main.java.models.IVA.ResponsableIVA;
 import main.view.ABMOrdenPago.OrdenPagoABM;
 import main.view.abm.AbstractABMWindow;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 
 public class FacturaABM extends AbstractABMWindow {
 
+    private ABMController controller;
     private FacturaABMTable tableModel;
     private ArrayList<Factura.DTOFactura> facturas;
 
@@ -32,7 +34,7 @@ public class FacturaABM extends AbstractABMWindow {
 
     @Override
     protected AbstractTableModel getTableModel() {
-        ABMController controller = ABMController.getInstancia();
+        controller = ABMController.getInstancia();
         facturas = controller.getFacturas();
         ArrayList<TableColumn> tableColumns = new ArrayList<>();
         tableColumns.add(new TableColumn("Nro Factura", int.class));
@@ -64,10 +66,11 @@ public class FacturaABM extends AbstractABMWindow {
             dialog.setVisible(true);
             //Esto se ejecuta cuando se apaga el modal
             if (dialog.getModalResult() == ModalResult.OK) {
-                tableModel.agregar(dialog.getDTO());
+                Factura.DTOFactura dto = dialog.getDTO();
+                controller.guardarFactura(dto);
 
-                ABMController controller = ABMController.getInstancia();
-                controller.guardarFacturas(tableModel.lista);
+                facturas = controller.getFacturas();
+                tableModel.nuevaLista(facturas);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,19 +90,12 @@ public class FacturaABM extends AbstractABMWindow {
 
     @Override
     protected void modificar() {
-        try {
-            FacturaABMDialog dialog = new FacturaABMDialog(frame);
-            dialog.setDTO(facturas.get(table.getSelectedRow()));
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            dialog.setVisible(true);
-            if (dialog.getModalResult() == ModalResult.OK) {
-                tableModel.refresh();
-                ABMController controller = ABMController.getInstancia();
-                controller.guardarFacturas(tableModel.lista);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //no modifica
+    }
+
+    @Override
+    protected boolean isModificar() {
+        return false;
     }
 
     private static class JTableButtonRenderer implements TableCellRenderer {

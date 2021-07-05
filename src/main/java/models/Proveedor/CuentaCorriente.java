@@ -174,13 +174,15 @@ public class CuentaCorriente {
         List<DTOConsultasDeLibroIVA> dto = new ArrayList<>();
 
         for (Documento documento : getDocumentos()) {
-            List<Iva> ivaDocumentos = documento.getDocumentIva();
-            dto.add(new DTOConsultasDeLibroIVA(getCuitProveedor(),
-                    getNombreProveedor(),
-                    documento.getFecha(),
-                    documento.getTipoDocumento(),
-                    ivaDocumentos,
-                    documento.getTotal()));
+            if (documento.getProductos() != null && !documento.getProductos().isEmpty()){
+                List<Iva> ivaDocumentos = documento.getDocumentIva();
+                dto.add(new DTOConsultasDeLibroIVA(getCuitProveedor(),
+                        getNombreProveedor(),
+                        documento.getFecha(),
+                        documento.getTipoDocumento(),
+                        ivaDocumentos,
+                        documento.getTotal()));
+            }
         }
         return dto;
     }

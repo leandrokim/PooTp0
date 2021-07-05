@@ -102,6 +102,7 @@ public class NotaCreditoABMDialog extends AbstractABMDialog<DTONotaCredito> {
 
     protected void asignarDatosForm() {
         DTONotaCredito notaCredito = this.dto;
+        this.nNotaCreditoField.setText(String.valueOf(notaCredito.nNotaDeCredito));
         this.vigenteField.setSelected(notaCredito.vigente);
         this.fechaField.setText(DateUtil.toString(notaCredito.fecha));
         this.cuitProveedorField.setText(String.valueOf(notaCredito.cuitProveedor));

@@ -2,9 +2,12 @@ package main.view.ABMFactura;
 
 import main.java.models.Documentos.Factura;
 import main.java.util.DateUtil;
+import main.view.FormaDePago.FormasDePago;
 import main.view.abm.AbstractModelTable;
 import main.view.abm.TableColumn;
+import main.view.productos.Productos;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class FacturaABMTable extends AbstractModelTable<Factura.DTOFactura> {
@@ -30,7 +33,12 @@ public class FacturaABMTable extends AbstractModelTable<Factura.DTOFactura> {
             case 5:
                 return dto.responsabilidadIVA;
             case 6:
-                return null;//TODO
+                JButton productos = new JButton("Visualizar");
+                productos.addActionListener(e -> {
+                    Productos productosView = new Productos(dto.productos);
+                    productosView.frame.setVisible(true);
+                });
+                return productos;
             default:
                 return "";
         }

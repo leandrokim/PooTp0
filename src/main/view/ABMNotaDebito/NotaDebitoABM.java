@@ -1,13 +1,18 @@
 package main.view.ABMNotaDebito;
 
+import java.awt.*;
 import java.util.ArrayList;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import main.java.controllers.ABMController;
 import main.java.models.Documentos.NotaDebito.DTONotaDebito;
+import main.view.ABMNotaCredito.NotaCreditoABM;
 import main.view.abm.AbstractABMWindow;
 import main.view.abm.ModalResult;
 import main.view.abm.TableColumn;
+import main.view.util.JTableButtonMouseListener;
 
 public class NotaDebitoABM extends AbstractABMWindow {
     private NotaDebitoABMTable tableModel;
@@ -29,8 +34,17 @@ public class NotaDebitoABM extends AbstractABMWindow {
         tableColumns.add(new TableColumn("fecha", String.class));
         tableColumns.add(new TableColumn("cuitProveedor", String.class));
         tableColumns.add(new TableColumn("total", String.class));
+        tableColumns.add(new TableColumn("Productos", JButton.class));
         this.tableModel = new NotaDebitoABMTable(this.notasDebito, tableColumns);
         return this.tableModel;
+    }
+
+    protected void initialize() {
+        super.initialize();
+
+        TableCellRenderer buttonRenderer = new JTableButtonRenderer();
+        table.getColumn("Productos").setCellRenderer(buttonRenderer);
+        table.addMouseListener(new JTableButtonMouseListener(table));
     }
 
     protected void agregar() {
@@ -76,4 +90,12 @@ public class NotaDebitoABM extends AbstractABMWindow {
         }
 
     }
+
+    private static class JTableButtonRenderer implements TableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            return (JButton) value;
+        }
+    }
+
 }

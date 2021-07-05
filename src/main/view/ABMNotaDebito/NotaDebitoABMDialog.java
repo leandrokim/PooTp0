@@ -111,6 +111,7 @@ public class NotaDebitoABMDialog extends AbstractABMDialog<DTONotaDebito> {
 
     protected void asignarDatosForm() {
         DTONotaDebito notaDebito = this.dto;
+        this.nNotaDebitoField.setText(String.valueOf(notaDebito.nNotaDeDebito));
         this.vigenteField.setSelected(notaDebito.vigente);
         this.fechaField.setText(DateUtil.toString(notaDebito.fecha));
         this.cuitProveedorField.setText(String.valueOf(notaDebito.cuitProveedor));

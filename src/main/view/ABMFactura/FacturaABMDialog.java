@@ -2,18 +2,25 @@ package main.view.ABMFactura;
 
 import main.java.controllers.ABMController;
 import main.java.models.Documentos.Factura;
+import main.java.models.Documentos.OrdenCompra;
 import main.java.models.IVA.ResponsableIVA;
 import main.java.util.DateUtil;
 import main.view.abm.AbstractABMDialog;
+import main.view.documentos.Documentos;
 
 import javax.swing.*;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
+import java.util.ArrayList;
 
 public class FacturaABMDialog extends AbstractABMDialog<Factura.DTOFactura> {
 
     private JLabel cuitProveedorLabel;
     private JTextField cuitProveedorField;
+    private JLabel ordenCompraLabel;
+    private JTextField ordenCompraField;
+    private JLabel documentosButtonLabel;
+    private JButton documentosButtonField;
     private JLabel dateLabel;
     private JFormattedTextField dateField;
     private JLabel totalLabel;
@@ -32,6 +39,27 @@ public class FacturaABMDialog extends AbstractABMDialog<Factura.DTOFactura> {
 
         cuitProveedorField = new JTextField();
         cuitProveedorField.setColumns(10);
+
+        ordenCompraLabel = new JLabel("Ordenes de Compra");
+
+        ordenCompraField = new JTextField();
+        ordenCompraField.setColumns(10);
+
+        documentosButtonLabel = new JLabel("Documentos del Proveedor");
+
+        documentosButtonField = new JButton("Visualizar");
+        documentosButtonField.addActionListener(e -> {
+            ABMController controller = ABMController.getInstancia();
+
+            if (cuitProveedorField.getText().isEmpty() || !controller.existeProveedor(Integer.parseInt(cuitProveedorField.getText()))) {
+                JOptionPane.showMessageDialog(null, "Ingrese Proveedor Valido");
+                return;
+            }
+
+            //TODO Lauti
+            Documentos documentos = new Documentos(controller.getDocumentosPorProveedor(Integer.parseInt(cuitProveedorField.getText())));
+            documentos.frame.setVisible(true);
+        });
 
         dateLabel = new JLabel("Fecha");
 
@@ -63,6 +91,8 @@ public class FacturaABMDialog extends AbstractABMDialog<Factura.DTOFactura> {
                 .addContainerGap()
                 .addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(cuitProveedorLabel)
+                        .addComponent(ordenCompraLabel)
+                        .addComponent(documentosButtonLabel)
                         .addComponent(dateLabel)
                         .addComponent(totalLabel)
                         .addComponent(paidBox)
@@ -70,6 +100,8 @@ public class FacturaABMDialog extends AbstractABMDialog<Factura.DTOFactura> {
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(cuitProveedorField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ordenCompraField)
+                        .addComponent(documentosButtonField)
                         .addComponent(dateField, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
                         .addComponent(totalField)
                         .addComponent(ivaField))
@@ -84,6 +116,14 @@ public class FacturaABMDialog extends AbstractABMDialog<Factura.DTOFactura> {
                 .addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(cuitProveedorLabel)
                         .addComponent(cuitProveedorField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(ordenCompraLabel)
+                        .addComponent(ordenCompraField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(documentosButtonLabel)
+                        .addComponent(documentosButtonField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(dateLabel)
@@ -116,17 +156,18 @@ public class FacturaABMDialog extends AbstractABMDialog<Factura.DTOFactura> {
         factura.facturaPaga = paidBox.isSelected();
         int index = ivaField.getSelectedIndex();
         factura.responsabilidadIVA = index == 0 ? ResponsableIVA.MONOTRIBUTO : ResponsableIVA.RESPONSABLE_INSCRIPTO;
+        factura.ordenesDeCompras = new ArrayList<>();
+        for (String i : ordenCompraField.getText().split(",")) {
+            OrdenCompra.DTOOrdenCompra ordenCompra = new OrdenCompra.DTOOrdenCompra();
+            ordenCompra.nOrdenCompra = Integer.parseInt(i);
+            factura.ordenesDeCompras.add(ordenCompra);
+        }
         dto = factura;
     }
 
     @Override
     protected void asignarDatosForm() {
-        Factura.DTOFactura factura = dto;
-        cuitProveedorField.setText(String.valueOf(factura.cuitProveedor));
-        dateField.setText(DateUtil.toString(factura.fecha));
-        totalField.setText(String.valueOf(factura.total));
-        paidBox.setSelected(factura.facturaPaga);
-        ivaField.setSelectedIndex(factura.responsabilidadIVA.equals(ResponsableIVA.MONOTRIBUTO) ? 0 : 1);
+        //No modifica
     }
 
     @Override

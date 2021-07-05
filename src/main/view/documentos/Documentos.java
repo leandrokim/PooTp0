@@ -18,7 +18,7 @@ public class Documentos extends AbstractABMWindow {
 
     @Override
     protected String getTitle() {
-        return "Documentos Recibidos";
+        return "Documentos";
     }
 
     @Override

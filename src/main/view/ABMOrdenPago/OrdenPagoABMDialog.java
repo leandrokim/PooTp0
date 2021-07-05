@@ -63,7 +63,7 @@ public class OrdenPagoABMDialog extends AbstractABMDialog<OrdenPago.DTOOrdenPago
 
         documentosButtonLabel = new JLabel("Documentos del Proveedor");
 
-        documentosButtonField = new JButton();
+        documentosButtonField = new JButton("Visualizar");
         documentosButtonField.addActionListener(e -> {
             ABMController controller = ABMController.getInstancia();
 

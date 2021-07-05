@@ -7,6 +7,9 @@ import main.java.models.Documentos.NotaCredito.DTONotaCredito;
 import main.java.util.DateUtil;
 import main.view.abm.AbstractModelTable;
 import main.view.abm.TableColumn;
+import main.view.productos.Productos;
+
+import javax.swing.*;
 
 public class NotaCreditoABMTable extends AbstractModelTable<DTONotaCredito> {
     public NotaCreditoABMTable(ArrayList<DTONotaCredito> lista, ArrayList<TableColumn> columnas) {
@@ -26,6 +29,13 @@ public class NotaCreditoABMTable extends AbstractModelTable<DTONotaCredito> {
                 return dto.cuitProveedor;
             case 4:
                 return dto.total;
+            case 5:
+                JButton productos = new JButton("Visualizar");
+                productos.addActionListener(e -> {
+                    Productos productosView = new Productos(dto.productos);
+                    productosView.frame.setVisible(true);
+                });
+                return productos;
             default:
                 return "";
         }

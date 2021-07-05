@@ -25,6 +25,8 @@ public abstract class Documento {
         this.fecha = fecha;
         this.cuitProveedor = cuitProveedor;
 
+        productos = new ArrayList<>();
+
         type = getClass().getName();
     }
 
@@ -99,7 +101,7 @@ public abstract class Documento {
     public static class DTODocumento {
         public LocalDate fecha;
         public int cuitProveedor;
-        public List<PrecioProductoPorProveedor.DTOPrecioProductoPorProveedor> productos;
+        public ArrayList<PrecioProductoPorProveedor.DTOPrecioProductoPorProveedor> productos;
         public double total;
 
         public String type;
