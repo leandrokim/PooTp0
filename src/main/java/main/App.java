@@ -1,6 +1,8 @@
 package main.java.main;
 
 import main.java.controllers.ABMController;
+import main.java.controllers.ConsultaGeneralController;
+import main.java.controllers.OrdenesYDocumentosController;
 import main.java.models.Documentos.*;
 import main.java.models.FormaDePago.Efectivo;
 import main.java.models.FormaDePago.FormaPago;
@@ -23,28 +25,38 @@ public class App {
 
     public static void main(String[] args) {
         ABMController abmController = ABMController.getInstancia();
+        ConsultaGeneralController consultaGeneralController = ConsultaGeneralController.getInstancia();
+        OrdenesYDocumentosController ordenesYDocumentosController = OrdenesYDocumentosController.getInstancia();
 
+        // Agregamos proveedores
         List<Certificado> certificados = new ArrayList<>();
         certificados.add(new Certificado(666,
                 LocalDate.of(2021, 6, 27),
                 LocalDate.of(2030, 6, 27),
                 false,
                 new Impuesto(1)));
-
-        Proveedor ricki = new Proveedor(666,
-                "Ricardo Fort",
-                10d,
+        ArrayList<Proveedor.DTOProveedor> proveedores = new ArrayList<>();
+        Proveedor proveedor = new Proveedor(666,
+        "Ricarchi Forchi",
+        100000d,
+        true,
+        certificados,
+        "ricky@miameeeee.com",
+        "080031431",
+        "Miameeee");
+        proveedores.add(proveedor.toDTO());
+        Proveedor proveedor1 = new Proveedor(777,
+                "Batman",
+                100000000d,
                 true,
-                certificados,
-                "rickiF@elComandante.com",
-                "1122223333",
-                "Miameeeeee");
+                new ArrayList<>(),
+                "bruce@wayne.com",
+                "0800847349",
+                "Baticueva");
+        proveedores.add(proveedor1.toDTO());
+        abmController.guardarProveedores(proveedores);
 
-        ArrayList<Proveedor.DTOProveedor> aux = new ArrayList<>();
-        aux.add(ricki.toDTO());
-
-        abmController.guardarProveedores(aux);
-
+        // Creamos Rubros y productos
         Rubro rubro = new Rubro(1, "Golosinas");
 
         Producto producto = new Producto(
@@ -54,78 +66,197 @@ public class App {
                 new ArrayList<>(),
                 TipoIVA.VEINTIUNO
         );
-        List<Producto> productos = new ArrayList<>();
-        productos.add(producto);
 
-        PrecioProductoPorProveedor precioProductoPorProveedor = new PrecioProductoPorProveedor(
-                10d,
-                ricki.getCuitProveedor(),
-                producto.getIdProducto()
+        Producto producto1 = new Producto(
+                10,
+                "Marroc",
+                Unidad.PESO,
+                new ArrayList<>(),
+                TipoIVA.CINCO
         );
-        List<PrecioProductoPorProveedor> precios = new ArrayList<>();
-        precios.add(precioProductoPorProveedor);
 
-        producto.setPreciosPorProveedor(precios);
-        rubro.setProductos(productos);
-        List<Rubro> rubros = new ArrayList<>();
-        rubros.add(rubro);
-        ricki.setRubros(rubros);
+        Producto producto2 = new Producto(
+                14,
+                "Marroc",
+                Unidad.UNIDAD,
+                new ArrayList<>(),
+                TipoIVA.DIEZ_COMA_CINCO
+        );
 
-        List<OrdenCompra> ordenCompras = new ArrayList<>();
-        ordenCompras.add(new OrdenCompra(1, precios));
+        Rubro rubro1 = new Rubro(2, "Automovil");
+        Rubro rubro2 = new Rubro(3, "Limpieza");
+        Rubro rubro3 = new Rubro(3, "Limpieza");
 
-        Factura factura = new Factura(abmController.nuevoNumeroFactura(),
-                ResponsableIVA.MONOTRIBUTO,
-                ordenCompras,
-                LocalDate.of(2021, 6, 27),
-                ricki.getCuitProveedor());
+        Producto producto3 = new Producto(
+                2,
+                "Batimovil",
+                Unidad.UNIDAD,
+                new ArrayList<>(),
+                TipoIVA.VEINTISIETE
+        );
 
-        ricki.setOrdenesDeCompra(ordenCompras);
+        Producto producto4 = new Producto(
+                3,
+                "Limpieza ciudad Gothica",
+                Unidad.HORA,
+                new ArrayList<>(),
+                TipoIVA.DOS_COMA_CINCO
+        );
 
-        factura.setProductos(precios);
+        Producto producto5 = new Producto(
+                3,
+                "Limpieza ciudad Gothica",
+                Unidad.HORA,
+                new ArrayList<>(),
+                TipoIVA.DOS_COMA_CINCO
+        );
 
-        NotaDebito notaDebito = new NotaDebito(11,
-                LocalDate.of(2021, 6, 27),
-                ricki.getCuitProveedor());
-        notaDebito.setProductos(precios);
+        PrecioProductoPorProveedor PPPP1 = new PrecioProductoPorProveedor(100, 666, 1);
+        PrecioProductoPorProveedor PPPP2 = new PrecioProductoPorProveedor(35, 666, 10);
+        PrecioProductoPorProveedor PPPP3 = new PrecioProductoPorProveedor(350, 666, 14);
 
-        ArrayList<Documento> documentos = new ArrayList<>();
-        documentos.add(factura);
-        documentos.add(notaDebito);
+        PrecioProductoPorProveedor PPPP4 = new PrecioProductoPorProveedor(100000000, 777, 2);
+        PrecioProductoPorProveedor PPPP5 = new PrecioProductoPorProveedor(1, 777, 3);
+        PrecioProductoPorProveedor PPPP6 = new PrecioProductoPorProveedor(1000000, 666, 3);
 
-        List<FormaPago> formaPagos = new ArrayList<>();
-        formaPagos.add(new Efectivo(10d));
+        producto.addPreciosPorProveedor(PPPP1);
+        producto1.addPreciosPorProveedor(PPPP2);
+        producto2.addPreciosPorProveedor(PPPP3);
+        producto3.addPreciosPorProveedor(PPPP4);
+        producto4.addPreciosPorProveedor(PPPP5);
+        producto5.addPreciosPorProveedor(PPPP6);
 
-        List<Retencion> retenciones = new ArrayList<>();
-        retenciones.add(new Retencion(1,
-                new Impuesto(1),
-                10));
+        rubro.addProducto(producto);
+        rubro.addProducto(producto1);
+        rubro.addProducto(producto2);
 
-        OrdenPago ordenPago = new OrdenPago(1,
-                ricki.getCuitProveedor(),
-                documentos,
-                retenciones,
-                formaPagos,
-                LocalDate.of(2021, 6, 27));
+        rubro1.addProducto(producto3);
+        rubro2.addProducto(producto4);
 
-        ArrayList<Proveedor.DTOProveedor> proveedores = new ArrayList<>();
-        proveedores.add(ricki.toDTO());
+        rubro3.addProducto(producto5);
 
-        abmController.guardarProveedores(proveedores);
+        ArrayList<Rubro> rickyRubros = new ArrayList<>();
+        rickyRubros.add(rubro);
+        rickyRubros.add(rubro3);
 
-        ArrayList<OrdenPago.DTOOrdenPago> ordenPagos = new ArrayList<>();
-        ordenPagos.add(ordenPago.toDTO());
+        ArrayList<Rubro> batiRubros = new ArrayList<>();
+        batiRubros.add(rubro1);
+        batiRubros.add(rubro2);
 
-        abmController.guardarOrdenesPago(ordenPagos);
 
-        ArrayList<Factura.DTOFactura> facturas = new ArrayList<>();
-        facturas.add(factura.toDTO());
+        proveedor.setRubros(rickyRubros);
+        proveedor1.setRubros(batiRubros);
 
-        ArrayList<NotaDebito.DTONotaDebito> notaDebitos = new ArrayList<>();
-        notaDebitos.add(notaDebito.toDTO());
+        ArrayList<Proveedor.DTOProveedor> proveedores2 = new ArrayList<>();
+        proveedores2.add(proveedor.toDTO());
+        proveedores2.add(proveedor1.toDTO());
 
-        abmController.guardarFacturas(facturas);
-        abmController.guardarNotasDebito(notaDebitos);
+        abmController.guardarProveedores(proveedores2);
+
+
+
+//        List<Certificado> certificados = new ArrayList<>();
+//        certificados.add(new Certificado(666,
+//                LocalDate.of(2021, 6, 27),
+//                LocalDate.of(2030, 6, 27),
+//                false,
+//                new Impuesto(1)));
+//
+//        Proveedor ricki = new Proveedor(666,
+//                "Ricardo Fort",
+//                10d,
+//                true,
+//                certificados,
+//                "rickiF@elComandante.com",
+//                "1122223333",
+//                "Miameeeeee");
+//
+//        ArrayList<Proveedor.DTOProveedor> aux = new ArrayList<>();
+//        aux.add(ricki.toDTO());
+//
+//        abmController.guardarProveedores(aux);
+//
+//        Rubro rubro = new Rubro(1, "Golosinas");
+//
+//        Producto producto = new Producto(
+//                1,
+//                "Chocolate Felfort",
+//                Unidad.UNIDAD,
+//                new ArrayList<>(),
+//                TipoIVA.VEINTIUNO
+//        );
+//        List<Producto> productos = new ArrayList<>();
+//        productos.add(producto);
+//
+//        PrecioProductoPorProveedor precioProductoPorProveedor = new PrecioProductoPorProveedor(
+//                10d,
+//                ricki.getCuitProveedor(),
+//                producto.getIdProducto()
+//        );
+//        List<PrecioProductoPorProveedor> precios = new ArrayList<>();
+//        precios.add(precioProductoPorProveedor);
+//
+//        producto.setPreciosPorProveedor(precios);
+//        rubro.setProductos(productos);
+//        List<Rubro> rubros = new ArrayList<>();
+//        rubros.add(rubro);
+//        ricki.setRubros(rubros);
+//
+//        List<OrdenCompra> ordenCompras = new ArrayList<>();
+//        ordenCompras.add(new OrdenCompra(1, precios));
+//
+//        Factura factura = new Factura(abmController.nuevoNumeroFactura(),
+//                ResponsableIVA.MONOTRIBUTO,
+//                ordenCompras,
+//                LocalDate.of(2021, 6, 27),
+//                ricki.getCuitProveedor());
+//
+//        ricki.setOrdenesDeCompra(ordenCompras);
+//
+//        factura.setProductos(precios);
+//
+//        NotaDebito notaDebito = new NotaDebito(11,
+//                LocalDate.of(2021, 6, 27),
+//                ricki.getCuitProveedor());
+//        notaDebito.setProductos(precios);
+//
+//        ArrayList<Documento> documentos = new ArrayList<>();
+//        documentos.add(factura);
+//        documentos.add(notaDebito);
+//
+//        List<FormaPago> formaPagos = new ArrayList<>();
+//        formaPagos.add(new Efectivo(10d));
+//
+//        List<Retencion> retenciones = new ArrayList<>();
+//        retenciones.add(new Retencion(1,
+//                new Impuesto(1),
+//                10));
+//
+//        OrdenPago ordenPago = new OrdenPago(1,
+//                ricki.getCuitProveedor(),
+//                documentos,
+//                retenciones,
+//                formaPagos,
+//                LocalDate.of(2021, 6, 27));
+//
+//        ArrayList<Proveedor.DTOProveedor> proveedores = new ArrayList<>();
+//        proveedores.add(ricki.toDTO());
+//
+//        abmController.guardarProveedores(proveedores);
+//
+//        ArrayList<OrdenPago.DTOOrdenPago> ordenPagos = new ArrayList<>();
+//        ordenPagos.add(ordenPago.toDTO());
+//
+//        abmController.guardarOrdenesPago(ordenPagos);
+//
+//        ArrayList<Factura.DTOFactura> facturas = new ArrayList<>();
+//        facturas.add(factura.toDTO());
+//
+//        ArrayList<NotaDebito.DTONotaDebito> notaDebitos = new ArrayList<>();
+//        notaDebitos.add(notaDebito.toDTO());
+//
+//        abmController.guardarFacturas(facturas);
+//        abmController.guardarNotasDebito(notaDebitos);
 
         //TODO agregar orden pago con metodo
     }
