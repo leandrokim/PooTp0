@@ -2,7 +2,6 @@ package main.view.ABMFactura;
 
 import main.java.models.Documentos.Factura;
 import main.java.util.DateUtil;
-import main.view.FormaDePago.FormasDePago;
 import main.view.abm.AbstractModelTable;
 import main.view.abm.TableColumn;
 import main.view.productos.Productos;

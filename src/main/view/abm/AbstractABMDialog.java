@@ -43,6 +43,9 @@ public abstract class AbstractABMDialog<T> extends JDialog {
 
         JButton okButton = new JButton("OK");
         okButton.addActionListener(e -> {
+            if (verificarSupervisor()) {
+                return;
+            }
             asignarDatosEntidad();
             modalResult = ModalResult.OK;
             dispose();
@@ -51,7 +54,6 @@ public abstract class AbstractABMDialog<T> extends JDialog {
         buttonPane.add(okButton);
         getRootPane().setDefaultButton(okButton);
 
-
         JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(e -> {
             modalResult = ModalResult.CANCEL;
@@ -59,6 +61,10 @@ public abstract class AbstractABMDialog<T> extends JDialog {
         });
         cancelButton.setActionCommand("Cancel");
         buttonPane.add(cancelButton);
+    }
+
+    protected boolean verificarSupervisor() {
+        return false;
     }
 
     protected abstract void inicializarCampos();

@@ -94,6 +94,7 @@ public abstract class Collection<T, H> {
 
     private Gson getGson() {
         GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Documento.class, new JsonSerializerWithInheritance());
         builder.registerTypeAdapter(Documento.class, new JsonDeserializerWithInheritance<Documento>());
         builder.registerTypeAdapter(FormaPago.class, new JsonDeserializerWithInheritance<FormaPago>());
         return builder.create();

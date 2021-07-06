@@ -332,15 +332,6 @@ public class ABMController {
         saveCuentaCorrientesCollection(cuentaCorrientes);
     }
 
-    /*
-    public int nroOrdenPago; *
-        public int cuitProveedor;*
-        public LocalDate fecha;
-        public double totalACancelar;
-        public ArrayList<Documento.DTODocumento> documentosAsociados;
-        public ArrayList<FormaPago.DTOFormaPago> formasDePago;
-        public ArrayList<Retencion.DTORetencion> retenciones;
-     */
     public void guardarOrdenPago(OrdenPago.DTOOrdenPago dato) {
         CuentaCorriente cuentaCorriente = getCuentaCorrienteCuit(dato.cuitProveedor);
 
@@ -572,6 +563,22 @@ public class ABMController {
         }
 
         saveCuentaCorrientesCollection(cuentaCorrientes);
+    }
+
+    public ArrayList<OrdenCompra.DTOOrdenCompra> getOrdenCompraPorProveedor(int cuitProveedor) {
+        ArrayList<CuentaCorriente> cuentaCorrientes = getCuentasCorrientesCollection();
+        ArrayList<OrdenCompra.DTOOrdenCompra> res = new ArrayList<>();
+
+        //Agrega todos los documentos del proveedor seleccionado
+        for (CuentaCorriente cuentaCorriente : cuentaCorrientes) {
+            if (cuentaCorriente.getCuitProveedor() == cuitProveedor) {
+                for (OrdenCompra ordenCompra : cuentaCorriente.getProveedor().getOrdenesDeCompra()) {
+                    res.add(ordenCompra.toDTO());
+                }
+            }
+        }
+
+        return res;
     }
 
 }

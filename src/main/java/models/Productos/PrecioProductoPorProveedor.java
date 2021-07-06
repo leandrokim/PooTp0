@@ -64,7 +64,6 @@ public class PrecioProductoPorProveedor {
     }
 
     public DTOPrecioProductoPorProveedor toDTO() {
-
         DTOPrecioProductoPorProveedor dto = new DTOPrecioProductoPorProveedor();
         dto.precio = getPrecio();
         dto.producto = getProductoId();

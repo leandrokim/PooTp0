@@ -123,7 +123,7 @@ public class ConsultaGeneralController {
 
                 if (busq != null) {
                     busq.totalRetenido = busq.totalRetenido + lista.totalRetenido;
-                    dto.replaceAll(p -> p.nombreDelImpuesto == busq.nombreDelImpuesto ? busq : p);
+                    dto.replaceAll(p -> p.nombreDelImpuesto.equals(busq.nombreDelImpuesto) ? busq : p);
                 } else {
                     dto.add(new DTOListadoDeImpuestosConNombreYTotalRetenido(lista.totalRetenido, lista.nombreDelImpuesto));
                 }

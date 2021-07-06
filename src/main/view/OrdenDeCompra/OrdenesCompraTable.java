@@ -1,6 +1,5 @@
 package main.view.OrdenDeCompra;
 
-import main.java.controllers.ABMController;
 import main.java.models.Documentos.OrdenCompra;
 import main.view.abm.AbstractModelTable;
 import main.view.abm.TableColumn;
@@ -24,9 +23,10 @@ public class OrdenesCompraTable extends AbstractModelTable<OrdenCompra.DTOOrdenC
             case 1:
                 JButton productos = new JButton("Visualizar");
                 productos.addActionListener(e -> {
-                    Productos productosView = new Productos((ArrayList) dto.productos);
+                    Productos productosView = new Productos(dto.productos);
                     productosView.frame.setVisible(true);
                 });
+                return productos;
             case 2:
                 return dto.totalPrecioAcordado;
             default:

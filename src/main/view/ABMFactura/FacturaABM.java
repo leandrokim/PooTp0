@@ -2,9 +2,7 @@ package main.view.ABMFactura;
 
 import main.java.controllers.ABMController;
 import main.java.models.Documentos.Factura;
-import main.java.models.Documentos.OrdenPago;
 import main.java.models.IVA.ResponsableIVA;
-import main.view.ABMOrdenPago.OrdenPagoABM;
 import main.view.abm.AbstractABMWindow;
 import main.view.abm.ModalResult;
 import main.view.abm.TableColumn;

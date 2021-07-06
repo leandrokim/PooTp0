@@ -1,10 +1,13 @@
 package main.view.ABMFactura;
 
 import main.java.controllers.ABMController;
+import main.java.controllers.UserController;
 import main.java.models.Documentos.Factura;
 import main.java.models.Documentos.OrdenCompra;
 import main.java.models.IVA.ResponsableIVA;
+import main.java.models.Usuario.TipoUsuario;
 import main.java.util.DateUtil;
+import main.view.OrdenDeCompra.OrdenesDeCompra;
 import main.view.abm.AbstractABMDialog;
 import main.view.documentos.Documentos;
 
@@ -56,9 +59,8 @@ public class FacturaABMDialog extends AbstractABMDialog<Factura.DTOFactura> {
                 return;
             }
 
-            //TODO Lauti
-            Documentos documentos = new Documentos(controller.getDocumentosPorProveedor(Integer.parseInt(cuitProveedorField.getText())));
-            documentos.frame.setVisible(true);
+            OrdenesDeCompra ordenesDeCompra = new OrdenesDeCompra(controller.getOrdenCompraPorProveedor(Integer.parseInt(cuitProveedorField.getText())));
+            ordenesDeCompra.frame.setVisible(true);
         });
 
         dateLabel = new JLabel("Fecha");
@@ -157,11 +159,12 @@ public class FacturaABMDialog extends AbstractABMDialog<Factura.DTOFactura> {
         int index = ivaField.getSelectedIndex();
         factura.responsabilidadIVA = index == 0 ? ResponsableIVA.MONOTRIBUTO : ResponsableIVA.RESPONSABLE_INSCRIPTO;
         factura.ordenesDeCompras = new ArrayList<>();
-        for (String i : ordenCompraField.getText().split(",")) {
-            OrdenCompra.DTOOrdenCompra ordenCompra = new OrdenCompra.DTOOrdenCompra();
-            ordenCompra.nOrdenCompra = Integer.parseInt(i);
-            factura.ordenesDeCompras.add(ordenCompra);
-        }
+        if (!ordenCompraField.getText().isEmpty())
+            for (String i : ordenCompraField.getText().split(",")) {
+                OrdenCompra.DTOOrdenCompra ordenCompra = new OrdenCompra.DTOOrdenCompra();
+                ordenCompra.nOrdenCompra = Integer.parseInt(i);
+                factura.ordenesDeCompras.add(ordenCompra);
+            }
         dto = factura;
     }
 
@@ -175,4 +178,13 @@ public class FacturaABMDialog extends AbstractABMDialog<Factura.DTOFactura> {
         return dto;
     }
 
+    @Override
+    protected boolean verificarSupervisor() {
+        boolean esSupervisor = UserController.getInstancia().usuarioLogeado().tipo.equals(TipoUsuario.SUPERVISOR);
+        if (!esSupervisor && ordenCompraField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se necesita ser supervisor para crear in orden de compra");
+            return true;
+        }
+        return false;
+    }
 }

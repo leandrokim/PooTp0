@@ -59,7 +59,7 @@ public class OrdenCompra {
 
     public static class DTOOrdenCompra {
         public int nOrdenCompra;
-        public List<PrecioProductoPorProveedor.DTOPrecioProductoPorProveedor> productos;
+        public ArrayList<PrecioProductoPorProveedor.DTOPrecioProductoPorProveedor> productos;
         public double totalPrecioAcordado;
     }
 

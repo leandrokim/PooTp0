@@ -4,14 +4,18 @@ package main.view.OrdenDeCompra;
 import main.java.models.Documentos.OrdenCompra;
 import main.view.abm.AbstractABMWindow;
 import main.view.abm.TableColumn;
+import main.view.util.JTableButtonMouseListener;
+
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-
+import javax.swing.table.TableCellRenderer;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class OrdenesDeCompra extends AbstractABMWindow {
 
-    private  ArrayList<OrdenCompra.DTOOrdenCompra> ordenCompras;
+    private final ArrayList<OrdenCompra.DTOOrdenCompra> ordenCompras;
+    private OrdenesCompraTable tableModel;
 
     public OrdenesDeCompra(ArrayList<OrdenCompra.DTOOrdenCompra> ordenCompras) {
         this.ordenCompras = ordenCompras;
@@ -29,7 +33,17 @@ public class OrdenesDeCompra extends AbstractABMWindow {
         tableColumns.add(new TableColumn("id OrdenCompra", int.class));
         tableColumns.add(new TableColumn("Productos", JButton.class));
         tableColumns.add(new TableColumn("totalPrecioAcordado", double.class));
-        return new OrdenesCompraTable(ordenCompras, tableColumns);
+        tableModel = new OrdenesCompraTable(ordenCompras, tableColumns);
+        return tableModel;
+    }
+
+    @Override
+    protected void initialize() {
+        super.initialize();
+
+        TableCellRenderer buttonRenderer = new JTableButtonRenderer();
+        table.getColumn("Productos").setCellRenderer(buttonRenderer);
+        table.addMouseListener(new JTableButtonMouseListener(table));
     }
 
     //Is Not ABM
@@ -48,6 +62,13 @@ public class OrdenesDeCompra extends AbstractABMWindow {
     @Override
     protected boolean isABM() {
         return false;
+    }
+
+    private static class JTableButtonRenderer implements TableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            return (JButton) value;
+        }
     }
 
 }

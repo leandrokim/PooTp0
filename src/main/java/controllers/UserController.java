@@ -1,5 +1,6 @@
 package main.java.controllers;
 
+import main.java.collections.LogeadoCollection;
 import main.java.collections.UsuarioCollection;
 import main.java.exceptions.UsuarioExistenteException;
 import main.java.models.Usuario.TipoUsuario;
@@ -47,10 +48,19 @@ public class UserController {
 
         for (Usuario usuario : usuarios) {
             if (usuario.validar(nombreUsuario, password)) {
+                LogeadoCollection logeadoCollection = new LogeadoCollection();
+                ArrayList<Usuario> logeados = new ArrayList<>();
+                logeados.add(usuario);
+                logeadoCollection.setDatos(logeados);
                 return true;
             }
         }
         return false;
+    }
+
+    public Usuario.DTOUsuario usuarioLogeado() {
+        LogeadoCollection logeadoCollection = new LogeadoCollection();
+        return logeadoCollection.getDatos().get(0).toDTO();
     }
 
 }
