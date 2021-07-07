@@ -147,9 +147,11 @@ public class ABMController {
                 if (rubros.isEmpty()) {
                     rubros.add(rubroProveedor);
                 } else {
+                    boolean existe = false;
                     //Tengo que mergear todos los productos de los rubros
                     for (Rubro rubro : rubros) {
                         if (rubroProveedor.getIdRubro() == rubro.getIdRubro()) {
+                            existe = true;
                             //Es el mismo rubro
                             for (Producto productoProveedor : rubroProveedor.getProductos()) {
                                 boolean noTieneProducto = true;
@@ -168,6 +170,10 @@ public class ABMController {
                                 }
                             }
                         }
+                    }
+
+                    if (!existe) {
+                        rubros.add(rubroProveedor);
                     }
                 }
             }
@@ -348,7 +354,7 @@ public class ABMController {
                     Factura.DTOFactura dto = (Factura.DTOFactura) documento;
                     if (dto.nFactura == factura.getnFactura()) {
                         factura.setFacturaPaga(true);
-                        asociados.add(DTOUtil.toClass(dto, Factura.class));
+                        asociados.add(factura);
                         facturas.set(i, factura);
                     }
                 }
@@ -363,7 +369,7 @@ public class ABMController {
                     NotaDebito.DTONotaDebito dto = (NotaDebito.DTONotaDebito) documento;
                     if (dto.nNotaDeDebito == notaDebito.getnNotaDeDebito()) {
                         notaDebito.setVigente(false);
-                        asociados.add(DTOUtil.toClass(dto, NotaDebito.class));
+                        asociados.add(notaDebito);
                         notaDebitos.set(i, notaDebito);
                     }
                 }
@@ -378,7 +384,7 @@ public class ABMController {
                     NotaCredito.DTONotaCredito dto = (NotaCredito.DTONotaCredito) documento;
                     if (dto.nNotaDeCredito == notaCredito.getnNotaDeCredito()) {
                         notaCredito.setVigente(false);
-                        asociados.add(DTOUtil.toClass(dto, NotaCredito.class));
+                        asociados.add(notaCredito);
                         notaCreditos.set(i, notaCredito);
                     }
                 }
@@ -402,6 +408,7 @@ public class ABMController {
                 formasDePagos,
                 LocalDate.now());
 
+        boolean existeCertificado = false;
         for (Certificado certificado : cuentaCorriente.getProveedor().getCertificados()) {
             int idImpuesto = Impuesto.getImpuestoPorMonto(ordenPago.getTotalACancelar());
             if (certificado.getImpuesto().getIdImpuesto() == idImpuesto) {
@@ -412,7 +419,16 @@ public class ABMController {
                             impuesto,
                             impuesto.calcular(ordenPago.getTotalACancelar())));
                 }
+                existeCertificado = true;
             }
+        }
+        if (cuentaCorriente.getProveedor().getCertificados() == null ||
+                cuentaCorriente.getProveedor().getCertificados().isEmpty() ||
+                !existeCertificado) {
+            Impuesto impuesto = new Impuesto(Impuesto.getImpuestoPorMonto(ordenPago.getTotalACancelar()));
+            retenciones.add(new Retencion(nuevoNumeroRetencion(),
+                    impuesto,
+                    impuesto.calcular(ordenPago.getTotalACancelar())));
         }
 
         ordenPago.setRetenciones(retenciones);
@@ -425,8 +441,22 @@ public class ABMController {
     }
 
     private int nuevoNumeroRetencion() {
+        OrdenesYDocumentosController controller = OrdenesYDocumentosController.getInstancia();
+        ArrayList<OrdenPago.DTOOrdenPago> ordenPagos = controller.getOrdenesDePago();
 
-        return 0;
+        ArrayList<Retencion.DTORetencion> retenciones = new ArrayList<>();
+        for (OrdenPago.DTOOrdenPago ordenPago : ordenPagos) {
+            retenciones.addAll(ordenPago.retenciones);
+        }
+
+        int numero = 0;
+        for (Retencion.DTORetencion retencion : retenciones) {
+            if (retencion.idRetencion > numero) {
+                numero = retencion.idRetencion;
+            }
+        }
+
+        return numero + 1;
     }
 
     public ArrayList<Usuario.DTOUsuario> getUsuarios() {
@@ -551,13 +581,17 @@ public class ABMController {
                 for (int i = 0; i < cuentaCorriente.getFacturas().size(); i++) {
                     Factura factura = cuentaCorriente.getFacturas().get(i);
                     if (factura.getnFactura() == dto.nFactura) {
-                        cuentaCorriente.getFacturas().set(i, DTOUtil.toClass(dto, Factura.class));
+                        Factura factura1 = DTOUtil.toClass(dto, Factura.class);
+                        factura1.setOrdenesDeCompras(factura1.getOrdenesDeCompras());
+                        cuentaCorriente.getFacturas().set(i, factura1);
                         existe = true;
                     }
                 }
 
                 if (!existe) {
-                    cuentaCorriente.getFacturas().add(DTOUtil.toClass(dto, Factura.class));
+                    Factura factura1 = DTOUtil.toClass(dto, Factura.class);
+                    factura1.setOrdenesDeCompras(factura1.getOrdenesDeCompras());
+                    cuentaCorriente.getFacturas().add(factura1);
                 }
             }
         }

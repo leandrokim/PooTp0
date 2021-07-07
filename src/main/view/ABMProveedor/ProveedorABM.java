@@ -31,7 +31,7 @@ public class ProveedorABM extends AbstractABMWindow {
         tableColumns.add(new TableColumn("Direccion", String.class));
         tableColumns.add(new TableColumn("Telefono", String.class));
         tableColumns.add(new TableColumn("ResponsableIva", boolean.class));
-        tableColumns.add(new TableColumn("Deuda", double.class));
+        tableColumns.add(new TableColumn("Tope Deuda", double.class));
         tableModel = new ProveedorABMTable(proveedores, tableColumns);
 
         return tableModel;

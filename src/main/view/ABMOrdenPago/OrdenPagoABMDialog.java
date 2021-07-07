@@ -169,21 +169,24 @@ public class OrdenPagoABMDialog extends AbstractABMDialog<OrdenPago.DTOOrdenPago
         }
         ordenPago.cuitProveedor = Integer.parseInt(cuitProveedorField.getText());
         ordenPago.documentosAsociados = new ArrayList<>();
-        for (String i : facturasField.getText().split(",")) {
-            Factura.DTOFactura factura = new Factura.DTOFactura();
-            factura.nFactura = Integer.parseInt(i);
-            ordenPago.documentosAsociados.add(factura);
-        }
-        for (String i : notaDebitoField.getText().split(",")) {
-            NotaDebito.DTONotaDebito notaDebito = new NotaDebito.DTONotaDebito();
-            notaDebito.nNotaDeDebito = Integer.parseInt(i);
-            ordenPago.documentosAsociados.add(notaDebito);
-        }
-        for (String i : notaCreditoField.getText().split(",")) {
-            NotaCredito.DTONotaCredito notaCredito = new NotaCredito.DTONotaCredito();
-            notaCredito.nNotaDeCredito = Integer.parseInt(i);
-            ordenPago.documentosAsociados.add(notaCredito);
-        }
+        if (!facturasField.getText().isEmpty())
+            for (String i : facturasField.getText().split(",")) {
+                Factura.DTOFactura factura = new Factura.DTOFactura();
+                factura.nFactura = Integer.parseInt(i);
+                ordenPago.documentosAsociados.add(factura);
+            }
+        if (!notaDebitoField.getText().isEmpty())
+            for (String i : notaDebitoField.getText().split(",")) {
+                NotaDebito.DTONotaDebito notaDebito = new NotaDebito.DTONotaDebito();
+                notaDebito.nNotaDeDebito = Integer.parseInt(i);
+                ordenPago.documentosAsociados.add(notaDebito);
+            }
+        if (!notaCreditoField.getText().isEmpty())
+            for (String i : notaCreditoField.getText().split(",")) {
+                NotaCredito.DTONotaCredito notaCredito = new NotaCredito.DTONotaCredito();
+                notaCredito.nNotaDeCredito = Integer.parseInt(i);
+                ordenPago.documentosAsociados.add(notaCredito);
+            }
         ordenPago.formasDePago = new ArrayList<>();
         if (!efectivoField.getText().isEmpty()) {
             Efectivo efectivo = new Efectivo(Double.parseDouble(efectivoField.getText()));

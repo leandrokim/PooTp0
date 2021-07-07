@@ -34,13 +34,13 @@ public class ABMDocumentos extends JFrame {
         });
 
         creditoButton.addActionListener(e -> {
-            NotaDebitoABM notaDebitoABM = new NotaDebitoABM();
-            notaDebitoABM.frame.setVisible(true);
+            NotaCreditoABM notaCreditoABM = new NotaCreditoABM();
+            notaCreditoABM.frame.setVisible(true);
         });
 
         debitoButton.addActionListener(e -> {
-            NotaCreditoABM notaCreditoABM = new NotaCreditoABM();
-            notaCreditoABM.frame.setVisible(true);
+            NotaDebitoABM notaDebitoABM = new NotaDebitoABM();
+            notaDebitoABM.frame.setVisible(true);
         });
     }
 

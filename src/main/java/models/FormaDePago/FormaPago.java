@@ -18,4 +18,6 @@ public abstract class FormaPago {
         public String type;
     }
 
+    public abstract String getTipoClase();
+
 }

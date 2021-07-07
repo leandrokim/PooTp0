@@ -162,11 +162,26 @@ public class App {
 
         //////////////////// Facturas ////////////////////
 
-//        Factura factura = new Factura(abmController.nuevoNumeroFactura(),
-//                ResponsableIVA.RESPONSABLE_INSCRIPTO,
-//                );
+        Factura factura = new Factura(1,
+                ResponsableIVA.RESPONSABLE_INSCRIPTO,
+                proveedor.getOrdenesDeCompra(),
+                LocalDate.now(),
+                proveedor.getCuitProveedor());
 
+        Factura factura1 = new Factura(2,
+                ResponsableIVA.RESPONSABLE_INSCRIPTO,
+                proveedor1.getOrdenesDeCompra(),
+                LocalDate.now(),
+                proveedor1.getCuitProveedor());
 
+        abmController.guardarFactura(factura.toDTO());
+        abmController.guardarFactura(factura1.toDTO());
+
+        //////////////////// Nota Debito ////////////////////
+
+        NotaDebito notaDebito = new NotaDebito(11,
+                LocalDate.now(),
+                proveedor.getCuitProveedor());
 
 
 //        Factura factura = new Factura(abmController.nuevoNumeroFactura(),

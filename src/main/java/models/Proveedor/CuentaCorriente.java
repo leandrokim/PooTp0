@@ -181,7 +181,7 @@ public class CuentaCorriente {
                         documento.getFecha(),
                         documento.getTipoDocumento(),
                         ivaDocumentos,
-                        documento.getTotal()));
+                        documento.getTotalIVA()));
             }
         }
         return dto;

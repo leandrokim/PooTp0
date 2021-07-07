@@ -98,6 +98,16 @@ public abstract class Documento {
 
     public abstract String getTipoDocumento();
 
+    public double getTotalIVA() {
+        double total = 0d;
+
+        for (PrecioProductoPorProveedor pppp : productos) {
+            total += pppp.getProductoIva();
+        }
+
+        return total;
+    }
+
     public static class DTODocumento {
         public LocalDate fecha;
         public int cuitProveedor;

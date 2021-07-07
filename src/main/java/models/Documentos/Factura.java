@@ -24,6 +24,15 @@ public class Factura extends Documento {
         this.nFactura = nFactura;
         this.responsabilidadIVA = responsabilidadIVA;
         this.ordenesDeCompras = ordenesDeCompras;
+        if (this.ordenesDeCompras == null) {
+            this.ordenesDeCompras = new ArrayList<>();
+        }
+
+        ArrayList<PrecioProductoPorProveedor> precioProductoPorProveedors = new ArrayList<>();
+        for (OrdenCompra ordenCompra : this.ordenesDeCompras) {
+            precioProductoPorProveedors.addAll(ordenCompra.getProductos());
+        }
+        setProductos(precioProductoPorProveedors);
         facturaPaga = false;
     }
 
@@ -49,6 +58,15 @@ public class Factura extends Documento {
 
     public void setOrdenesDeCompras(List<OrdenCompra> ordenesDeCompras) {
         this.ordenesDeCompras = ordenesDeCompras;
+        if (this.ordenesDeCompras == null) {
+            this.ordenesDeCompras = new ArrayList<>();
+        }
+
+        ArrayList<PrecioProductoPorProveedor> precioProductoPorProveedors = new ArrayList<>();
+        for (OrdenCompra ordenCompra : this.ordenesDeCompras) {
+            precioProductoPorProveedors.addAll(ordenCompra.getProductos());
+        }
+        setProductos(precioProductoPorProveedors);
     }
 
     public boolean isFacturaPaga() {

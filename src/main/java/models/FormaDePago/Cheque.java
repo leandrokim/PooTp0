@@ -1,5 +1,7 @@
 package main.java.models.FormaDePago;
 
+import main.java.models.Documentos.Factura;
+
 import java.time.LocalDate;
 
 public class Cheque extends FormaPago {
@@ -69,6 +71,11 @@ public class Cheque extends FormaPago {
         dto.firmante = getFirmante();
         dto.type = type;
         return dto;
+    }
+
+    @Override
+    public String getTipoClase() {
+        return Cheque.class.getSimpleName();
     }
 
     public static class DTOCheque extends FormaPago.DTOFormaPago {

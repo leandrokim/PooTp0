@@ -20,6 +20,11 @@ public class Efectivo extends FormaPago {
         return dto;
     }
 
+    @Override
+    public String getTipoClase() {
+        return Efectivo.class.getSimpleName();
+    }
+
     public static class DTOEfectivo extends FormaPago.DTOFormaPago {
 
     }
