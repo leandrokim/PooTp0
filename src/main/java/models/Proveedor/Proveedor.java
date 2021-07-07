@@ -134,6 +134,14 @@ public class Proveedor {
         this.ordenesDeCompra = ordenesDeCompra;
     }
 
+    public void addOrdenDeCompra(OrdenCompra ordenCompra) {
+        if (ordenesDeCompra == null) {
+            ordenesDeCompra = new ArrayList<>();
+        }
+
+        ordenesDeCompra.add(ordenCompra);
+    }
+
     public DTOProveedor toDTO() {
         DTOProveedor dto = new DTOProveedor();
         dto.cuitProveedor = getCuitProveedor();
@@ -162,8 +170,8 @@ public class Proveedor {
             }
         }
         dto.ordenesDeCompra = new ArrayList<>();
-        if (ordenesDeCompra != null){
-            for (OrdenCompra ordenCompra : ordenesDeCompra){
+        if (ordenesDeCompra != null) {
+            for (OrdenCompra ordenCompra : ordenesDeCompra) {
                 dto.ordenesDeCompra.add(ordenCompra.toDTO());
             }
         }

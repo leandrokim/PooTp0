@@ -1,5 +1,6 @@
 package main.java.main;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import main.java.controllers.ABMController;
 import main.java.controllers.ConsultaGeneralController;
 import main.java.controllers.OrdenesYDocumentosController;
@@ -28,23 +29,21 @@ public class App {
         ConsultaGeneralController consultaGeneralController = ConsultaGeneralController.getInstancia();
         OrdenesYDocumentosController ordenesYDocumentosController = OrdenesYDocumentosController.getInstancia();
 
-        // Agregamos proveedores
+        //////////////////// Agregamos proveedores ////////////////////
         List<Certificado> certificados = new ArrayList<>();
         certificados.add(new Certificado(666,
                 LocalDate.of(2021, 6, 27),
                 LocalDate.of(2030, 6, 27),
                 false,
                 new Impuesto(1)));
-        ArrayList<Proveedor.DTOProveedor> proveedores = new ArrayList<>();
         Proveedor proveedor = new Proveedor(666,
-        "Ricarchi Forchi",
-        100000d,
-        true,
-        certificados,
-        "ricky@miameeeee.com",
-        "080031431",
-        "Miameeee");
-        proveedores.add(proveedor.toDTO());
+                "Ricarchi Forchi",
+                100000d,
+                true,
+                certificados,
+                "ricky@miameeeee.com",
+                "080031431",
+                "Miameeee");
         Proveedor proveedor1 = new Proveedor(777,
                 "Batman",
                 100000000d,
@@ -53,10 +52,11 @@ public class App {
                 "bruce@wayne.com",
                 "0800847349",
                 "Baticueva");
-        proveedores.add(proveedor1.toDTO());
-        abmController.guardarProveedores(proveedores);
 
-        // Creamos Rubros y productos
+
+        guardarProveedores(proveedor, proveedor1);
+
+        //////////////////// Creamos Rubros y productos ////////////////////
         Rubro rubro = new Rubro(1, "Golosinas");
 
         Producto producto = new Producto(
@@ -143,68 +143,32 @@ public class App {
         batiRubros.add(rubro1);
         batiRubros.add(rubro2);
 
-
         proveedor.setRubros(rickyRubros);
         proveedor1.setRubros(batiRubros);
 
-        ArrayList<Proveedor.DTOProveedor> proveedores2 = new ArrayList<>();
-        proveedores2.add(proveedor.toDTO());
-        proveedores2.add(proveedor1.toDTO());
+        guardarProveedores(proveedor, proveedor1);
 
-        abmController.guardarProveedores(proveedores2);
+        //////////////////// Ordenes de Compra ////////////////////
+
+        ArrayList<PrecioProductoPorProveedor> compras = new ArrayList<>();
+        compras.add(PPPP3);
+        proveedor.addOrdenDeCompra(new OrdenCompra(1, compras));
+
+        ArrayList<PrecioProductoPorProveedor> compras1 = new ArrayList<>();
+        compras1.add(PPPP4);
+        proveedor1.addOrdenDeCompra(new OrdenCompra(2, compras1));
+
+        guardarProveedores(proveedor, proveedor1);
+
+        //////////////////// Facturas ////////////////////
+
+//        Factura factura = new Factura(abmController.nuevoNumeroFactura(),
+//                ResponsableIVA.RESPONSABLE_INSCRIPTO,
+//                );
 
 
 
-//        List<Certificado> certificados = new ArrayList<>();
-//        certificados.add(new Certificado(666,
-//                LocalDate.of(2021, 6, 27),
-//                LocalDate.of(2030, 6, 27),
-//                false,
-//                new Impuesto(1)));
-//
-//        Proveedor ricki = new Proveedor(666,
-//                "Ricardo Fort",
-//                10d,
-//                true,
-//                certificados,
-//                "rickiF@elComandante.com",
-//                "1122223333",
-//                "Miameeeeee");
-//
-//        ArrayList<Proveedor.DTOProveedor> aux = new ArrayList<>();
-//        aux.add(ricki.toDTO());
-//
-//        abmController.guardarProveedores(aux);
-//
-//        Rubro rubro = new Rubro(1, "Golosinas");
-//
-//        Producto producto = new Producto(
-//                1,
-//                "Chocolate Felfort",
-//                Unidad.UNIDAD,
-//                new ArrayList<>(),
-//                TipoIVA.VEINTIUNO
-//        );
-//        List<Producto> productos = new ArrayList<>();
-//        productos.add(producto);
-//
-//        PrecioProductoPorProveedor precioProductoPorProveedor = new PrecioProductoPorProveedor(
-//                10d,
-//                ricki.getCuitProveedor(),
-//                producto.getIdProducto()
-//        );
-//        List<PrecioProductoPorProveedor> precios = new ArrayList<>();
-//        precios.add(precioProductoPorProveedor);
-//
-//        producto.setPreciosPorProveedor(precios);
-//        rubro.setProductos(productos);
-//        List<Rubro> rubros = new ArrayList<>();
-//        rubros.add(rubro);
-//        ricki.setRubros(rubros);
-//
-//        List<OrdenCompra> ordenCompras = new ArrayList<>();
-//        ordenCompras.add(new OrdenCompra(1, precios));
-//
+
 //        Factura factura = new Factura(abmController.nuevoNumeroFactura(),
 //                ResponsableIVA.MONOTRIBUTO,
 //                ordenCompras,
@@ -259,6 +223,14 @@ public class App {
 //        abmController.guardarNotasDebito(notaDebitos);
 
         //TODO agregar orden pago con metodo
+    }
+
+    private static void guardarProveedores(Proveedor proveedor, Proveedor proveedor1) {
+        ABMController abmController = ABMController.getInstancia();
+        ArrayList<Proveedor.DTOProveedor> proveedores = new ArrayList<>();
+        proveedores.add(proveedor.toDTO());
+        proveedores.add(proveedor1.toDTO());
+        abmController.guardarProveedores(proveedores);
     }
 
 }
