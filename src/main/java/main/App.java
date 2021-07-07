@@ -5,8 +5,10 @@ import main.java.controllers.ABMController;
 import main.java.controllers.ConsultaGeneralController;
 import main.java.controllers.OrdenesYDocumentosController;
 import main.java.models.Documentos.*;
+import main.java.models.FormaDePago.Cheque;
 import main.java.models.FormaDePago.Efectivo;
 import main.java.models.FormaDePago.FormaPago;
+import main.java.models.FormaDePago.TipoCheque;
 import main.java.models.IVA.ResponsableIVA;
 import main.java.models.IVA.TipoIVA;
 import main.java.models.Productos.PrecioProductoPorProveedor;
@@ -183,61 +185,93 @@ public class App {
                 LocalDate.now(),
                 proveedor.getCuitProveedor());
 
+        notaDebito.setProductos(proveedor.getOrdenesDeCompra().get(0).getProductos());
 
-//        Factura factura = new Factura(abmController.nuevoNumeroFactura(),
-//                ResponsableIVA.MONOTRIBUTO,
-//                ordenCompras,
-//                LocalDate.of(2021, 6, 27),
-//                ricki.getCuitProveedor());
-//
-//        ricki.setOrdenesDeCompra(ordenCompras);
-//
-//        factura.setProductos(precios);
-//
-//        NotaDebito notaDebito = new NotaDebito(11,
-//                LocalDate.of(2021, 6, 27),
-//                ricki.getCuitProveedor());
-//        notaDebito.setProductos(precios);
-//
-//        ArrayList<Documento> documentos = new ArrayList<>();
-//        documentos.add(factura);
-//        documentos.add(notaDebito);
-//
-//        List<FormaPago> formaPagos = new ArrayList<>();
-//        formaPagos.add(new Efectivo(10d));
-//
-//        List<Retencion> retenciones = new ArrayList<>();
-//        retenciones.add(new Retencion(1,
-//                new Impuesto(1),
-//                10));
-//
-//        OrdenPago ordenPago = new OrdenPago(1,
-//                ricki.getCuitProveedor(),
-//                documentos,
-//                retenciones,
-//                formaPagos,
-//                LocalDate.of(2021, 6, 27));
-//
-//        ArrayList<Proveedor.DTOProveedor> proveedores = new ArrayList<>();
-//        proveedores.add(ricki.toDTO());
-//
-//        abmController.guardarProveedores(proveedores);
-//
-//        ArrayList<OrdenPago.DTOOrdenPago> ordenPagos = new ArrayList<>();
-//        ordenPagos.add(ordenPago.toDTO());
-//
-//        abmController.guardarOrdenesPago(ordenPagos);
-//
-//        ArrayList<Factura.DTOFactura> facturas = new ArrayList<>();
-//        facturas.add(factura.toDTO());
-//
-//        ArrayList<NotaDebito.DTONotaDebito> notaDebitos = new ArrayList<>();
-//        notaDebitos.add(notaDebito.toDTO());
-//
-//        abmController.guardarFacturas(facturas);
-//        abmController.guardarNotasDebito(notaDebitos);
+        NotaDebito notaDebito1 = new NotaDebito(120,
+                LocalDate.now(),
+                proveedor1.getCuitProveedor());
 
-        //TODO agregar orden pago con metodo
+        notaDebito1.setProductos(proveedor1.getOrdenesDeCompra().get(0).getProductos());
+
+        ArrayList<NotaDebito.DTONotaDebito> notaDebitos = new ArrayList<>();
+        notaDebitos.add(notaDebito.toDTO());
+        notaDebitos.add(notaDebito1.toDTO());
+
+        abmController.guardarNotasDebito(notaDebitos);
+
+        //////////////////// Nota Credito ////////////////////
+
+        NotaCredito notaCredito = new NotaCredito(382,
+                LocalDate.now(),
+                proveedor.getCuitProveedor());
+
+        notaCredito.setProductos(proveedor.getOrdenesDeCompra().get(0).getProductos());
+
+        NotaCredito notaCredito1 = new NotaCredito(572,
+                LocalDate.now(),
+                proveedor1.getCuitProveedor());
+
+        notaCredito1.setProductos(proveedor1.getOrdenesDeCompra().get(0).getProductos());
+
+        ArrayList<NotaCredito.DTONotaCredito> notaCreditos = new ArrayList<>();
+        notaCreditos.add(notaCredito.toDTO());
+        notaCreditos.add(notaCredito1.toDTO());
+
+        abmController.guardarNotasCredito(notaCreditos);
+
+        //////////////////// Orden Pago ////////////////////
+
+        Efectivo efectivo = new Efectivo(1000);
+        Efectivo efectivo1 = new Efectivo(200);
+
+        Cheque cheque = new Cheque(100,
+                TipoCheque.COMUN,
+                LocalDate.now(),
+                LocalDate.of(2028, 5, 6),
+                "Firma1");
+
+        Cheque cheque1 = new Cheque(300,
+                TipoCheque.DE_PAGO_DIFERIDO,
+                LocalDate.now(),
+                LocalDate.of(2029, 3, 4),
+                "Firma2");
+
+        ArrayList<Documento> documentos = new ArrayList<>();
+        documentos.add(factura);
+        documentos.add(notaCredito);
+        documentos.add(notaDebito);
+
+        ArrayList<FormaPago> pagos = new ArrayList<>();
+        pagos.add(efectivo);
+        pagos.add(cheque);
+
+        OrdenPago ordenPago = new OrdenPago(123,
+                proveedor.getCuitProveedor(),
+                documentos,
+                new ArrayList<>(),
+                pagos,
+                LocalDate.now());
+
+        abmController.guardarOrdenPago(ordenPago.toDTO());
+
+        ArrayList<Documento> documentos1 = new ArrayList<>();
+        documentos1.add(factura1);
+        documentos1.add(notaCredito1);
+        documentos1.add(notaDebito1);
+
+        ArrayList<FormaPago> pagos1 = new ArrayList<>();
+        pagos1.add(efectivo1);
+        pagos1.add(cheque1);
+
+        OrdenPago ordenPago1 = new OrdenPago(675,
+                proveedor1.getCuitProveedor(),
+                documentos1,
+                new ArrayList<>(),
+                pagos1,
+                LocalDate.now());
+
+        abmController.guardarOrdenPago(ordenPago1.toDTO());
+
     }
 
     private static void guardarProveedores(Proveedor proveedor, Proveedor proveedor1) {
